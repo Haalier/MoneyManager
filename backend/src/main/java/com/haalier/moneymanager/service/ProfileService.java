@@ -42,7 +42,7 @@ public class ProfileService {
 
     public boolean activateProfile(String activationToken) {
         return profileRepository.findByActivationToken(activationToken).map((ProfileEntity profile) -> {
-            profile.setActivationToken(null);
+            profile.setIsActive(true);
             profileRepository.save(profile);
             return true;
         }).orElse(false);
