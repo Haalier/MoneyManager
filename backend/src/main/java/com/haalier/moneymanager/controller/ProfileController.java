@@ -39,8 +39,8 @@ public class ProfileController {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message", "Account is not activated"));
             }
 
-         Map<String, Object> response = profileService.authenticateAndGenerateToken(authDTO);
-           return ResponseEntity.ok(response);
+            Map<String, Object> response = profileService.authenticateAndGenerateToken(authDTO);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
         }
