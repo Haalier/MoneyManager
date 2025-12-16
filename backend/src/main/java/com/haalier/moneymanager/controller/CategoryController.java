@@ -3,7 +3,6 @@ package com.haalier.moneymanager.controller;
 import com.haalier.moneymanager.dto.CategoryDTO;
 import com.haalier.moneymanager.service.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
