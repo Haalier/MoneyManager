@@ -23,7 +23,7 @@ public interface ExpenseRepository extends JpaRepository<ExpenseEntity, Long> {
 
 
     // select * from tbl_expenses where profile_id = ? and date between ? and ? and name like ? and name like %?%
-    List<ExpenseEntity> findProfileIdAndDateBetweenAndNameContainingIgnoreCase(Long profileId, LocalDate startDate,
+    List<ExpenseEntity> findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(Long profileId, LocalDate startDate,
                                                                                LocalDate endDate,
                                                                                String keyword, Sort sort);
 

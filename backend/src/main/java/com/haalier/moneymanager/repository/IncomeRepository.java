@@ -22,7 +22,7 @@ public interface IncomeRepository extends JpaRepository<IncomeEntity, Long> {
 
 
     // select * from tbl_incomes where profile_id = ? and date between ? and ? and name like ? and name like %?%
-    List<IncomeEntity> findProfileIdAndDateBetweenAndNameContainingIgnoreCase(Long profileId, LocalDate startDate,
+    List<IncomeEntity> findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(Long profileId, LocalDate startDate,
                                                                                LocalDate endDate,
                                                                                String keyword, Sort sort);
 
