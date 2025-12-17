@@ -22,9 +22,11 @@ public class IncomeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String name;
     private String icon;
     private LocalDate date;
+    @Column(nullable = false)
     private BigDecimal amount;
 
     @CreationTimestamp
