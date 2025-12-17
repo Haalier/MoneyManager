@@ -46,7 +46,7 @@ public class IncomeService {
         return toDTO(newIncome);
     }
 
-    // Get all incomes for current user and month based on the start date and end date
+    // Get all incomes for the current user and month based on the start date and end date
     public List<IncomeDTO> getCurrentMonthIncomesForCurrentUser() {
         ProfileEntity profile = profileService.getCurrentProfile();
         LocalDate date = LocalDate.now();
@@ -57,14 +57,11 @@ public class IncomeService {
 
     }
 
-    public void deleteIncome(Long incomeId) {
+    // Get total incomes for the current user
+    public BigDecimal getTotalIncomeForCurrentUser() {
         ProfileEntity profile = profileService.getCurrentProfile();
-        IncomeEntity expense = incomeRepository.findById(incomeId)
-                .orElseThrow(() -> new RuntimeException("Income not found."));
-        if (!expense.getProfile().getId().equals(profile.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to delete this income.");
-        }
-        incomeRepository.delete(expense);
+        BigDecimal total = incomeRepository.findTotalIncomeByProfileId(profile.getId());
+        return total != null ? total : BigDecimal.ZERO;
     }
 
     // Get latest 5 incomes for current user
@@ -73,6 +70,17 @@ public class IncomeService {
         List<IncomeEntity> newEntity = incomeRepository.findTop5ByProfileIdOrderByDateDesc(profile.getId());
 
         return newEntity.stream().map(this::toDTO).toList();
+    }
+
+    // Delete income by id
+    public void deleteIncome(Long incomeId) {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        IncomeEntity expense = incomeRepository.findById(incomeId)
+                .orElseThrow(() -> new RuntimeException("Income not found."));
+        if (!expense.getProfile().getId().equals(profile.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to delete this income.");
+        }
+        incomeRepository.delete(expense);
     }
 
     // Helper methods
