@@ -93,9 +93,8 @@ public class IncomeService {
     }
 
     // Notifications
-    public List<IncomeDTO> getIncomesForUserOnDate(Long profileId, LocalDate date) {
-        List<IncomeEntity> incomes = incomeRepository.findByProfileIdAndDate(profileId, date);
-        return incomes.stream().map(this::toDTO).toList();
+    public boolean hasIncomesForUserOnDate(Long profileId, LocalDate date) {
+        return incomeRepository.existByProfileIdAndDate(profileId, date);
     }
 
     // Helper methods

@@ -34,12 +34,12 @@ public class NotificationService {
         List<ProfileEntity> profiles = profileRepository.findAll();
 
         for (ProfileEntity profile : profiles) {
-            List<ExpenseDTO> todayExpenses = expenseService.getExpensesForUserOnDate(profile.getId(),
+            boolean existExpenses = expenseService.hasExpensesForUserOnDate(profile.getId(),
                     LocalDate.now(ZoneId.of("Europe/Warsaw")));
-            List<IncomeDTO> todayIncomes = incomeService.getIncomesForUserOnDate(profile.getId(),
+            boolean existIncomes = incomeService.hasIncomesForUserOnDate(profile.getId(),
                     LocalDate.now(ZoneId.of("Europe/Warsaw")));
 
-            if (todayExpenses.isEmpty() && todayIncomes.isEmpty()) {
+            if (existExpenses && existIncomes) {
                 String body = "Hi " + profile.getFullName() + ",<br><br>" + "This is a daily reminder to add your income " +
                         "and expenses for today in Money Manager.<br><br>" + "<a href=" + frontendUrl + "style='display" +
                         ":inline-block;padding:10px 20px;background-color:#4CAF50;color:#fff;text-decoration:none;" +

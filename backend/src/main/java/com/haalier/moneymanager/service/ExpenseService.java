@@ -95,8 +95,12 @@ public class ExpenseService {
 
     // Notifications
     public List<ExpenseDTO> getExpensesForUserOnDate(Long profileId, LocalDate date) {
-       List<ExpenseEntity> expenses =  expenseRepository.findByProfileIdAndDate(profileId, date);
-       return expenses.stream().map(this::toDTO).toList();
+        List<ExpenseEntity> expenses = expenseRepository.findByProfileIdAndDate(profileId, date);
+        return expenses.stream().map(this::toDTO).toList();
+    }
+
+    public boolean hasExpensesForUserOnDate(Long profileId, LocalDate date) {
+        return expenseRepository.existByProfileIdAndDate(profileId, date);
     }
 
     // Helper methods

@@ -24,12 +24,16 @@ public interface ExpenseRepository extends JpaRepository<ExpenseEntity, Long> {
 
     // select * from tbl_expenses where profile_id = ? and date between ? and ? and name like ? and name like %?%
     List<ExpenseEntity> findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(Long profileId, LocalDate startDate,
-                                                                               LocalDate endDate,
-                                                                               String keyword, Sort sort);
+                                                                                 LocalDate endDate,
+                                                                                 String keyword, Sort sort);
 
     // select * from tbl_expenses where profile_id = ? and date between ? and ?
     List<ExpenseEntity> findByProfileIdAndDateBetween(Long profileId, LocalDate startDate, LocalDate endDate);
 
     // select * from tbl_expenses where profile_id = ? and date = ?
     List<ExpenseEntity> findByProfileIdAndDate(Long profileId, LocalDate date);
+
+    @Query("SELECT CASE WHEN COUNT(e) > 0 THEN true ELSE false END FROM ExpenseEntity e WHERE e.profile.id = " +
+            ":profileId AND e.date = :date")
+    boolean existByProfileIdAndDate(@Param("profileId") Long profileId, @Param("date") LocalDate date);
 }
