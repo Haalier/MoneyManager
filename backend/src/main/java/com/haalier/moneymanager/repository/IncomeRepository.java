@@ -28,4 +28,7 @@ public interface IncomeRepository extends JpaRepository<IncomeEntity, Long> {
 
     // select * from tbl_incomes where profile_id = ? and date between ? and ?
     List<IncomeEntity> findByProfileIdAndDateBetween(Long profileId, LocalDate startDate, LocalDate endDate);
+
+    // select * from tbl_incomes where profile_id = ? and date = ?
+    List<IncomeEntity> findByProfileIdAndDate(Long profileId, LocalDate date);
 }

@@ -92,6 +92,12 @@ public class IncomeService {
         return entities.stream().map(this::toDTO).toList();
     }
 
+    // Notifications
+    public List<IncomeDTO> getIncomesForUserOnDate(Long profileId, LocalDate date) {
+        List<IncomeEntity> incomes = incomeRepository.findByProfileIdAndDate(profileId, date);
+        return incomes.stream().map(this::toDTO).toList();
+    }
+
     // Helper methods
     private IncomeEntity toEntity(IncomeDTO dto, ProfileEntity profile, CategoryEntity category) {
         return IncomeEntity.builder().id(dto.getId()).name(dto.getName()).icon(dto.getIcon()).date(dto.getDate())

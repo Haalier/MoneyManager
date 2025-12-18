@@ -1,6 +1,7 @@
 package com.haalier.moneymanager.service;
 
 import com.haalier.moneymanager.dto.ExpenseDTO;
+import com.haalier.moneymanager.dto.IncomeDTO;
 import com.haalier.moneymanager.entity.ProfileEntity;
 import com.haalier.moneymanager.repository.ProfileRepository;
 import jakarta.transaction.Transactional;
@@ -22,6 +23,7 @@ public class NotificationService {
     private final ProfileRepository profileRepository;
     private final EmailService emailService;
     private final ExpenseService expenseService;
+    private final IncomeService incomeService;
 
     @Value("${money.manager.frontend.url}")
     private String frontendUrl;
@@ -32,12 +34,20 @@ public class NotificationService {
         List<ProfileEntity> profiles = profileRepository.findAll();
 
         for (ProfileEntity profile : profiles) {
-            String body = "Hi " + profile.getFullName() + ",<br><br>" + "This is a daily reminder to add your income " +
-                    "and expenses for today in Money Manager.<br><br>" + "<a href=" + frontendUrl + "style='display" +
-                    ":inline-block;padding:10px 20px;background-color:#4CAF50;color:#fff;text-decoration:none;" +
-                    "border-radius:5px;font-weight:bold;'>Go to Money Manager</a>" + "<br><br>Thanks,<br>Money " +
-                    "Manager Team";
-            emailService.sendEmail(profile.getEmail(), "Daily reminde: Add your income and expenses", body);
+            List<ExpenseDTO> todayExpenses = expenseService.getExpensesForUserOnDate(profile.getId(),
+                    LocalDate.now(ZoneId.of("Europe/Warsaw")));
+            List<IncomeDTO> todayIncomes = incomeService.getIncomesForUserOnDate(profile.getId(),
+                    LocalDate.now(ZoneId.of("Europe/Warsaw")));
+
+            if (todayExpenses.isEmpty() && todayIncomes.isEmpty()) {
+                String body = "Hi " + profile.getFullName() + ",<br><br>" + "This is a daily reminder to add your income " +
+                        "and expenses for today in Money Manager.<br><br>" + "<a href=" + frontendUrl + "style='display" +
+                        ":inline-block;padding:10px 20px;background-color:#4CAF50;color:#fff;text-decoration:none;" +
+                        "border-radius:5px;font-weight:bold;'>Go to Money Manager</a>" + "<br><br>Thanks,<br>Money " +
+                        "Manager Team";
+                emailService.sendEmail(profile.getEmail(), "Daily reminde: Add your income and expenses", body);
+
+            }
         }
         log.info("Job finished: sendDailyIncomeExpenseReminder");
     }
