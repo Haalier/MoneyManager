@@ -14,4 +14,4 @@ WORKDIR /app
 COPY --from=build /app/target/moneymanager-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 9090
-ENTRYPOINT ["java","-jar","moneymanager-v1.0.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
