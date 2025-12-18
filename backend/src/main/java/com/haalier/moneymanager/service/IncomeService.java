@@ -9,6 +9,7 @@ import com.haalier.moneymanager.entity.ProfileEntity;
 import com.haalier.moneymanager.repository.CategoryRepository;
 import com.haalier.moneymanager.repository.IncomeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -81,6 +82,14 @@ public class IncomeService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to delete this income.");
         }
         incomeRepository.delete(expense);
+    }
+
+    // Filter incomes
+    public List<IncomeDTO> filterIncomes(LocalDate startDate, LocalDate endDate, String keyword, Sort sort){
+        ProfileEntity profile = profileService.getCurrentProfile();
+        List<IncomeEntity> entities =
+                incomeRepository.findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(profile.getId(), startDate, endDate, keyword, sort);
+        return entities.stream().map(this::toDTO).toList();
     }
 
     // Helper methods

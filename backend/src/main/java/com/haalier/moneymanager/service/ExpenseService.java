@@ -8,6 +8,7 @@ import com.haalier.moneymanager.repository.CategoryRepository;
 import com.haalier.moneymanager.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -81,6 +82,21 @@ public class ExpenseService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not authorized to delete this expense.");
         }
         expenseRepository.delete(expense);
+    }
+
+    // Filter expenses
+    public List<ExpenseDTO> filterExpenses(LocalDate startDate, LocalDate endDate, String keyword, Sort sort) {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        List<ExpenseEntity> expense =
+                expenseRepository.findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(profile.getId(), startDate
+                        , endDate, keyword, sort);
+        return expense.stream().map(this::toDTO).toList();
+    }
+
+    // Notifications
+    public List<ExpenseDTO> getExpensesForUserOnDate(Long profileId, LocalDate date) {
+       List<ExpenseEntity> expenses =  expenseRepository.findByProfileIdAndDate(profileId, date);
+       return expenses.stream().map(this::toDTO).toList();
     }
 
     // Helper methods
