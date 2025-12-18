@@ -5,7 +5,6 @@ import com.haalier.moneymanager.entity.CategoryEntity;
 import com.haalier.moneymanager.entity.ProfileEntity;
 import com.haalier.moneymanager.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

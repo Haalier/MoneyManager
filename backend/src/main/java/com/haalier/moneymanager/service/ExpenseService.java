@@ -7,7 +7,6 @@ import com.haalier.moneymanager.entity.ProfileEntity;
 import com.haalier.moneymanager.repository.CategoryRepository;
 import com.haalier.moneymanager.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

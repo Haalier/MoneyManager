@@ -1,7 +1,6 @@
 package com.haalier.moneymanager.service;
 
 import com.haalier.moneymanager.dto.ExpenseDTO;
-import com.haalier.moneymanager.dto.IncomeDTO;
 import com.haalier.moneymanager.entity.ProfileEntity;
 import com.haalier.moneymanager.repository.ProfileRepository;
 import jakarta.transaction.Transactional;
