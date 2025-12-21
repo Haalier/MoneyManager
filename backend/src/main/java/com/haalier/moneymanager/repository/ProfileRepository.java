@@ -12,4 +12,6 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Long> {
 
    //select * from tbl_profiles where activationToken = ?
    Optional<ProfileEntity> findByActivationToken(String activationToken);
+
+   Boolean existsByEmail(String email);
 }

@@ -5,6 +5,7 @@ import com.haalier.moneymanager.dto.ProfileDTO;
 import com.haalier.moneymanager.entity.ProfileEntity;
 import com.haalier.moneymanager.repository.ProfileRepository;
 import com.haalier.moneymanager.util.JwtUtil;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,17 +32,45 @@ public class ProfileService {
     @Value("${app.activation.url}")
     private String activationURL;
 
+    @Transactional
     public ProfileDTO registerProfile(ProfileDTO profileDTO) {
+
+        if (profileRepository.existsByEmail(profileDTO.getEmail())) {
+            throw new RuntimeException("Email already exists.");
+        }
+
         ProfileEntity newProfile = toEntity(profileDTO);
         newProfile.setActivationToken(UUID.randomUUID().toString());
-        newProfile = profileRepository.save(newProfile);
-        // Send activation email
-        String activationLink = activationURL + "/api/v1.0/activate?token=" + newProfile.getActivationToken();
-        String subject = "Money Manager Account Activation";
-        String body = "Please click the link below to activate your account: " + activationLink;
 
-        emailService.sendEmail(newProfile.getEmail(), subject, body);
-        return toDTO(newProfile);
+        newProfile = profileRepository.save(newProfile);
+
+        try{
+            String activationLink = activationURL + "/api/v1.0/activate?token=" + newProfile.getActivationToken();
+            String subject = "Money Manager Account Activation";
+            String body = buildActivationLink(newProfile.getFullName(), activationLink);
+            emailService.sendEmail(newProfile.getEmail(), subject, body);
+            return toDTO(newProfile);
+        } catch (Exception e){
+            throw new RuntimeException("Failed to send activation email. Please try again later.");
+        }
+    }
+
+    private String buildActivationLink(String fullName, String activationLink) {
+        return """
+        <html>
+        <body>
+            <h2>Welcome to Money Manager, %s!</h2>
+            <p>Please click the button below to activate your account:</p>
+            <a href="%s" style="display:inline-block;padding:10px 20px;background-color:#4CAF50;color:#fff;text-decoration:none;border-radius:5px;font-weight:bold;">
+                Activate Account
+            </a>
+            <p>Or copy this link: <a href="%s">%s</a></p>
+            <p>This link will expire in 24 hours.</p>
+            <br>
+            <p>Thanks,<br>Money Manager Team</p>
+        </body>
+        </html>
+        """.formatted(fullName, activationLink, activationLink, activationLink);
     }
 
     public ProfileEntity toEntity(ProfileDTO profileDTO) {
