@@ -1,24 +1,75 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { computed, inject, Injectable, signal } from '@angular/core';
+import { User } from '../../models/user.model';
+import { catchError, finalize, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 interface LoginRes {
-
+  token: string,
+  user: User
 }
 
 @Injectable({
   providedIn: 'root',
 })
-export class Auth {
-  private URL = "https://moneymanager-1-vrgj.onrender.com/api/v1.0";
+export class AuthService {
+  private readonly router = inject(Router);
+  private readonly URL = "https://moneymanager-1-vrgj.onrender.com/api/v1.0";
+  private readonly http = inject(HttpClient);
 
-  private http = inject(HttpClient);
+  private _user = signal<User | null>(null);
+  private _isLoading = signal<boolean>(false);
 
-  private _user = signal({});
-  public user = this._user.asReadonly();
+
+  public readonly user = this._user.asReadonly();
+  public readonly isLoading = this._isLoading.asReadonly();
+
+  public isLoggedIn = computed(() => !!this._user());
+
+
+  public checkAuth(): Observable<boolean> {
+
+    if (this.isLoggedIn()) {
+      return of(true);
+    }
+
+    this._isLoading.set(true);
+
+    return this.http.get<User>(`${this.URL}/me`, { withCredentials: true })
+      .pipe(
+        map((user) => {
+          this._user.set(user);
+          return true;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          this._user.set(null);
+          return of(false);
+        }), finalize(() => {
+          this._isLoading.set(false);
+        })
+      );
+  }
 
 
   public login(email: string, password: string) {
-    this.http.post(`${this.URL}/login`, {email, password});
+    this.http.post<LoginRes>(`${this.URL}/login`, { email, password }, {
+      withCredentials: true
+    }).pipe(tap(res => {
+      this._user.set(res.user)
+      this.router.navigate(['/dashboard']);
+    }), catchError(error => {
+      console.error("Login failed: ", error)
+      return throwError(() => error);
+    }), shareReplay());
+  }
+
+  public logout() {
+    return this.http.post(`${this.URL}/logout`, {}).pipe(
+      tap(res => {
+        this._user.set(null),
+          this.router.navigate(['/login']);
+      })
+    )
   }
 
 }

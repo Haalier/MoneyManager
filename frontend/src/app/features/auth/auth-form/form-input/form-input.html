@@ -1,0 +1,21 @@
+<div class="mb-4">
+    <label [for]="id" class="text-[13px] text-slate-800 block mb-1">
+        {{ label}}
+    </label>
+    <div class="relative">
+        <input [type]="type === 'password' && showPassword ? 'text' : type" [id]="id" [value]="value" [disabled]="isDisabled"
+            (input)="handleInput($event)" (blur)="onTouched()" [placeholder]="placeholder"
+            class="w-full border border-slate-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+        @if (type === "password") {
+        <span class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer" (click)="togglePasswordVisibility()"
+            [pTooltip]="showPassword ? 'Hide password' : 'Show password'" tooltipPosition="top">
+            @if (showPassword) {
+            <ng-icon name="lucideEyeOff" />
+            } @else {
+            <ng-icon name="lucideEye" />
+            }
+        </span>
+        }
+    </div>
+</div>

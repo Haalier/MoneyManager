@@ -1,1 +1,20 @@
-<p>sign-up works!</p>
+<div class="h-screen w-full relative flex items-center justify-center overflow-hidden">
+    <div>
+        <div class="absolute inset-0 w-full h-full bg-black/50 z-10"></div>
+        <img class="select-none absolute inset-0 w-full h-full object-cover grayscale-75 blur-xs" src="login-bg.jpg"
+            alt="Sign Up Background">
+    </div>
+
+    <div class="relative z-10 w-full max-w-lg px-6">
+        <div class="bg-white opacity-95 backdrop-blur-sm rounded-lg shadow-2xl p-8 max-h-[90vh] overflow-y-auto">
+            <h3 class="text-2xl uppercase tracking-widest font-semibold text-black text-center mb-2">
+                Create An Account
+            </h3>
+            <p class="text-sm text-slate-700 text-center mb-8">
+                Start tracking your spendings by joining us today!
+            </p>
+
+            <app-auth-form></app-auth-form>
+        </div>
+    </div>
+</div>

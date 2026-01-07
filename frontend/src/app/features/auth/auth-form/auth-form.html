@@ -1,0 +1,27 @@
+<form class="space-y-4" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+    <div class="flex justify-center mb-6">
+
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <app-form-input label="Full Name" id="fullName" formControlName="fullName" placeholder="John Doe"></app-form-input>
+
+        <app-form-input label="Email Address" id="email" type="email" formControlName="email"
+            placeholder="test@example.com"></app-form-input>
+
+
+
+        <div class="col-span-2">
+            <app-form-input label="Password" id="password" type="password" formControlName="password"
+                placeholder="********"></app-form-input>
+        </div>
+    </div>
+
+    <button type="submit" [disabled]="authForm.invalid"
+        class="w-full btn-primary disabled:cursor-not-allowed disabled:bg-blue-600/50 disabled:transition-none bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 uppercase">sign
+        up</button>
+
+    <p class="text-sm text-slate-800 text-center mt-6">
+        Already have an account?
+        <a routerLink="/login" class="font-medium text-blue-600 hover:text-blue-800">Log in</a>
+    </p>
+</form>
