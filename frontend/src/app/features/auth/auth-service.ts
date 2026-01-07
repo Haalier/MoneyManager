@@ -50,9 +50,21 @@ export class AuthService {
       );
   }
 
+  public signup(fullName: string, email: string, password: string) {
+    return this.http.post<LoginRes>(`${this.URL}/signup`, {fullName, email, password}, {
+      withCredentials: true
+    }).pipe(tap(res => {
+      this._user.set(res.user)
+      this.router.navigate(['/dashboard']);
+    }), catchError(error => {
+      console.error("Signup failed: ", error)
+      return throwError(() => error);
+    }), shareReplay());
+  }
+
 
   public login(email: string, password: string) {
-    this.http.post<LoginRes>(`${this.URL}/login`, { email, password }, {
+    return this.http.post<LoginRes>(`${this.URL}/login`, { email, password }, {
       withCredentials: true
     }).pipe(tap(res => {
       this._user.set(res.user)

@@ -4,18 +4,17 @@ import { Expense } from './expense/expense';
 import { Income } from './income/income';
 import { Category } from './category/category';
 import { Filter } from './filter/filter';
-import { Login } from './features/auth/login/login';
-import { SignUp } from './features/auth/sign-up/sign-up';
 import { authGuard } from './guards/auth-guard';
+import { AuthForm } from './features/auth/auth-form/auth-form';
 
 export const routes: Routes = [
     {
         path: 'login',
-        component: Login,
+        component: AuthForm,
     },
     {
         path: 'signup',
-        component: SignUp,
+        component: AuthForm,
     },
 
     {

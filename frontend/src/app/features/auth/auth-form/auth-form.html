@@ -1,27 +1,78 @@
-<form class="space-y-4" [formGroup]="authForm" (ngSubmit)="onSubmit()">
-    <div class="flex justify-center mb-6">
-
+<div class="h-screen w-full relative flex items-center justify-center overflow-hidden">
+    <div>
+        <div class="absolute inset-0 w-full h-full bg-black/50 z-10"></div>
+        <img class="select-none absolute inset-0 w-full h-full object-cover grayscale-75 blur-xs" src="login-bg.jpg"
+            alt="Sign Up Background">
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <app-form-input label="Full Name" id="fullName" formControlName="fullName" placeholder="John Doe"></app-form-input>
 
-        <app-form-input label="Email Address" id="email" type="email" formControlName="email"
-            placeholder="test@example.com"></app-form-input>
+    <div class="relative z-10 w-full max-w-lg px-6">
+        <div class="bg-white opacity-95 backdrop-blur-sm rounded-lg shadow-2xl p-8 max-h-[90vh] overflow-y-auto">
+            <h3 class="text-2xl uppercase tracking-widest font-semibold text-black text-center mb-2">
+                @if(route === "signup") {
+                Create An Account
+                } @else {
+                Log Into Your Account
+                }
+            </h3>
+            <p class="text-sm text-slate-700 text-center mb-8">
+                @if (route === "signup") {
+                Start tracking your spendings by joining us today!
+                } @else {
+                Welcome back! Please enter your details to log in.
+                }
+            </p>
+
+            <form class="space-y-4" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+                <div class="flex justify-center mb-2">
+
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    @if (route === "signup") {
+                    <app-form-input label="Full Name" id="fullName" formControlName="fullName" placeholder="John Doe"></app-form-input>
+                    }
+
+                    @if (route === "signup") {
+                    <app-form-input label="Email Address" id="email" type="email" formControlName="email"
+                        placeholder="test@example.com"></app-form-input>
+
+                    } @else {
+                    <div class="col-span-2">
+                        <app-form-input label="Email Address" id="email" type="email" formControlName="email"
+                            placeholder="test@example.com"></app-form-input>
+                    </div>
+
+                    }
 
 
 
-        <div class="col-span-2">
-            <app-form-input label="Password" id="password" type="password" formControlName="password"
-                placeholder="********"></app-form-input>
+                    <div class="col-span-2">
+                        <app-form-input
+                            label="Password" id="password" type="password" formControlName="password"
+                            placeholder="********"></app-form-input>
+                    </div>
+                    @if (errorMessage()) {
+                    <app-error-message [errorMessage]="errorMessage()" />
+                    }
+                </div>
+
+                <p-button type="submit" [loading]="isLoading" [unstyled]="true"
+                    styleClass="w-full btn-primary disabled:cursor-not-allowed disabled:bg-blue-600/50 disabled:transition-none bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 uppercase">
+                    <span>{{route === 'signup' ? 'create an account': 'log in'}}</span>
+                </p-button>
+
+
+                <p class="text-sm text-slate-800 text-center mt-6">
+                    @if (route === "signup") {
+                    Already have an account?
+                    } @else{
+                    Don't have an account?
+                    }
+                    <a [routerLink]="route === 'signup' ? '/login' : '/signup'"
+                        class="font-medium text-blue-600 hover:text-blue-800">{{route ===
+                        'signup' ? 'Log in' : 'Sign up'}}</a>
+                </p>
+            </form>
+
         </div>
     </div>
-
-    <button type="submit" [disabled]="authForm.invalid"
-        class="w-full btn-primary disabled:cursor-not-allowed disabled:bg-blue-600/50 disabled:transition-none bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 uppercase">sign
-        up</button>
-
-    <p class="text-sm text-slate-800 text-center mt-6">
-        Already have an account?
-        <a routerLink="/login" class="font-medium text-blue-600 hover:text-blue-800">Log in</a>
-    </p>
-</form>
+</div>

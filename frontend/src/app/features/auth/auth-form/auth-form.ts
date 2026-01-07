@@ -1,28 +1,93 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormInput } from "./form-input/form-input";
-import { RouterLink } from "@angular/router";
+import { ButtonModule } from 'primeng/button';
+import { ActivatedRoute, RouterLink } from "@angular/router";
+import { AuthService } from '../auth-service';
+import { ErrorMessage } from "../../../shared/error-message/error-message";
+import { finalize, first } from 'rxjs';
 
 @Component({
   selector: 'app-auth-form',
-  imports: [ReactiveFormsModule, FormInput, RouterLink],
+  imports: [ReactiveFormsModule, FormInput, RouterLink, ErrorMessage, ButtonModule],
   templateUrl: './auth-form.html',
   styleUrl: './auth-form.css',
 })
-export class AuthForm {
+export class AuthForm implements OnInit {
+  private act = inject(ActivatedRoute);
+  private authService = inject(AuthService);
+  protected route = this.act.snapshot.url.map(segment => segment.path).join('/')
+
   private fb = inject(FormBuilder);
+  protected errorMessage = signal<string>('');
+  protected isLoading: boolean = false;
 
   authForm = this.fb.group({
-    fullName: ['', Validators.required],
+    fullName: [''],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
 
   });
 
+  get passwordControl() {
+    return this.authForm.get('password');
+  }
+
+  get fullNameControl() {
+    return this.authForm.get('fullName');
+  }
+
+  get emailControl() {
+    return this.authForm.get('email');
+  }
+
+  ngOnInit(): void {
+    if (this.route === 'signup') {
+      this.authForm.get('fullName')?.setValidators([Validators.required, Validators.minLength(3)]);
+    }
+  }
+
   onSubmit() {
+    console.log(this.authForm);
+
+
     if (this.authForm.invalid) {
       return;
     }
-    console.log(this.authForm.value);
+    this.isLoading = true;
+
+    if (this.route === 'signup') {
+      this.authService.signup(
+        this.authForm.value.fullName!,
+        this.authForm.value.email!,
+        this.authForm.value.password!
+      ).pipe(finalize(() => this.isLoading = false
+      ), first()).subscribe({
+        next: () => {
+          console.log(this.isLoading);
+          this.errorMessage.set('');
+        },
+        error: (err) => {
+          console.log(this.isLoading);
+          this.errorMessage.set(err.error.message || 'An error occurred. Please try again.');
+        }
+      });
+
+    } else {
+      this.authService.login(
+        this.authForm.value.email!,
+        this.authForm.value.password!
+      ).pipe(finalize(() => this.isLoading = false
+      ), first()).subscribe({
+        next: () => {
+          console.log(this.isLoading);
+          this.errorMessage.set('');
+        },
+        error: (err) => {
+          console.log(this.isLoading);
+          this.errorMessage.set(err.error.message || 'An error occurred. Please try again.');
+        }
+      });
+    }
   }
 }

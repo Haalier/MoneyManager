@@ -1,33 +1,34 @@
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, Input, Optional, Self } from '@angular/core';
 import { lucideEye, lucideEyeOff } from '@ng-icons/lucide';
 import { TooltipModule } from 'primeng/tooltip';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-form-input',
-  imports: [NgIcon, TooltipModule],
+  imports: [NgIcon, TooltipModule, NgClass],
   templateUrl: './form-input.html',
   styleUrl: './form-input.css',
   viewProviders: [provideIcons({ lucideEye, lucideEyeOff })],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FormInput),
-      multi: true
-    }
-  ]
 })
 export class FormInput implements ControlValueAccessor {
-  @Input() label: string = '';
+  @Input({ required: true }) label: string = '';
   @Input() type: string = 'text';
   @Input() placeholder: string = '';
-  @Input() id: string = '';
+  @Input({ required: true }) id: string = '';
 
   value: string = '';
   isDisabled: boolean = false;
 
   showPassword: boolean = false;
+
+  constructor(@Optional() @Self() public ngControl: NgControl) {
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+
+  }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
@@ -56,5 +57,25 @@ export class FormInput implements ControlValueAccessor {
     const val = (event.target as HTMLInputElement).value;
     this.value = val;
     this.onChange(val);
+  }
+
+  get errorMessage(): string | null {
+    const control = this.ngControl?.control;
+
+    if (!control || !control.touched || !control.errors) {
+      return null;
+    }
+
+    const errors = control.errors;
+
+    if (errors['required']) return `${this.label} is required.`;
+    if (errors['email']) return `Please enter a valid email address.`;
+    if (errors['minlength']) {
+      const requiredLength = errors['minlength'].requiredLength;
+      return `${this.label} must be at least ${requiredLength} characters long.`;
+    }
+    if (errors['pattern']) return `Invalid format.`;
+
+    return 'Invalid value.';
   }
 }

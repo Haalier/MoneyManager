@@ -6,4 +6,17 @@ body {
   font-family: 'Outfit', sans-serif;
   background-color: #fcfbfc;
   overflow-x: hidden;
+  color: #000;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #eeefef inset !important;
+  -webkit-text-fill-color: black !important;
+  caret-color: black !important;
+}
+
+.input-error {
+  @apply border-2 border-red-500;
 }
