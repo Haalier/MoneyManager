@@ -15,6 +15,8 @@ interface LoginRes {
 export class AuthService {
   private readonly router = inject(Router);
   private readonly URL = "https://moneymanager-1-vrgj.onrender.com/api/v1.0";
+  private readonly CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dizakv3kv/image/upload";
+  private readonly CLOUDINARY_UPLOAD_PRESET = "moneymanager";
   private readonly http = inject(HttpClient);
 
   private _user = signal<User | null>(null);
@@ -50,8 +52,19 @@ export class AuthService {
       );
   }
 
-  public signup(fullName: string, email: string, password: string) {
-    return this.http.post<LoginRes>(`${this.URL}/signup`, {fullName, email, password}, {
+  private uploadProfileImage(image: File): Observable<any> {
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", this.CLOUDINARY_UPLOAD_PRESET);
+    return this.http.post(this.CLOUDINARY_URL, formData).pipe(
+      map((res: any) => res.secure_url),
+      catchError(error => {
+        return throwError(() => `Cloudinary upload failed: ${error?.message || error}`);
+      }));
+  }
+
+  public signup(fullName: string, email: string, password: string, profileImageUrl: string) {
+    return this.http.post<LoginRes>(`${this.URL}/signup`, { fullName, email, password, profileImageUrl }, {
       withCredentials: true
     }).pipe(tap(res => {
       this._user.set(res.user)
@@ -59,7 +72,7 @@ export class AuthService {
     }), catchError(error => {
       console.error("Signup failed: ", error)
       return throwError(() => error);
-    }), shareReplay());
+    }));
   }
 
 
@@ -72,7 +85,7 @@ export class AuthService {
     }), catchError(error => {
       console.error("Login failed: ", error)
       return throwError(() => error);
-    }), shareReplay());
+    }));
   }
 
   public logout() {

@@ -6,14 +6,17 @@ import { ActivatedRoute, RouterLink } from "@angular/router";
 import { AuthService } from '../auth-service';
 import { ErrorMessage } from "../../../shared/error-message/error-message";
 import { finalize, first } from 'rxjs';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { PhotoSelector } from "./photo-selector/photo-selector";
 
 @Component({
   selector: 'app-auth-form',
-  imports: [ReactiveFormsModule, FormInput, RouterLink, ErrorMessage, ButtonModule],
+  imports: [ReactiveFormsModule, FormInput, RouterLink, ErrorMessage, ButtonModule, PhotoSelector],
   templateUrl: './auth-form.html',
   styleUrl: './auth-form.css',
 })
 export class AuthForm implements OnInit {
+  private toast = inject(HotToastService);
   private act = inject(ActivatedRoute);
   private authService = inject(AuthService);
   protected route = this.act.snapshot.url.map(segment => segment.path).join('/')
@@ -26,6 +29,7 @@ export class AuthForm implements OnInit {
     fullName: [''],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
+    profileImageUrl: ['']
 
   });
 
@@ -48,9 +52,6 @@ export class AuthForm implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.authForm);
-
-
     if (this.authForm.invalid) {
       return;
     }
@@ -60,15 +61,15 @@ export class AuthForm implements OnInit {
       this.authService.signup(
         this.authForm.value.fullName!,
         this.authForm.value.email!,
-        this.authForm.value.password!
+        this.authForm.value.password!,
+        this.authForm.value.profileImageUrl!
       ).pipe(finalize(() => this.isLoading = false
       ), first()).subscribe({
         next: () => {
-          console.log(this.isLoading);
+          this.toast.show('Account created successfully!', { className: 'bg-success text-white' });
           this.errorMessage.set('');
         },
         error: (err) => {
-          console.log(this.isLoading);
           this.errorMessage.set(err.error.message || 'An error occurred. Please try again.');
         }
       });
@@ -80,11 +81,11 @@ export class AuthForm implements OnInit {
       ).pipe(finalize(() => this.isLoading = false
       ), first()).subscribe({
         next: () => {
-          console.log(this.isLoading);
+          this.toast.success('Logged in successfully!');
           this.errorMessage.set('');
         },
         error: (err) => {
-          console.log(this.isLoading);
+
           this.errorMessage.set(err.error.message || 'An error occurred. Please try again.');
         }
       });

@@ -23,9 +23,11 @@
             </p>
 
             <form class="space-y-4" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+                @if (route === 'signup') {
                 <div class="flex justify-center mb-2">
-
+                    <app-photo-selector formControlName="profileImageUrl" />
                 </div>
+                }
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     @if (route === "signup") {
                     <app-form-input label="Full Name" id="fullName" formControlName="fullName" placeholder="John Doe"></app-form-input>
@@ -46,8 +48,7 @@
 
 
                     <div class="col-span-2">
-                        <app-form-input
-                            label="Password" id="password" type="password" formControlName="password"
+                        <app-form-input label="Password" id="password" type="password" formControlName="password"
                             placeholder="********"></app-form-input>
                     </div>
                     @if (errorMessage()) {
@@ -55,8 +56,8 @@
                     }
                 </div>
 
-                <p-button type="submit" [loading]="isLoading" [unstyled]="true"
-                    styleClass="w-full btn-primary disabled:cursor-not-allowed disabled:bg-blue-600/50 disabled:transition-none bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 uppercase">
+                <p-button type="submit" [loading]="isLoading" [unstyled]="true" [disabled]="authForm.invalid"
+                    styleClass="w-full disabled:cursor-not-allowed disabled:bg-blue-600/50 disabled:transition-none bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 uppercase flex items-center justify-center gap-2">
                     <span>{{route === 'signup' ? 'create an account': 'log in'}}</span>
                 </p-button>
 

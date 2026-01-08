@@ -15,6 +15,31 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: Aura
       }
-    }), provideHotToastConfig()
+    }), provideHotToastConfig({
+      stacking: "depth",
+      visibleToasts: 6,
+      duration: 3000,
+      success: {
+        style: {
+          background: 'hsl(143, 85%, 96%)',
+          borderColor: 'hsl(145, 92%, 87%)',
+          color: 'hsl(140, 100%, 27%)',
+        }
+      },
+      error: {
+        style: {
+          background: 'hsl(359, 100%, 97%)',
+          borderColor: 'hsl(359, 100%, 94%)',
+          color: 'hsl(360, 100%, 45%)',
+        }
+      },
+      info: {
+        style: {
+          background: 'hsl(208, 100%, 97%)',
+          borderColor: 'hsl(221, 91%, 93%)',
+          color: 'hsl(210, 92%, 45%)',
+        }
+      }
+    })
   ]
 };

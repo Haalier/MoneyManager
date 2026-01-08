@@ -32,7 +32,7 @@
     "@ctrl/ngx-emoji-mart": "^9.3.0",
     "@ng-icons/core": "^33.0.0",
     "@ng-icons/lucide": "^33.0.0",
-    "@ngneat/overview": "6.1.1",
+    "@ngneat/overview": "^7.0.0",
     "@ngxpert/hot-toast": "^6.0.0",
     "@primeuix/themes": "^2.0.2",
     "chart.js": "^4.3.0",

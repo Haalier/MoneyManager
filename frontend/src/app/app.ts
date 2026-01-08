@@ -9,15 +9,4 @@ import { AuthService } from './features/auth/auth-service';
   styleUrl: './app.css'
 })
 export class App {
-  // private authService = inject(AuthService);
-  // private publicRoutes = ['/login', '/signup'];
-
-  // ngOnInit(): void {
-  //   const currentPath = window.location.pathname;
-
-  //   if (!this.publicRoutes.some(route => currentPath.includes(route))) {
-  //     this.authService.checkAuth().subscribe();
-  //   }
-
-  // }
 }

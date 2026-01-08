@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import 'tailwindcss';
 
+@use '@ngexpert/hot-toast/src/styles/styles.scss';
+
 body {
   font-family: 'Outfit', sans-serif;
   background-color: #fcfbfc;
