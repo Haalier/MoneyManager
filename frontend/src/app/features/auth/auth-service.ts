@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { User } from '../../models/user.model';
-import { catchError, finalize, map, Observable, of, shareReplay, tap, throwError } from 'rxjs';
+import { catchError, EMPTY, finalize, map, Observable, of, shareReplay, switchMap, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 interface LoginRes {
@@ -30,11 +30,6 @@ export class AuthService {
 
 
   public checkAuth(): Observable<boolean> {
-
-    if (this.isLoggedIn()) {
-      return of(true);
-    }
-
     this._isLoading.set(true);
 
     return this.http.get<User>(`${this.URL}/me`, { withCredentials: true })
@@ -52,7 +47,7 @@ export class AuthService {
       );
   }
 
-  private uploadProfileImage(image: File): Observable<any> {
+  private uploadProfileImage(image: string): Observable<any> {
     const formData = new FormData();
     formData.append("file", image);
     formData.append("upload_preset", this.CLOUDINARY_UPLOAD_PRESET);
@@ -63,16 +58,28 @@ export class AuthService {
       }));
   }
 
-  public signup(fullName: string, email: string, password: string, profileImageUrl: string) {
-    return this.http.post<LoginRes>(`${this.URL}/signup`, { fullName, email, password, profileImageUrl }, {
-      withCredentials: true
-    }).pipe(tap(res => {
-      this._user.set(res.user)
-      this.router.navigate(['/dashboard']);
-    }), catchError(error => {
-      console.error("Signup failed: ", error)
-      return throwError(() => error);
-    }));
+  public signup(fullName: string, email: string, password: string, profileImage: string) {
+
+    const signupRequest = (imageUrl?: string) => {
+      return this.http.post<LoginRes>(`${this.URL}/register`, { fullName, email, password, profileImage: imageUrl || profileImage }, {
+        withCredentials: true
+      }).pipe(tap(res => {
+        this._user.set(res.user)
+        this.router.navigate(['/dashboard']);
+      }), catchError(error => {
+        console.error("Signup failed: ", error)
+        return throwError(() => error);
+      }));
+    }
+
+    if (profileImage) {
+      return this.uploadProfileImage(profileImage).pipe(
+        switchMap((imageUrl: string) => signupRequest(imageUrl)
+        ));
+    }
+
+    return signupRequest();
+
   }
 
 
@@ -90,9 +97,15 @@ export class AuthService {
 
   public logout() {
     return this.http.post(`${this.URL}/logout`, {}).pipe(
-      tap(res => {
-        this._user.set(null),
-          this.router.navigate(['/login']);
+      tap(_ => {
+        this._user.set(null);
+        this.router.navigate(['/login']);
+      }),
+      catchError(err => {
+        console.error('Logout failed: ', err);
+        this._user.set(null);
+        this.router.navigate(['/login']);
+        return EMPTY;
       })
     )
   }

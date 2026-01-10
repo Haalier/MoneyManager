@@ -1,29 +1,35 @@
 import { Routes } from '@angular/router';
-import { Home } from './home/home';
-import { Expense } from './expense/expense';
-import { Income } from './income/income';
-import { Category } from './category/category';
-import { Filter } from './filter/filter';
 import { authGuard } from './guards/auth-guard';
 import { AuthForm } from './features/auth/auth-form/auth-form';
+import { guestGuard } from './guards/guest-guard';
+import { AuthLayout } from './layout/auth-layout/auth-layout';
+import { MainLayout } from './layout/main-layout/main-layout';
 
 export const routes: Routes = [
     {
-        path: 'login',
-        component: AuthForm,
+        path: '',
+        component: AuthLayout,
+        children: [
+            {
+                path: 'login',
+                component: AuthForm,
+            },
+            {
+                path: 'signup',
+                component: AuthForm,
+            },
+        ]
     },
-    {
-        path: 'signup',
-        component: AuthForm,
-    },
+    
+    
 
     {
         path: '',
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
         children: [
             {
                 path: 'dashboard',
-                component: Home
+                component: MainLayout
             },
             {
                 path: 'expense',

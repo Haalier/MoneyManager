@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
@@ -6,6 +6,9 @@ import Aura from '@primeuix/themes/aura';
 import { routes } from './app.routes';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
+import { AuthService } from './features/auth/auth-service';
+import { firstValueFrom } from 'rxjs';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,7 +16,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), provideCharts(withDefaultRegisterables()),
     providePrimeNG({
       theme: {
-        preset: Aura
+        preset: Aura,
+        options: {
+          darkModeSelector: false,
+        }
       }
     }), provideHotToastConfig({
       stacking: "depth",
@@ -39,6 +45,15 @@ export const appConfig: ApplicationConfig = {
           borderColor: 'hsl(221, 91%, 93%)',
           color: 'hsl(210, 92%, 45%)',
         }
+      }
+    })
+    ,
+    provideAppInitializer(async () => {
+      const authService = inject(AuthService);
+      try {
+        return await firstValueFrom(authService.checkAuth());
+      } catch {
+        return false;
       }
     })
   ]

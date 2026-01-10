@@ -47,6 +47,7 @@ export class PhotoSelector implements ControlValueAccessor, OnDestroy {
       this.cleanUpObjectURL();
 
       this.image.set(file);
+      
       const preview = URL.createObjectURL(file);
       this.previewUrl.set(preview);
 

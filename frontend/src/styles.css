@@ -22,3 +22,7 @@ input:-webkit-autofill:active {
 .input-error {
   @apply border-2 border-red-500;
 }
+
+button:hover {
+  cursor: pointer;
+}

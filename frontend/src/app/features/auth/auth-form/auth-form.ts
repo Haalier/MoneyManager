@@ -29,7 +29,7 @@ export class AuthForm implements OnInit {
     fullName: [''],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
-    profileImageUrl: ['']
+    profileImage: ['']
 
   });
 
@@ -58,11 +58,12 @@ export class AuthForm implements OnInit {
     this.isLoading = true;
 
     if (this.route === 'signup') {
+      console.log('Submitting signup form with values: ', this.authForm.value);
       this.authService.signup(
         this.authForm.value.fullName!,
         this.authForm.value.email!,
         this.authForm.value.password!,
-        this.authForm.value.profileImageUrl!
+        this.authForm.value.profileImage!
       ).pipe(finalize(() => this.isLoading = false
       ), first()).subscribe({
         next: () => {
@@ -70,6 +71,7 @@ export class AuthForm implements OnInit {
           this.errorMessage.set('');
         },
         error: (err) => {
+          console.error('Signup error: ', err);
           this.errorMessage.set(err.error.message || 'An error occurred. Please try again.');
         }
       });

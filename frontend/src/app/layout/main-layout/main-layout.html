@@ -1,0 +1,13 @@
+<div>
+    <app-menubar />
+
+    @if (user()) {
+    <div class="flex">
+        <div class="max-[1080px]:hidden">
+            <app-sidebar></app-sidebar>
+        </div>
+
+        <div class="grow mx-5">Right side content</div>
+    </div>
+    }
+</div>
