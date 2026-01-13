@@ -4,10 +4,11 @@ import { NgIcon, provideIcons } from "@ng-icons/core";
 import { AuthService } from '../../features/auth/auth-service';
 import { lucideLogOut, lucideMenu, lucideUser, lucideX } from '@ng-icons/lucide';
 import { PopoverModule } from 'primeng/popover';
+import { Sidebar } from "../sidebar/sidebar";
 
 @Component({
   selector: 'app-menubar',
-  imports: [NgIcon, PopoverModule],
+  imports: [NgIcon, PopoverModule, Sidebar],
   templateUrl: './menubar.html',
   styleUrl: './menubar.css',
   viewProviders: [provideIcons({ lucideX, lucideMenu, lucideUser, lucideLogOut })]

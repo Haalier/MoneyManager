@@ -26,3 +26,7 @@ input:-webkit-autofill:active {
 button:hover {
   cursor: pointer;
 }
+
+.btn-add {
+  @apply bg-green-500/20 border rounded-sm border-green-500/30 py-1 px-2 text-sm text-wrap md:text-base md:py-2 md:px-4 text-green-600 hover:bg-green-500/40 transition duration-200;
+}

@@ -8,12 +8,17 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { AuthService } from './features/auth/auth-service';
 import { firstValueFrom } from 'rxjs';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {authInterceptor} from './interceptors/auth-interceptor';
 
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), provideCharts(withDefaultRegisterables()),
+    provideHttpClient(
+      withInterceptors([authInterceptor])
+    ),
     providePrimeNG({
       theme: {
         preset: Aura,

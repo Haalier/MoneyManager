@@ -49,5 +49,9 @@
         </button>
     </div>
 
-    <span>Mobile side menu</span>
+    @if (openSideMenu) {
+    <div class="fixed left-0 right-0 bg-white border-b border-gray-200 lg:hidden z-20 top-18.5">
+        <app-sidebar></app-sidebar>
+    </div>
+    }
 </div>

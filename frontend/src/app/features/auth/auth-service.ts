@@ -32,7 +32,7 @@ export class AuthService {
   public checkAuth(): Observable<boolean> {
     this._isLoading.set(true);
 
-    return this.http.get<User>(`${this.URL}/me`, { withCredentials: true })
+    return this.http.get<User>(`${this.URL}/me`)
       .pipe(
         map((user) => {
           this._user.set(user);
@@ -61,9 +61,7 @@ export class AuthService {
   public signup(fullName: string, email: string, password: string, profileImage: string) {
 
     const signupRequest = (imageUrl?: string) => {
-      return this.http.post<LoginRes>(`${this.URL}/register`, { fullName, email, password, profileImage: imageUrl || profileImage }, {
-        withCredentials: true
-      }).pipe(tap(res => {
+      return this.http.post<LoginRes>(`${this.URL}/register`, { fullName, email, password, profileImage: imageUrl || profileImage }).pipe(tap(res => {
         this._user.set(res.user)
         this.router.navigate(['/dashboard']);
       }), catchError(error => {
@@ -84,9 +82,7 @@ export class AuthService {
 
 
   public login(email: string, password: string) {
-    return this.http.post<LoginRes>(`${this.URL}/login`, { email, password }, {
-      withCredentials: true
-    }).pipe(tap(res => {
+    return this.http.post<LoginRes>(`${this.URL}/login`, { email, password }).pipe(tap(res => {
       this._user.set(res.user)
       this.router.navigate(['/dashboard']);
     }), catchError(error => {
