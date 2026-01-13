@@ -17,6 +17,8 @@ export class FormInput implements ControlValueAccessor {
   @Input() type: string = 'text';
   @Input() placeholder: string = '';
   @Input({ required: true }) id: string = '';
+  @Input() isSelect: boolean = false;
+  @Input() options: { value: string; label: string }[] = [];
 
   value: string = '';
   isDisabled: boolean = false;
@@ -27,15 +29,14 @@ export class FormInput implements ControlValueAccessor {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
-
   }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
-  onChange = (value: string) => { };
-  onTouched = () => { };
+  onChange = (value: string) => {};
+  onTouched = () => {};
 
   writeValue(value: string): void {
     this.value = value || '';

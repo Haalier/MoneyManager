@@ -6,26 +6,43 @@
       <h4 class="text-lg font-semibold">Category Sources</h4>
     </div>
 
-
     @if (categories(); as cat) {
       @if (cat.length > 0) {
         <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           @for (category of categories(); track category.id) {
             <li class="group relative flex items-center gap-4 p-3 rounded-lg hover:bg-gray-100/60">
               <div
-                class="w-12 h-12 flex items-center justify-center text-xl text-gray-800 bg-gray-100 rounded-full">
+                class="w-12 h-12 flex items-center justify-center text-xl text-gray-800 bg-gray-100 rounded-full"
+              >
                 @if (category.icon) {
                   <span class="text-2xl">
-                    <img [src]="category.icon" [alt]="category.name + ' icon'" class="h-5 w-5">
+                    <img [src]="category.icon" [alt]="category.name + ' icon'" class="h-5 w-5"/>
                   </span>
                 } @else {
-                  <ng-icon name="lucideLayers" size="24" class="text-blue-500"/>
+                  <ng-icon name="lucideLayers" size="24" class="text-blue-500!"/>
                 }
               </div>
-              <span>{{ category.name }}</span>
+
+              <div class="flex flex-1 justify-between items-center">
+                <div>
+                  <p class="text-sm text-gray-700 font-medium">
+                    {{ category.name }}
+                  </p>
+                  <p class="text-sm text-gray-400 mt-1 capitalize"
+                     [class.text-green-500]="category.type === CategoryEnum.INCOME"
+                     [class.text-red-500]="category.type === CategoryEnum.EXPENSE">
+                    {{ category.type }}
+                  </p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button (click)="onUpdate()"
+                    class="text-gray-400 hover:text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                    <ng-icon name="lucidePencil" size="18"/>
+                  </button>
+                </div>
+              </div>
             </li>
           }
-
         </ul>
       } @else {
         <p class="text-gray-500">No categories added yet. Add some to get started!</p>

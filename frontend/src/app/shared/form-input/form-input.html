@@ -1,0 +1,44 @@
+<div class="mb-4">
+  <label [for]="id" class="text-[13px] text-slate-800 block mb-1">
+    {{ label }}
+  </label>
+  <div class="relative">
+    @if (isSelect) {
+      <select
+        class="w-full bg-transparent border border-gray-300 rounded-md py-2 px-3 text-gray-700 leading-tight outline-none ring-offset-1 transition duration-200 focus:ring-2"
+        [id]="id"
+        [value]="value"
+        [disabled]="isDisabled"
+        (change)="handleInput($event)"
+        (blur)="onTouched()"
+        [ngClass]="errorMessage ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-blue-500'">
+        <option value="" disabled selected>{{ placeholder || 'Select option' }}</option>
+
+        @for (option of options; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+
+      </select>
+    } @else {
+      <input [type]="type === 'password' && showPassword ? 'text' : type" [id]="id" [value]="value"
+             [disabled]="isDisabled"
+             (input)="handleInput($event)" (blur)="onTouched()" [placeholder]="placeholder"
+             [ngClass]="errorMessage ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-blue-500'"
+             class="w-full text-black border rounded-md px-3 py-2 outline-none ring-offset-1 transition duration-200 focus:ring-2"/>
+    }
+
+    @if (type === "password") {
+      <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer"
+              (click)="togglePasswordVisibility()"
+              [pTooltip]="showPassword ? 'Hide password' : 'Show password'" tooltipPosition="top">
+        <ng-icon [name]="showPassword ? 'lucideEyeOff' : 'lucideEye'"/>
+      </button>
+    }
+  </div>
+  @if (errorMessage) {
+    <p class="mt-1 text-red-500 text-sm font-medium animate-in fade-in slide-in-from-top-1">
+      <span>{{ errorMessage }}</span>
+    </p>
+  }
+
+</div>

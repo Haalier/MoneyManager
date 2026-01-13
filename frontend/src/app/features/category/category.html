@@ -1,11 +1,18 @@
 <div class="my-5 mx-auto">
-    <div class="flex justify-between items-center mb-5">
-        <h2 class="text-2xl font-semibold">All Categories</h2>
-        <button class="btn-add flex items-center gap-1">
-            <ng-icon name="lucidePlus" size="18" />
-            Add Category
-        </button>
-    </div>
+  <div class="flex justify-between items-center mb-5">
+    <h2 class="text-2xl font-semibold">All Categories</h2>
+    <button (click)="onCreateCategory()" class="btn-add flex items-center gap-1">
+      <ng-icon name="lucidePlus" size="18"/>
+      Add Category
+    </button>
+  </div>
 
-    <app-category-list />
+  <app-category-list (updateEvent)="onUpdateEvent()"/>
+
+  <app-modal [(isModalVisible)]="editDialogVisible" [title]="'Update Category'">
+    <app-category-form></app-category-form>
+  </app-modal>
+  <app-modal [(isModalVisible)]="addDialogVisible" [title]="'Add New Category'">
+    <app-category-form></app-category-form>
+  </app-modal>
 </div>

@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+@import "@ctrl/ngx-emoji-mart/picker";
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 @import 'tailwindcss';
 
-@use '@ngexpert/hot-toast/src/styles/styles.scss';
+/*@use '@ngexpert/hot-toast/src/styles/styles.scss';*/
 
 body {
   font-family: 'Outfit', sans-serif;
@@ -10,6 +11,7 @@ body {
   overflow-x: hidden;
   color: #000;
 }
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

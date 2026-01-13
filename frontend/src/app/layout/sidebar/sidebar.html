@@ -17,7 +17,8 @@
                 [class.hover:text-white]="rla.isActive" [class.no-underline!]="rla.isActive">
                 <ng-icon [name]="item.icon" size="20"></ng-icon>
                 <span>{{item.label}}</span>
-                <a [routerLink]="item.path" class="absolute inset-0" routerLinkActive #rla="routerLinkActive"
+                <a [routerLink]="item.path" (click)="onCloseSidebar()" class="absolute inset-0" routerLinkActive
+                   #rla="routerLinkActive"
                     [routerLinkActiveOptions]="{exact: true}"></a>
             </li>
             }

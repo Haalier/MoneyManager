@@ -1,20 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgIcon, provideIcons } from "@ng-icons/core";
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { AuthService } from '../../features/auth/auth-service';
 import { lucideLogOut, lucideMenu, lucideUser, lucideX } from '@ng-icons/lucide';
 import { PopoverModule } from 'primeng/popover';
-import { Sidebar } from "../sidebar/sidebar";
+import { Sidebar } from '../sidebar/sidebar';
 
 @Component({
   selector: 'app-menubar',
   imports: [NgIcon, PopoverModule, Sidebar],
   templateUrl: './menubar.html',
   styleUrl: './menubar.css',
-  viewProviders: [provideIcons({ lucideX, lucideMenu, lucideUser, lucideLogOut })]
+  viewProviders: [provideIcons({ lucideX, lucideMenu, lucideUser, lucideLogOut })],
 })
 export class Menubar implements OnInit {
-
   private router = inject(Router);
   protected openSideMenu = false;
   protected showDropdown = false;
@@ -27,7 +26,7 @@ export class Menubar implements OnInit {
   }
 
   protected toggleDropdown(): void {
-    this.showDropdown = !this.showDropdown
+    this.showDropdown = !this.showDropdown;
   }
 
   protected onLogOut(): void {
@@ -36,7 +35,9 @@ export class Menubar implements OnInit {
 
   ngOnInit(): void {
     console.log('user', this.user);
-
   }
 
+  protected onSidebarClose() {
+    this.openSideMenu = false;
+  }
 }

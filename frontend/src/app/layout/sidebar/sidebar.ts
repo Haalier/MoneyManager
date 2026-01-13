@@ -1,24 +1,32 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { AuthService } from '../../features/auth/auth-service';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { lucideArrowRight, lucideCoins, lucideFunnelPlus, lucideLayoutDashboard, lucideList, lucideUser, lucideWallet } from '@ng-icons/lucide';
-import { RouterLink, RouterLinkActive } from "@angular/router";
+import {
+  lucideArrowRight,
+  lucideCoins,
+  lucideFunnelPlus,
+  lucideLayoutDashboard,
+  lucideList,
+  lucideUser,
+  lucideWallet,
+} from '@ng-icons/lucide';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
-const SIDE_BAR_DATA: { label: string, icon: string, path: string }[] = [
+const SIDE_BAR_DATA: { label: string; icon: string; path: string }[] = [
   {
     label: 'Dashboard',
     icon: 'lucideLayoutDashboard',
-    path: '/dashboard'
+    path: '/dashboard',
   },
   {
     label: 'Category',
     icon: 'lucideList',
-    path: 'category'
+    path: 'category',
   },
   {
     label: 'Income',
     icon: 'lucideWallet',
-    path: 'income'
+    path: 'income',
   },
   {
     label: 'Expense',
@@ -28,20 +36,34 @@ const SIDE_BAR_DATA: { label: string, icon: string, path: string }[] = [
   {
     label: 'Filters',
     icon: 'lucideFunnelPlus',
-    path: 'filter'
-  }
-
-]
+    path: 'filter',
+  },
+];
 
 @Component({
   selector: 'app-sidebar',
   imports: [NgIcon, RouterLink, RouterLinkActive],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
-  viewProviders: [provideIcons({ lucideUser, lucideLayoutDashboard, lucideList, lucideWallet, lucideCoins, lucideFunnelPlus, lucideArrowRight })]
+  viewProviders: [
+    provideIcons({
+      lucideUser,
+      lucideLayoutDashboard,
+      lucideList,
+      lucideWallet,
+      lucideCoins,
+      lucideFunnelPlus,
+      lucideArrowRight,
+    }),
+  ],
 })
 export class Sidebar {
   protected readonly sidebarItems = SIDE_BAR_DATA;
   private readonly authService = inject(AuthService);
   protected readonly user = this.authService.user;
+  closeSidebarEvent = output<void>();
+
+  protected onCloseSidebar() {
+    this.closeSidebarEvent.emit();
+  }
 }
