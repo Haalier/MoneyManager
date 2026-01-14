@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { IncomeService } from './income-service';
 
 @Component({
   selector: 'app-income',
@@ -6,6 +7,8 @@ import { Component } from '@angular/core';
   templateUrl: './income.html',
   styleUrl: './income.css',
 })
-export class Income {
+export class Income implements OnInit {
+  private incomeService = inject(IncomeService);
 
+  ngOnInit() {}
 }

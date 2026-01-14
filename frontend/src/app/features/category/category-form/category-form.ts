@@ -70,7 +70,8 @@ export class CategoryForm {
   protected selectedIcon = toSignal(this.categoryForm.get('icon')!.valueChanges, {
     initialValue: 'dollar',
   });
-  protected isLoading: boolean = false;
+
+  protected isLoading = this.categoryService.isLoading;
 
   protected isDirty = toSignal(
     this.categoryForm.valueChanges.pipe(
@@ -90,7 +91,6 @@ export class CategoryForm {
 
   protected onSubmit() {
     if (this.categoryForm.invalid) return;
-    this.isLoading = true;
     const formData = this.categoryForm.getRawValue();
 
     const request$ =
@@ -101,7 +101,6 @@ export class CategoryForm {
     request$
       .pipe(
         finalize(() => {
-          this.isLoading = false;
           this.formSubmittedEvent.emit();
           this.categoryForm.reset();
         }),

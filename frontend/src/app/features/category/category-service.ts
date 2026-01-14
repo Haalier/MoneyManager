@@ -32,7 +32,9 @@ export class CategoryService {
   }
 
   public addCategory(newCategory: Partial<Category>) {
+    this.isLoadingSignal.set(true);
     return this.http.post<Category>(this.URL, newCategory).pipe(
+      finalize(() => this.isLoadingSignal.set(false)),
       tap((addedCategory) => {
         this.categoriesSignal.update((cats) => [...(cats ?? []), addedCategory]);
       }),
@@ -40,7 +42,9 @@ export class CategoryService {
   }
 
   public updateCategory(categoryId: number, category: Partial<Category>) {
+    this.isLoadingSignal.set(true);
     return this.http.put<Category>(`${this.URL}/${categoryId}`, category).pipe(
+      finalize(() => this.isLoadingSignal.set(false)),
       tap((updatedCategory) => {
         this.categoriesSignal.update((cats) => {
           if (!cats) return [];
