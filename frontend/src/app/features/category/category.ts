@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucidePlus } from '@ng-icons/lucide';
 import { CategoryList } from './category-list/category-list';
 import { Dialog } from 'primeng/dialog';
 import { Modal } from '../../shared/modal/modal';
 import { CategoryForm } from './category-form/category-form';
+import { Category as CategoryModel } from '../../models/category.model';
 
 @Component({
   selector: 'app-category',
@@ -16,8 +17,10 @@ import { CategoryForm } from './category-form/category-form';
 export class Category {
   protected editDialogVisible = false;
   protected addDialogVisible = false;
+  protected categoryData = signal<CategoryModel | null>(null);
 
-  protected onUpdateEvent() {
+  protected onUpdateEvent(category: CategoryModel) {
+    this.categoryData.set(category);
     this.editDialogVisible = true;
   }
 

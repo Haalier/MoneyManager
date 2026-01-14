@@ -33,7 +33,15 @@
   <app-form-input id="type" label="Category Type" placeholder="Select category type" [isSelect]="true"
                   [options]="categoryTypeOptions" formControlName="type"/>
 
-  <button type="submit" class="btn-add block ml-auto">
-    <span>Add category</span>
-  </button>
+  <div class="w-fit ml-auto" [pTooltip]="categoryForm.invalid ? 'Fill up form to submit' :
+  (isEditMode && !isDirty() ?
+  'No changes detected' :
+  '')">
+    <p-button type="submit" [loading]="isLoading" [unstyled]="true" [disabled]="categoryForm.invalid || (isEditMode &&
+  !isDirty())"
+
+              styleClass="disabled:cursor-not-allowed disabled:grayscale-75 disabled:hover:bg-green-600/30 disabled:transition-none bg-green-600/30 hover:bg-green-600/40 text-green-600 font-medium py-2 px-4 rounded-md transition duration-300 flex items-center justify-center gap-2">
+      <span>{{ isEditMode ? 'Update category' : 'Add category' }}</span>
+    </p-button>
+  </div>
 </form>
