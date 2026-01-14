@@ -51,6 +51,10 @@ export class CategoryService {
     );
   }
 
+  public resetCategories() {
+    this.categoriesSignal.set(null);
+  }
+
   public getCategoryByType(categoryType: CategoryEnum) {
     return this.http.get<Category[]>(`${this.URL}/${categoryType}`);
   }

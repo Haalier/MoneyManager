@@ -114,7 +114,8 @@ export class CategoryForm {
           this.toast.success(msg);
         },
         error: (err) => {
-          this.toast.error(err.message);
+          const msg = this.isEditMode ? 'Failed to update category' : 'Failed to update category';
+          this.toast.error(err.response?.data?.message || msg);
         },
       });
   }
