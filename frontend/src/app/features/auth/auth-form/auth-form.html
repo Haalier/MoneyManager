@@ -49,7 +49,7 @@
       }
     </div>
 
-    <p-button type="submit" [loading]="isLoading" [unstyled]="true" [disabled]="authForm.invalid"
+    <p-button type="submit" [loading]="isLoading()" [unstyled]="true" [disabled]="authForm.invalid"
               styleClass="w-full disabled:cursor-not-allowed disabled:bg-blue-600/50 disabled:transition-none bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 uppercase flex items-center justify-center gap-2">
       <span>{{ route === 'signup' ? 'create an account' : 'log in' }}</span>
     </p-button>

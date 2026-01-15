@@ -13,6 +13,7 @@ import { CategoryService } from '../category-service';
 import { finalize, map, startWith } from 'rxjs';
 import { Button } from 'primeng/button';
 import { Category } from '../../../models/category.model';
+import { LoadingService } from '../../../shared/services/loading-service';
 
 @Component({
   selector: 'app-category-form',
@@ -42,14 +43,14 @@ export class CategoryForm {
       this.categoryForm.reset();
     }
   }
-
   private categoryData: Category | null = null;
 
-  protected isEditMode = false;
   private categoryService = inject(CategoryService);
-  formSubmittedEvent = output();
-  private fb = inject(FormBuilder);
   private toast = inject(HotToastService);
+  private fb = inject(FormBuilder);
+  private loadingService = inject(LoadingService);
+  formSubmittedEvent = output();
+  protected isEditMode = false;
   protected categoryTypeOptions = [
     {
       value: 'income',
@@ -71,7 +72,7 @@ export class CategoryForm {
     initialValue: 'dollar',
   });
 
-  protected isLoading = this.categoryService.isLoading;
+  protected isLoading = this.loadingService.isLoading;
 
   protected isDirty = toSignal(
     this.categoryForm.valueChanges.pipe(

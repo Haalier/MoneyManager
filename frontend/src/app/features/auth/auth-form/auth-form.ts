@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormInput } from '../../../shared/form-input/form-input';
 import { ButtonModule } from 'primeng/button';
@@ -8,6 +8,8 @@ import { ErrorMessage } from '../../../shared/error-message/error-message';
 import { finalize, first } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { PhotoSelector } from './photo-selector/photo-selector';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoadingService } from '../../../shared/services/loading-service';
 
 @Component({
   selector: 'app-auth-form',
@@ -19,11 +21,14 @@ export class AuthForm implements OnInit {
   private toast = inject(HotToastService);
   private act = inject(ActivatedRoute);
   private authService = inject(AuthService);
+  private destroyRef = inject(DestroyRef);
+  private fb = inject(FormBuilder);
+  private loadingService = inject(LoadingService);
   protected route = this.act.snapshot.url.map((segment) => segment.path).join('/');
 
-  private fb = inject(FormBuilder);
+  protected isLoading = this.loadingService.isLoading;
+
   protected errorMessage = signal<string>('');
-  protected isLoading: boolean = false;
 
   authForm = this.fb.group({
     fullName: [''],
@@ -42,7 +47,6 @@ export class AuthForm implements OnInit {
     if (this.authForm.invalid) {
       return;
     }
-    this.isLoading = true;
 
     if (this.route === 'signup') {
       console.log('Submitting signup form with values: ', this.authForm.value);
@@ -53,10 +57,7 @@ export class AuthForm implements OnInit {
           this.authForm.value.password!,
           this.authForm.value.profileImage!,
         )
-        .pipe(
-          finalize(() => (this.isLoading = false)),
-          first(),
-        )
+        .pipe(first(), takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: () => {
             this.toast.show('Account created successfully!', {
@@ -72,10 +73,7 @@ export class AuthForm implements OnInit {
     } else {
       this.authService
         .login(this.authForm.value.email!, this.authForm.value.password!)
-        .pipe(
-          finalize(() => (this.isLoading = false)),
-          first(),
-        )
+        .pipe(first(), takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: () => {
             this.toast.success('Logged in successfully!');

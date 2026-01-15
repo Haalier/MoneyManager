@@ -7,6 +7,7 @@ import { lucideLayers, lucidePencil } from '@ng-icons/lucide';
 import { Card } from 'primeng/card';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { Category } from '../../../models/category.model';
+import { LoadingService } from '../../../shared/services/loading-service';
 
 @Component({
   selector: 'app-category-list',
@@ -18,8 +19,9 @@ import { Category } from '../../../models/category.model';
 export class CategoryList implements OnInit {
   protected readonly CategoryEnum = CategoryEnum;
   protected readonly categoryService = inject(CategoryService);
+  private readonly loadingService = inject(LoadingService);
   categories = this.categoryService.categories;
-  loader = this.categoryService.isLoading;
+  loader = this.loadingService.isLoading;
 
   updateEvent = output<Category>();
 
