@@ -8,10 +8,11 @@ import { Card } from 'primeng/card';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { Category } from '../../../models/category.model';
 import { LoadingService } from '../../../shared/services/loading-service';
+import { Tooltip } from "primeng/tooltip";
 
 @Component({
   selector: 'app-category-list',
-  imports: [SpinnerComponent, NgIcon, Card, EmojiComponent],
+  imports: [SpinnerComponent, NgIcon, Card, EmojiComponent, Tooltip],
   templateUrl: './category-list.html',
   styleUrl: './category-list.css',
   viewProviders: [provideIcons({ lucideLayers, lucidePencil })],

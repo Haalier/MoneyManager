@@ -1,8 +1,9 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../../models/category.model';
 import { CategoryEnum } from './CategoryEnum';
-import { finalize, tap } from 'rxjs';
+import { tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ export class CategoryService {
   private readonly http = inject(HttpClient);
   private readonly URL = 'https://moneymanager-1-vrgj.onrender.com/api/v1.0/categories';
   private categoriesSignal = signal<Category[] | null>(null);
+  private destroyRef = inject(DestroyRef);
 
   public categories = this.categoriesSignal.asReadonly();
 
@@ -22,6 +24,7 @@ export class CategoryService {
   private refreshCategories() {
     this.http
       .get<Category[]>(this.URL)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((cat) => {
         this.categoriesSignal.set(cat);
       });
@@ -32,6 +35,7 @@ export class CategoryService {
       tap((addedCategory) => {
         this.categoriesSignal.update((cats) => [...(cats ?? []), addedCategory]);
       }),
+      takeUntilDestroyed(this.destroyRef),
     );
   }
 
@@ -44,6 +48,7 @@ export class CategoryService {
           return cats?.map((cat) => (cat.id === categoryId ? updatedCategory : cat));
         });
       }),
+      takeUntilDestroyed(this.destroyRef),
     );
   }
 
@@ -52,6 +57,8 @@ export class CategoryService {
   }
 
   public getCategoryByType(categoryType: CategoryEnum) {
-    return this.http.get<Category[]>(`${this.URL}/${categoryType}`);
+    return this.http
+      .get<Category[]>(`${this.URL}/${categoryType}`)
+      .pipe(takeUntilDestroyed(this.destroyRef));
   }
 }

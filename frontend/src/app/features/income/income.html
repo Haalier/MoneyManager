@@ -1,9 +1,7 @@
 <div class="my-5 mx-auto">
   <div class="grid grid-cols-1 gap-6">
-    <div>
+    <div></div>
 
-    </div>
-
-    <app-income-list></app-income-list>
+    <app-income-list [transactions]="incomeService.incomes()"></app-income-list>
   </div>
 </div>

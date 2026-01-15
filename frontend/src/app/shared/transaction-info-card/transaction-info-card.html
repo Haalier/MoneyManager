@@ -1,3 +1,54 @@
 <div class="group relative flex items-center gap-4 mt-2 p-3 rounded-lg hover:bg-gray-100/60">
-  <div class="w-12 h-12 flex items-center justify-center text-xl text-gray-800 bg-gray-100 rounded-full"></div>
+  <div
+    [class]="iconStyles()"
+    class="w-12 h-12 flex items-center aspect-square justify-center text-xl text-gray-800 bg-gray-100 rounded-full"
+  >
+    @if (income.icon) {
+      <img [src]="income.icon" [alt]="income.name" title="Income icon" class="w-6 h-6" />
+    } @else {
+      <ng-icon name="lucideUtensilsCrossed" class="text-blue-500!"></ng-icon>
+    }
+  </div>
+
+  <div class="flex flex-1 items-center justify-between">
+    <div>
+      <p
+        #textEl
+        class="text-sm text-gray-700 font-medium truncate"
+        [pTooltip]="isTruncated(textEl) ? income.name : ''"
+        tooltipPosition="top"
+      >
+        {{ income.name }}
+      </p>
+      <p class="text-[10px] uppercase tracking-wider text-gray-500 mt-1">
+        {{ income.date | date: 'dd/MM/yyyy' }}
+      </p>
+    </div>
+
+    <div class="flex items-center gap-2">
+      @if (!hideDeleteButton) {
+        <button
+          type="button"
+          aria-label="Click to delete particular income"
+          class="text-gray-400 hover:text-red-800 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300 flex items-center justify-center"
+          pTooltip="Delete income"
+          tooltipPosition="top"
+        >
+          <ng-icon name="lucideTrash2" size="18"></ng-icon>
+        </button>
+      }
+
+      <div [class]="getComputedStyles()" class="flex items-center gap-2 px-3 py-1.5 rounded-m">
+        <h6 class="text-xs font-medium">
+          {{ type() === CategoryEnum.INCOME ? '+' : '-' }}
+          {{ income.amount | currency: 'PLN' : 'symbol' : '1.2-2' : 'pl' }}
+        </h6>
+        @if (type() === CategoryEnum.INCOME) {
+          <ng-icon name="lucideTrendingUp"></ng-icon>
+        } @else {
+          <ng-icon name="lucideTrendingDown"></ng-icon>
+        }
+      </div>
+    </div>
+  </div>
 </div>

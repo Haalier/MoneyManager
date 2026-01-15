@@ -9,11 +9,8 @@ import { IncomeList } from './income-list/income-list';
   styleUrl: './income.css',
 })
 export class Income implements OnInit {
-  private incomeService = inject(IncomeService);
-  incomes = this.incomeService.incomes;
+  protected incomeService = inject(IncomeService);
   isLoading = this.incomeService.isLoading;
-
-  totals = this.incomeService.totalIncomes;
 
   ngOnInit() {
     this.incomeService.getCurrentMonthIncomes();

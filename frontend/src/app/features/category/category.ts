@@ -2,14 +2,13 @@ import { Component, signal } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucidePlus } from '@ng-icons/lucide';
 import { CategoryList } from './category-list/category-list';
-import { Dialog } from 'primeng/dialog';
 import { Modal } from '../../shared/modal/modal';
 import { CategoryForm } from './category-form/category-form';
 import { Category as CategoryModel } from '../../models/category.model';
 
 @Component({
   selector: 'app-category',
-  imports: [NgIcon, CategoryList, Dialog, Modal, CategoryForm],
+  imports: [NgIcon, CategoryList, Modal, CategoryForm],
   templateUrl: './category.html',
   styleUrl: './category.css',
   viewProviders: [provideIcons({ lucidePlus })],
