@@ -14,6 +14,7 @@ import { finalize, map, startWith } from 'rxjs';
 import { Button } from 'primeng/button';
 import { Category } from '../../../models/category.model';
 import { LoadingService } from '../../../shared/services/loading-service';
+import { FormSelect } from "../../../shared/form-select/form-select";
 
 @Component({
   selector: 'app-category-form',
@@ -26,7 +27,8 @@ import { LoadingService } from '../../../shared/services/loading-service';
     Popover,
     Tooltip,
     Button,
-  ],
+    FormSelect
+],
   templateUrl: './category-form.html',
   styleUrl: './category-form.css',
   viewProviders: [provideIcons({ lucidePlus })],

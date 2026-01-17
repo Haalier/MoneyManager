@@ -18,9 +18,16 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
       @if (transactions; as incomes) {
-        @for (income of incomes; track income.id) {
-          <app-transaction-info-card [income]="income" type="income"></app-transaction-info-card>
-        } @empty {}
+        @for (income of incomes; track income.id; let i = $index) {
+          <app-transaction-info-card
+            [income]="income"
+            type="income"
+            [style.--index]="i"
+            animate.enter="slide-in"
+          ></app-transaction-info-card>
+        } @empty {
+          <p class="text-gray-500">No incomes added yet. Add some to get started!</p>
+        }
       }
     </div>
   }

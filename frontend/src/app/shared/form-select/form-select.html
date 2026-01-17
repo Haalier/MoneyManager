@@ -1,0 +1,29 @@
+<div class="mb-4">
+  <label [for]="id()" class="text-[13px] text-slate-800 block mb-1">
+    {{ label() }}
+  </label>
+  <div class="relative">
+    <select
+      class="w-full bg-transparent border border-gray-300 rounded-md py-2 px-3 text-gray-700 leading-tight outline-none ring-offset-1 transition duration-200 focus:ring-2"
+      [id]="id()"
+      [value]="value"
+      [disabled]="isDisabled"
+      (change)="handleInput($event)"
+      (blur)="onTouched()"
+      [ngClass]="
+        errorMessage ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-blue-500'
+      "
+    >
+      <option value="" disabled selected>{{ placeholder() || 'Select option' }}</option>
+
+      @for (option of options(); track getOptionValue(option)) {
+        <option [value]="getOptionValue(option)">{{ getOptionLabel(option) }}</option>
+      }
+    </select>
+  </div>
+  @if (errorMessage) {
+    <p class="mt-1 text-red-500 text-sm font-medium animate-in fade-in slide-in-from-top-1">
+      <span>{{ errorMessage }}</span>
+    </p>
+  }
+</div>

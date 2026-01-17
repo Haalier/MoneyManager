@@ -1,7 +1,20 @@
 <div class="my-5 mx-auto">
   <div class="grid grid-cols-1 gap-6">
-    <div></div>
+    <div class="flex">
+      <button type="button" class="btn-add ml-auto" (click)="onDialogToggle()">
+        <ng-icon name="lucidePlus" size="18" />
+        Add income
+      </button>
+    </div>
 
     <app-income-list [transactions]="incomeService.incomes()"></app-income-list>
+
+    <app-modal [(isModalVisible)]="addDialogVisible" [title]="'Add New Income'">
+      @if (incomeCategories().length > 0) {
+        <app-income-form [categories]="incomeCategories()"></app-income-form>
+      } @else {
+       <app-spinner></app-spinner>
+      }
+    </app-modal>
   </div>
 </div>

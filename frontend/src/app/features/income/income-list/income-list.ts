@@ -5,7 +5,7 @@ import { lucideMail, lucideDownload } from '@ng-icons/lucide';
 import { SpinnerComponent } from '../../../shared/spinner/spinner';
 import { LoadingService } from '../../../shared/services/loading-service';
 import { Income } from '../../../models/income.model';
-import { TransactionInfoCard } from "../../../shared/transaction-info-card/transaction-info-card";
+import { TransactionInfoCard } from '../../../shared/transaction-info-card/transaction-info-card';
 
 @Component({
   selector: 'app-income-list',

@@ -33,21 +33,20 @@
     ></emoji-mart>
   </p-popover>
 
-  <app-form-input
+  <app-input
     id="name"
     label="Category Name"
     placeholder="e.g., Salary, Groceries, Bonus"
     formControlName="name"
   />
 
-  <app-form-input
+  <app-select
     id="type"
     label="Category Type"
     placeholder="Select category type"
-    [isSelect]="true"
     [options]="categoryTypeOptions"
     formControlName="type"
-  />
+  ></app-select>
 
   <div
     class="w-fit ml-auto"

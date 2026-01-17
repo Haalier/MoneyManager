@@ -1,0 +1,28 @@
+<form class="p4" [formGroup]="incomeForm">
+  <app-input
+    id="name"
+    label="Income Name"
+    placeholder="eg., Mid year bonus, salary..."
+    formControlName="name"
+  >
+  </app-input>
+
+  <app-select
+    id="categoryId"
+    label="Income Categories"
+    placeholder=""
+    [options]="categories()"
+    formControlName="categoryId"
+    bindLabel="name"
+    bindValue="id"
+  ></app-select>
+
+  <app-input
+    id="amount"
+    label="Income amount"
+    [placeholder]="('1000' | currency: 'PLN' : 'symbol' : '1.2-2' : 'pl') ?? '$1000'"
+    formControlName="amount"
+  ></app-input>
+
+  <app-input id="date" label="Income date" type="date" formControlName="date"></app-input>
+</form>

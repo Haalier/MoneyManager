@@ -139,6 +139,7 @@ public class ProfileService {
                     .path("/")
                     .maxAge(60 * 60 * 24)
                     .sameSite("None")
+                    .partitioned(true)
                     .build();
 
             ProfileDTO user = getPublicProfile(authDTO.getEmail());

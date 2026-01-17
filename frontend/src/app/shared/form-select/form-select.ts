@@ -1,22 +1,20 @@
-import { NgIcon, provideIcons } from '@ng-icons/core';
-import { Component, Input, Optional, Self } from '@angular/core';
-import { lucideEye, lucideEyeOff } from '@ng-icons/lucide';
-import { TooltipModule } from 'primeng/tooltip';
+import { Component, input, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { NgClass } from '@angular/common';
 
 @Component({
-  selector: 'app-input',
-  imports: [NgIcon, TooltipModule, NgClass],
-  templateUrl: './form-input.html',
-  styleUrl: './form-input.css',
-  viewProviders: [provideIcons({ lucideEye, lucideEyeOff })],
+  selector: 'app-select',
+  imports: [NgClass],
+  templateUrl: './form-select.html',
+  styleUrl: './form-select.css',
 })
-export class FormInput implements ControlValueAccessor {
-  @Input({ required: true }) label: string = '';
-  @Input() type: string = 'text';
-  @Input() placeholder: string = '';
-  @Input({ required: true }) id: string = '';
+export class FormSelect<T> implements ControlValueAccessor {
+  label = input.required<string>();
+  id = input.required<string>();
+  placeholder = input<string>();
+  options = input.required<T[]>();
+  bindLabel = input<keyof T | string>('label');
+  bindValue = input<keyof T | string>('value');
 
   constructor(@Optional() @Self() public ngControl: NgControl) {
     if (this.ngControl) {
@@ -24,14 +22,18 @@ export class FormInput implements ControlValueAccessor {
     }
   }
 
+  getOptionLabel(option: T): string {
+    const key = this.bindLabel() as keyof T;
+    return String(option[key]) || '';
+  }
+
+  getOptionValue(option: T): any {
+    const key = this.bindLabel() as keyof T;
+    return option[key];
+  }
+
   value: string = '';
   isDisabled: boolean = false;
-
-  showPassword: boolean = false;
-
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
-  }
 
   onChange = (value: string) => {};
   onTouched = () => {};
@@ -53,7 +55,7 @@ export class FormInput implements ControlValueAccessor {
   }
 
   handleInput(event: Event): void {
-    const val = (event.target as HTMLInputElement).value;
+    const val = (event.target as HTMLSelectElement).value;
     this.value = val;
     this.onChange(val);
   }

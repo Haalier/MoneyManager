@@ -22,18 +22,18 @@
     }
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       @if (route === "signup") {
-        <app-form-input label="Full Name" id="fullName" formControlName="fullName"
-                        placeholder="John Doe"></app-form-input>
+        <app-input label="Full Name" id="fullName" formControlName="fullName"
+                        placeholder="John Doe"></app-input>
       }
 
       @if (route === "signup") {
-        <app-form-input label="Email Address" id="email" type="email" formControlName="email"
-                        placeholder="test@example.com"></app-form-input>
+        <app-input label="Email Address" id="email" type="email" formControlName="email"
+                        placeholder="test@example.com"></app-input>
 
       } @else {
         <div class="col-span-2">
-          <app-form-input label="Email Address" id="email" type="email" formControlName="email"
-                          placeholder="test@example.com"></app-form-input>
+          <app-input label="Email Address" id="email" type="email" formControlName="email"
+                          placeholder="test@example.com"></app-input>
         </div>
 
       }
@@ -41,8 +41,8 @@
 
 
       <div [class]="route === 'signup' ? 'col-span-1' : 'col-span-2'">
-        <app-form-input label="Password" id="password" type="password" formControlName="password"
-                        placeholder="********"></app-form-input>
+        <app-input label="Password" id="password" type="password" formControlName="password"
+                        placeholder="********"></app-input>
       </div>
       @if (errorMessage()) {
         <app-error-message [errorMessage]="errorMessage()"/>
