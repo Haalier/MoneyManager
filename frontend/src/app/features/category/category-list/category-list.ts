@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { CategoryService } from '../category-service';
 import { CategoryEnum } from '../CategoryEnum';
 import { SpinnerComponent } from '../../../shared/spinner/spinner';
@@ -17,18 +17,13 @@ import { Tooltip } from 'primeng/tooltip';
   styleUrl: './category-list.css',
   viewProviders: [provideIcons({ lucideLayers, lucidePencil })],
 })
-export class CategoryList implements OnInit {
+export class CategoryList {
+  categories = input<Category[] | null>(null);
   protected readonly CategoryEnum = CategoryEnum;
-  protected readonly categoryService = inject(CategoryService);
   private readonly loadingService = inject(LoadingService);
-  categories = this.categoryService.categories;
   loader = this.loadingService.isLoading;
 
   updateEvent = output<Category>();
-
-  ngOnInit() {
-    this.categoryService.getCategories();
-  }
 
   onUpdate(category: Category) {
     this.updateEvent.emit(category);

@@ -1,4 +1,4 @@
-import { DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { DestroyRef, inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../../models/category.model';
 import { CategoryEnum } from './CategoryEnum';
@@ -11,29 +11,36 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class CategoryService {
   private readonly http = inject(HttpClient);
   private readonly URL = 'https://moneymanager-1-vrgj.onrender.com/api/v1.0/categories';
-  private categoriesSignal = signal<Category[] | null>(null);
   private destroyRef = inject(DestroyRef);
 
-  public categories = this.categoriesSignal.asReadonly();
+  private allCategoriesSignal = signal<Category[] | null>(null);
 
-  public getCategories() {
-    if (this.categoriesSignal() !== null) return;
-    this.refreshCategories();
-  }
+  private categoriesByTypeCache = new Map<CategoryEnum, WritableSignal<Category[]>>();
 
-  private refreshCategories() {
-    this.http
-      .get<Category[]>(this.URL)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((cat) => {
-        this.categoriesSignal.set(cat);
-      });
+  public getAllCategories() {
+    if (this.allCategoriesSignal() === null) {
+      this.allCategoriesSignal.set([]);
+      this.http
+        .get<Category[]>(this.URL)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe((cats) => {
+          this.allCategoriesSignal.set(cats);
+        });
+    }
+
+    return this.allCategoriesSignal.asReadonly();
   }
 
   public addCategory(newCategory: Partial<Category>) {
     return this.http.post<Category>(this.URL, newCategory).pipe(
       tap((addedCategory) => {
-        this.categoriesSignal.update((cats) => [...(cats ?? []), addedCategory]);
+        const type = addedCategory.type as CategoryEnum;
+        if (this.categoriesByTypeCache.has(type)) {
+          this.categoriesByTypeCache.get(type)?.update((cats) => [...cats, addedCategory]);
+        }
+        if (this.allCategoriesSignal() !== null) {
+          this.allCategoriesSignal.update((cats) => [...(cats ?? []), addedCategory]);
+        }
       }),
       takeUntilDestroyed(this.destroyRef),
     );
@@ -42,7 +49,7 @@ export class CategoryService {
   public updateCategory(categoryId: number, category: Partial<Category>) {
     return this.http.put<Category>(`${this.URL}/${categoryId}`, category).pipe(
       tap((updatedCategory) => {
-        this.categoriesSignal.update((cats) => {
+        this.allCategoriesSignal.update((cats) => {
           if (!cats) return [];
 
           return cats?.map((cat) => (cat.id === categoryId ? updatedCategory : cat));
@@ -53,14 +60,24 @@ export class CategoryService {
   }
 
   public resetCategories() {
-    this.categoriesSignal.set(null);
+    this.allCategoriesSignal.set(null);
   }
 
-  public getCategoryByType(categoryType: CategoryEnum) {
-    console.log('xd');
+  public getCategoryByType(type: CategoryEnum) {
+    if (!this.categoriesByTypeCache.has(type)) {
+      this.categoriesByTypeCache.set(type, signal<Category[]>([]));
+      this.refreshCategoriesByType(type);
+    }
 
-    return this.http
-      .get<Category[]>(`${this.URL}/${categoryType}`)
-      .pipe(takeUntilDestroyed(this.destroyRef));
+    return this.categoriesByTypeCache.get(type)!.asReadonly();
+  }
+
+  private refreshCategoriesByType(type: CategoryEnum): void {
+    this.http
+      .get<Category[]>(`${this.URL}/${type}`)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => {
+        this.categoriesByTypeCache.get(type)?.set(data);
+      });
   }
 }

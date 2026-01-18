@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { IncomeService } from './income-service';
 import { IncomeList } from './income-list/income-list';
 import { Modal } from '../../shared/modal/modal';
@@ -9,6 +9,7 @@ import { CategoryService } from '../category/category-service';
 import { CategoryEnum } from '../category/CategoryEnum';
 import { IncomeForm } from './income-form/income-form';
 import { SpinnerComponent } from '../../shared/spinner/spinner';
+import { LoadingService } from '../../shared/services/loading-service';
 
 @Component({
   selector: 'app-income',
@@ -17,19 +18,15 @@ import { SpinnerComponent } from '../../shared/spinner/spinner';
   styleUrl: './income.css',
   viewProviders: [provideIcons({ lucidePlus })],
 })
-export class Income implements OnInit {
+export class Income {
   private TYPE = CategoryEnum.INCOME;
   protected incomeService = inject(IncomeService);
   private categoryService = inject(CategoryService);
-  isLoading = this.incomeService.isLoading;
+  private loadingService = inject(LoadingService);
+  isLoading = this;
   addDialogVisible = signal<boolean>(false);
-  protected incomeCategories = toSignal(this.categoryService.getCategoryByType(this.TYPE), {
-    initialValue: [],
-  });
-
-  ngOnInit() {
-    this.incomeService.getCurrentMonthIncomes();
-  }
+  protected incomeCategories = this.categoryService.getCategoryByType(this.TYPE);
+  protected transactions = this.incomeService.getCurrentMonthIncomes();
 
   protected onDialogToggle(): void {
     this.addDialogVisible.set(true);

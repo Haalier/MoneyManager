@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, input, Input, OnInit } from '@angular/core';
 import { Card } from 'primeng/card';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideMail, lucideDownload } from '@ng-icons/lucide';
@@ -15,8 +15,7 @@ import { TransactionInfoCard } from '../../../shared/transaction-info-card/trans
   viewProviders: [provideIcons({ lucideMail, lucideDownload })],
 })
 export class IncomeList {
-  @Input()
-  transactions: Income[] | null = null;
+  transactions = input<Income[] | null>();
 
   private readonly loadingService = inject(LoadingService);
   protected readonly loader = this.loadingService.isLoading;

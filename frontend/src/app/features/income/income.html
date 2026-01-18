@@ -7,11 +7,11 @@
       </button>
     </div>
 
-    <app-income-list [transactions]="incomeService.incomes()"></app-income-list>
+    <app-income-list [transactions]="transactions()"></app-income-list>
 
     <app-modal [(isModalVisible)]="addDialogVisible" title="Add New Income">
       @if (addDialogVisible()) {
-        @if (incomeCategories().length > 0) {
+        @if (incomeCategories()) {
           <app-income-form [categories]="incomeCategories()"></app-income-form>
         } @else {
           <app-spinner></app-spinner>
