@@ -8,7 +8,7 @@ import { Card } from 'primeng/card';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { Category } from '../../../models/category.model';
 import { LoadingService } from '../../../shared/services/loading-service';
-import { Tooltip } from "primeng/tooltip";
+import { Tooltip } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-category-list',

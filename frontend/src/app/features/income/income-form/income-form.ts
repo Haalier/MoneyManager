@@ -9,16 +9,28 @@ import { Category } from '../../../models/category.model';
 import { FormInput } from '../../../shared/form-input/form-input';
 import { FormSelect } from '../../../shared/form-select/form-select';
 import { CurrencyPipe } from '@angular/common';
+import { Button } from 'primeng/button';
+import { LoadingService } from '../../../shared/services/loading-service';
 
 @Component({
   selector: 'app-income-form',
-  imports: [ɵInternalFormsSharedModule, ReactiveFormsModule, FormInput, FormSelect, CurrencyPipe],
+  imports: [
+    ɵInternalFormsSharedModule,
+    ReactiveFormsModule,
+    FormInput,
+    FormSelect,
+    CurrencyPipe,
+    Button,
+  ],
   templateUrl: './income-form.html',
   styleUrl: './income-form.css',
 })
 export class IncomeForm implements OnInit {
   categories = input.required<Category[]>();
   private fb = inject(FormBuilder);
+  private loadingService = inject(LoadingService);
+
+  protected isLoading = this.loadingService.isLoading;
 
   protected incomeForm = this.fb.group({
     name: this.fb.control('', { validators: [Validators.required], nonNullable: true }),
@@ -38,6 +50,5 @@ export class IncomeForm implements OnInit {
     if (cats?.length > 0 && !this.incomeForm.controls.categoryId.value) {
       this.incomeForm.patchValue({ categoryId: cats[0].id });
     }
-    console.log(cats);
   }
 }

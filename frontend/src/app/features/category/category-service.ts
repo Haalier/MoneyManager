@@ -57,6 +57,8 @@ export class CategoryService {
   }
 
   public getCategoryByType(categoryType: CategoryEnum) {
+    console.log('xd');
+
     return this.http
       .get<Category[]>(`${this.URL}/${categoryType}`)
       .pipe(takeUntilDestroyed(this.destroyRef));

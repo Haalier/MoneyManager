@@ -25,4 +25,14 @@
   ></app-input>
 
   <app-input id="date" label="Income date" type="date" formControlName="date"></app-input>
+
+  <p-button
+    type="submit"
+    [loading]="isLoading()"
+    [unstyled]="true"
+    [disabled]="incomeForm.invalid"
+    styleClass="disabled:cursor-not-allowed disabled:grayscale-75 disabled:hover:bg-green-600/30 disabled:transition-none bg-green-600/30 hover:bg-green-600/40 text-green-600 font-medium py-2 px-4 rounded-md transition duration-300 flex items-center justify-center gap-2"
+  >
+    <span>Add income</span>
+  </p-button>
 </form>
