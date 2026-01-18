@@ -11,12 +11,12 @@
 
   <app-modal [(isModalVisible)]="editDialogVisible" [title]="'Update Category'">
     <app-category-form
-      (formSubmittedEvent)="editDialogVisible = false"
+      (submitForm)="onFormSubmitted($event)"
       [category]="categoryData()"
     ></app-category-form>
   </app-modal>
 
   <app-modal [(isModalVisible)]="addDialogVisible" [title]="'Add New Category'">
-    <app-category-form (formSubmittedEvent)="addDialogVisible = false"></app-category-form>
+    <app-category-form (submitForm)="onFormSubmitted($event)"></app-category-form>
   </app-modal>
 </div>

@@ -24,7 +24,7 @@ export class FormInput implements ControlValueAccessor {
     }
   }
 
-  value: string = '';
+  value: any;
   isDisabled: boolean = false;
 
   showPassword: boolean = false;
@@ -33,10 +33,10 @@ export class FormInput implements ControlValueAccessor {
     this.showPassword = !this.showPassword;
   }
 
-  onChange = (value: string) => {};
+  onChange = (value: any) => {};
   onTouched = () => {};
 
-  writeValue(value: string): void {
+  writeValue(value: any): void {
     this.value = value || '';
   }
 
@@ -53,9 +53,28 @@ export class FormInput implements ControlValueAccessor {
   }
 
   handleInput(event: Event): void {
-    const val = (event.target as HTMLInputElement).value;
-    this.value = val;
-    this.onChange(val);
+    const target = event.target as HTMLInputElement;
+    let val: any = target.value;
+
+    if (this.type === 'number') {
+      val = target.value.replace(/[^0-9]/g, '');
+      target.value = val;
+
+      const numericValue = parseFloat(val);
+
+      if (val === '') {
+        this.value = val;
+        this.onChange(null);
+      } else if (!isNaN(numericValue)) {
+        this.value = val;
+        this.onChange(numericValue);
+      } else {
+        return;
+      }
+    } else {
+      this.value = target.value;
+      this.onChange(val);
+    }
   }
 
   get errorMessage(): string | null {

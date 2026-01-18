@@ -4,6 +4,7 @@ import { Category } from '../../models/category.model';
 import { CategoryEnum } from './CategoryEnum';
 import { tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CategoryDTO } from '../../models/DTO/category.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,7 @@ export class CategoryService {
     return this.allCategoriesSignal.asReadonly();
   }
 
-  public addCategory(newCategory: Partial<Category>) {
+  public addCategory(newCategory: CategoryDTO) {
     return this.http.post<Category>(this.URL, newCategory).pipe(
       tap((addedCategory) => {
         const type = addedCategory.type as CategoryEnum;
@@ -46,7 +47,7 @@ export class CategoryService {
     );
   }
 
-  public updateCategory(categoryId: number, category: Partial<Category>) {
+  public updateCategory(categoryId: number, category: CategoryDTO) {
     return this.http.put<Category>(`${this.URL}/${categoryId}`, category).pipe(
       tap((updatedCategory) => {
         this.allCategoriesSignal.update((cats) => {

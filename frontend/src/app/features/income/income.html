@@ -10,12 +10,13 @@
     <app-income-list [transactions]="transactions()"></app-income-list>
 
     <app-modal [(isModalVisible)]="addDialogVisible" title="Add New Income">
-      @if (addDialogVisible()) {
-        @if (incomeCategories()) {
-          <app-income-form [categories]="incomeCategories()"></app-income-form>
-        } @else {
-          <app-spinner></app-spinner>
-        }
+      @if (incomeCategories()) {
+        <app-income-form
+          [categories]="incomeCategories()"
+          (save)="onSubmitForm($event)"
+        ></app-income-form>
+      } @else {
+        <app-spinner></app-spinner>
       }
     </app-modal>
   </div>

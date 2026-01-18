@@ -10,6 +10,7 @@ import { CategoryEnum } from '../category/CategoryEnum';
 import { IncomeForm } from './income-form/income-form';
 import { SpinnerComponent } from '../../shared/spinner/spinner';
 import { LoadingService } from '../../shared/services/loading-service';
+import { IncomeDTO } from '../../models/DTO/income.dto';
 
 @Component({
   selector: 'app-income',
@@ -23,12 +24,18 @@ export class Income {
   protected incomeService = inject(IncomeService);
   private categoryService = inject(CategoryService);
   private loadingService = inject(LoadingService);
-  isLoading = this;
+  isLoading = this.loadingService;
   addDialogVisible = signal<boolean>(false);
   protected incomeCategories = this.categoryService.getCategoryByType(this.TYPE);
   protected transactions = this.incomeService.getCurrentMonthIncomes();
 
   protected onDialogToggle(): void {
     this.addDialogVisible.set(true);
+  }
+
+  onSubmitForm(event: IncomeDTO) {
+    this.incomeService.addIncome(event).subscribe({
+      next: () => this.addDialogVisible.set(false),
+    });
   }
 }

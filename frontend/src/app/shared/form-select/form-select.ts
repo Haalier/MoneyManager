@@ -28,11 +28,11 @@ export class FormSelect<T> implements ControlValueAccessor {
   }
 
   getOptionValue(option: T): any {
-    const key = this.bindLabel() as keyof T;
+    const key = this.bindValue() as keyof T;
     return option[key];
   }
 
-  value: string = '';
+  value: any;
   isDisabled: boolean = false;
 
   onChange = (value: string) => {};
@@ -69,11 +69,11 @@ export class FormSelect<T> implements ControlValueAccessor {
 
     const errors = control.errors;
 
-    if (errors['required']) return `${this.label} is required.`;
+    if (errors['required']) return `${this.label()} is required.`;
     if (errors['email']) return `Please enter a valid email address.`;
     if (errors['minlength']) {
       const requiredLength = errors['minlength'].requiredLength;
-      return `${this.label} must be at least ${requiredLength} characters long.`;
+      return `${this.label()} must be at least ${requiredLength} characters long.`;
     }
     if (errors['pattern']) return `Invalid format.`;
 

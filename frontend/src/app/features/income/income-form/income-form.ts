@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, output } from '@angular/core';
 import {
   FormBuilder,
   Validators,
@@ -11,6 +11,7 @@ import { FormSelect } from '../../../shared/form-select/form-select';
 import { CurrencyPipe } from '@angular/common';
 import { Button } from 'primeng/button';
 import { LoadingService } from '../../../shared/services/loading-service';
+import { IncomeDTO } from '../../../models/DTO/income.dto';
 
 @Component({
   selector: 'app-income-form',
@@ -26,6 +27,7 @@ import { LoadingService } from '../../../shared/services/loading-service';
   styleUrl: './income-form.css',
 })
 export class IncomeForm implements OnInit {
+  save = output<IncomeDTO>();
   categories = input.required<Category[]>();
   private fb = inject(FormBuilder);
   private loadingService = inject(LoadingService);
@@ -35,7 +37,7 @@ export class IncomeForm implements OnInit {
   protected incomeForm = this.fb.group({
     name: this.fb.control('', { validators: [Validators.required], nonNullable: true }),
     categoryId: this.fb.control(0, {
-      validators: [Validators.required, Validators.min(0)],
+      validators: [Validators.required, Validators.min(0), Validators.pattern(/^\d+(\.\d{1,2})?$/)],
       nonNullable: true,
     }),
     amount: this.fb.control(0, {
@@ -50,5 +52,11 @@ export class IncomeForm implements OnInit {
     if (cats?.length > 0 && !this.incomeForm.controls.categoryId.value) {
       this.incomeForm.patchValue({ categoryId: cats[0].id });
     }
+  }
+
+  protected onSubmit() {
+    if (this.incomeForm.invalid) return;
+    const incomeData = this.incomeForm.getRawValue();
+    this.save.emit(incomeData);
   }
 }

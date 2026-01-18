@@ -1,4 +1,4 @@
-<form class="p-4" [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+<form class="p-4" [formGroup]="categoryForm" (ngSubmit)="onSubmitForm()">
   <div
     class="flex items-center gap-4 mb-3 rounded-xl w-fit transition-all hover:border-blue-300 group"
   >
@@ -53,7 +53,7 @@
     [pTooltip]="
       categoryForm.invalid
         ? 'Fill up form to submit'
-        : isEditMode && !isDirty()
+        : isEditMode() && !isDirty()
           ? 'No changes detected'
           : ''
     "
@@ -62,10 +62,10 @@
       type="submit"
       [loading]="isLoading()"
       [unstyled]="true"
-      [disabled]="categoryForm.invalid || (isEditMode && !isDirty())"
+      [disabled]="categoryForm.invalid || (isEditMode() && !isDirty())"
       styleClass="disabled:cursor-not-allowed disabled:grayscale-75 disabled:hover:bg-green-600/30 disabled:transition-none bg-green-600/30 hover:bg-green-600/40 text-green-600 font-medium py-2 px-4 rounded-md transition duration-300 flex items-center justify-center gap-2"
     >
-      <span>{{ isEditMode ? 'Update category' : 'Add category' }}</span>
+      <span>{{ isEditMode() ? 'Update category' : 'Add category' }}</span>
     </p-button>
   </div>
 </form>

@@ -1,4 +1,13 @@
-import { Component, inject, Input, output, ViewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  Input,
+  output,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormInput } from '../../../shared/form-input/form-input';
 import { PickerComponent } from '@ctrl/ngx-emoji-mart';
@@ -15,6 +24,7 @@ import { Button } from 'primeng/button';
 import { Category } from '../../../models/category.model';
 import { LoadingService } from '../../../shared/services/loading-service';
 import { FormSelect } from '../../../shared/form-select/form-select';
+import { CategoryDTO } from '../../../models/DTO/category.dto';
 
 @Component({
   selector: 'app-category-form',
@@ -35,24 +45,14 @@ import { FormSelect } from '../../../shared/form-select/form-select';
 })
 export class CategoryForm {
   @ViewChild('op') emojiPopover!: Popover;
-  @Input() set category(data: Category | null) {
-    if (data) {
-      this.isEditMode = true;
-      this.categoryForm.patchValue(data);
-      this.categoryData = data;
-    } else {
-      this.isEditMode = false;
-      this.categoryForm.reset();
-    }
-  }
-  private categoryData: Category | null = null;
 
-  private categoryService = inject(CategoryService);
-  private toast = inject(HotToastService);
+  category = input<Category | null>(null);
+  submitForm = output<{ isEditMode: boolean; newCategory: CategoryDTO }>();
+  protected isEditMode = computed(() => !!this.category());
+
   private fb = inject(FormBuilder);
   private loadingService = inject(LoadingService);
-  formSubmittedEvent = output();
-  protected isEditMode = false;
+
   protected categoryTypeOptions = [
     {
       value: 'income',
@@ -76,53 +76,38 @@ export class CategoryForm {
 
   protected isLoading = this.loadingService.isLoading;
 
-  protected isDirty = toSignal(
-    this.categoryForm.valueChanges.pipe(
-      map(() => {
-        if (!this.isEditMode || !this.categoryData) return false;
-        const raw = this.categoryForm.getRawValue();
-        return (
-          raw.name !== this.categoryData.name ||
-          raw.type !== this.categoryData.type ||
-          raw.icon !== this.categoryData.icon
-        );
-      }),
-      startWith(false),
-    ),
-    { initialValue: false },
-  );
+  private formValueSignal = toSignal(this.categoryForm.valueChanges, {
+    initialValue: this.categoryForm.getRawValue(),
+  });
 
-  protected onSubmit() {
-    console.log(this.categoryForm.value);
+  protected isDirty = computed(() => {
+    const initialData = this.category();
+    if (!initialData) return false;
 
+    const currentForm = this.formValueSignal();
+
+    return (
+      currentForm.name !== initialData.name ||
+      currentForm.type !== initialData.type ||
+      currentForm.icon !== initialData.icon
+    );
+  });
+
+  constructor() {
+    effect(() => {
+      const data = this.category();
+      if (data) {
+        this.categoryForm.patchValue(data);
+      } else {
+        this.categoryForm.reset({ icon: 'dollar' });
+      }
+    });
+  }
+
+  protected onSubmitForm() {
     if (this.categoryForm.invalid) return;
-    const type = (this.categoryForm.get('type')?.value as string).toLowerCase();
-    const formData = { ...this.categoryForm.getRawValue(), type };
-
-    const request$ =
-      this.isEditMode && this.categoryData?.id
-        ? this.categoryService.updateCategory(this.categoryData.id, formData)
-        : this.categoryService.addCategory(formData);
-
-    request$
-      .pipe(
-        finalize(() => {
-          this.formSubmittedEvent.emit();
-          this.categoryForm.reset();
-        }),
-      )
-      .subscribe({
-        next: () => {
-          const msg = this.isEditMode
-            ? 'Category successfully updated!'
-            : 'Category successfully added!';
-          this.toast.success(msg);
-        },
-        error: (err) => {
-          const msg = this.isEditMode ? 'Failed to update category' : 'Failed to update category';
-          this.toast.error(err.response?.data?.message || msg);
-        },
-      });
+    const formData = this.categoryForm.getRawValue() as CategoryDTO;
+    this.submitForm.emit({ isEditMode: this.isEditMode(), newCategory: formData });
   }
 
   protected addEmoji(event: any) {

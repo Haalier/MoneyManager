@@ -1,4 +1,4 @@
-<form class="p4" [formGroup]="incomeForm">
+<form class="p4" [formGroup]="incomeForm" (ngSubmit)="onSubmit()">
   <app-input
     id="name"
     label="Income Name"
@@ -20,6 +20,7 @@
   <app-input
     id="amount"
     label="Income amount"
+    type="number"
     [placeholder]="('1000' | currency: 'PLN' : 'symbol' : '1.2-2' : 'pl') ?? '$1000'"
     formControlName="amount"
   ></app-input>
