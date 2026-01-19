@@ -1,13 +1,15 @@
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { Component, Input, Optional, Self } from '@angular/core';
+import { Component, inject, Input, Optional, Self } from '@angular/core';
 import { lucideEye, lucideEyeOff } from '@ng-icons/lucide';
 import { TooltipModule } from 'primeng/tooltip';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { TranslateService, _ } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-input',
-  imports: [NgIcon, TooltipModule, NgClass],
+  imports: [NgIcon, TooltipModule, NgClass, TranslatePipe],
   templateUrl: './form-input.html',
   styleUrl: './form-input.css',
   viewProviders: [provideIcons({ lucideEye, lucideEyeOff })],
@@ -17,6 +19,7 @@ export class FormInput implements ControlValueAccessor {
   @Input() type: string = 'text';
   @Input() placeholder: string = '';
   @Input({ required: true }) id: string = '';
+  private translate = inject(TranslateService);
 
   constructor(@Optional() @Self() public ngControl: NgControl) {
     if (this.ngControl) {
@@ -84,17 +87,19 @@ export class FormInput implements ControlValueAccessor {
       return null;
     }
 
+    const params = { field: this.label };
+
     const errors = control.errors;
 
-    if (errors['required']) return `${this.label} is required.`;
-    if (errors['email']) return `Please enter a valid email address.`;
+    if (errors['required']) return this.translate.instant('errors.required', params);
+    if (errors['email']) return this.translate.instant('error.email');
     if (errors['minlength']) {
       const requiredLength = errors['minlength'].requiredLength;
-      return `${this.label} must be at least ${requiredLength} characters long.`;
+      return this.translate.instant('errors.min-length', { ...params, length: requiredLength });
     }
-    if (errors['pattern']) return `Invalid format.`;
-    if (errors['futureDate']) return 'Date cannot be in the future.';
+    if (errors['pattern']) return this.translate.instant('errors.pattern');
+    if (errors['futureDate']) return this.translate.instant('errors.future-date');
 
-    return 'Invalid value.';
+    return this.translate.instant('errors.default');
   }
 }

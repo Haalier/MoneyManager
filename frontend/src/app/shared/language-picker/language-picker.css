@@ -1,0 +1,17 @@
+.fi {
+  display: inline-block;
+  width: 20px;
+  height: 15px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 2px;
+}
+
+.fi-pl {
+  background-image: url('/flags/pl.svg');
+}
+
+.fi-us {
+  background-image: url('/flags/us.svg');
+}
