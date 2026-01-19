@@ -8,6 +8,6 @@ import { Dialog } from 'primeng/dialog';
   styleUrl: './modal.css',
 })
 export class Modal {
-  @Input() title!: string;
+  @Input() headerText!: string;
   isModalVisible = model<boolean>(false);
 }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, Input, output } from '@angular/core';
+import { Component, computed, inject, input, Input, output, signal } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   lucideUtensilsCrossed,
@@ -10,11 +10,14 @@ import { Income } from '../../models/income.model';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { Tooltip } from 'primeng/tooltip';
 import { CategoryEnum } from '../../features/category/CategoryEnum';
-import { EmojiComponent } from "@ctrl/ngx-emoji-mart/ngx-emoji";
+import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { Popover } from 'primeng/popover';
+import { Dialog } from 'primeng/dialog';
+import { Modal } from '../modal/modal';
 
 @Component({
   selector: 'app-transaction-info-card',
-  imports: [NgIcon, DatePipe, CurrencyPipe, Tooltip, EmojiComponent],
+  imports: [NgIcon, DatePipe, CurrencyPipe, Tooltip, EmojiComponent, Modal],
   templateUrl: './transaction-info-card.html',
   styleUrl: './transaction-info-card.css',
   viewProviders: [
@@ -28,6 +31,7 @@ export class TransactionInfoCard {
 
   @Input()
   hideDeleteButton: boolean = false;
+  deleteModalVisible = signal<boolean>(false);
 
   type = input.required<'income' | 'expense'>();
   delete = output<number>();
@@ -46,7 +50,13 @@ export class TransactionInfoCard {
   protected isTruncated(el: HTMLElement): boolean {
     return el.scrollWidth > el.clientWidth;
   }
+
+  onDeleteModalVisible(): void {
+    this.deleteModalVisible.set(true);
+  }
+
   onDelete() {
     this.delete.emit(this.income.id);
+    this.deleteModalVisible.set(false);
   }
 }

@@ -13,7 +13,7 @@
       (delete)="onDeleteIncome($event)"
     ></app-income-list>
 
-    <app-modal [(isModalVisible)]="addDialogVisible" title="Add New Income">
+    <app-modal [(isModalVisible)]="addDialogVisible" headerText="Add New Income">
       @if (incomeCategories()) {
         <app-income-form
           #incomeForm

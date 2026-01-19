@@ -11,7 +11,7 @@
 
   <app-modal
     [(isModalVisible)]="dialogVisible"
-    [title]="isEditMode() ? 'Update Category' : 'Add New Category'"
+    [headerText]="isEditMode() ? 'Update Category' : 'Add New Category'"
   >
     <app-category-form
       #categoryForm
