@@ -57,7 +57,7 @@ export class FormInput implements ControlValueAccessor {
     let val: any = target.value;
 
     if (this.type === 'number') {
-      val = target.value.replace(/[^0-9]/g, '');
+      val = target.value.replace(/[^0-9.,]/g, '').replace(',', '.');
       target.value = val;
 
       const numericValue = parseFloat(val);
@@ -93,6 +93,7 @@ export class FormInput implements ControlValueAccessor {
       return `${this.label} must be at least ${requiredLength} characters long.`;
     }
     if (errors['pattern']) return `Invalid format.`;
+    if (errors['futureDate']) return 'Date cannot be in the future.';
 
     return 'Invalid value.';
   }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, Input } from '@angular/core';
+import { Component, computed, inject, input, Input, output } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   lucideUtensilsCrossed,
@@ -10,10 +10,11 @@ import { Income } from '../../models/income.model';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { Tooltip } from 'primeng/tooltip';
 import { CategoryEnum } from '../../features/category/CategoryEnum';
+import { EmojiComponent } from "@ctrl/ngx-emoji-mart/ngx-emoji";
 
 @Component({
   selector: 'app-transaction-info-card',
-  imports: [NgIcon, DatePipe, CurrencyPipe, Tooltip],
+  imports: [NgIcon, DatePipe, CurrencyPipe, Tooltip, EmojiComponent],
   templateUrl: './transaction-info-card.html',
   styleUrl: './transaction-info-card.css',
   viewProviders: [
@@ -29,6 +30,7 @@ export class TransactionInfoCard {
   hideDeleteButton: boolean = false;
 
   type = input.required<'income' | 'expense'>();
+  delete = output<number>();
 
   protected getComputedStyles = computed(() => {
     return this.type() === 'income'
@@ -43,5 +45,8 @@ export class TransactionInfoCard {
 
   protected isTruncated(el: HTMLElement): boolean {
     return el.scrollWidth > el.clientWidth;
+  }
+  onDelete() {
+    this.delete.emit(this.income.id);
   }
 }

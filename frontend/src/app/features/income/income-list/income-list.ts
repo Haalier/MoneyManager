@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, OnInit } from '@angular/core';
+import { Component, inject, input, Input, OnInit, output } from '@angular/core';
 import { Card } from 'primeng/card';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideMail, lucideDownload } from '@ng-icons/lucide';
@@ -16,7 +16,12 @@ import { TransactionInfoCard } from '../../../shared/transaction-info-card/trans
 })
 export class IncomeList {
   transactions = input<Income[] | null>();
+  delete = output<number>();
 
   private readonly loadingService = inject(LoadingService);
   protected readonly loader = this.loadingService.isLoading;
+
+  protected onDelete(event: number) {
+    this.delete.emit(event);
+  }
 }

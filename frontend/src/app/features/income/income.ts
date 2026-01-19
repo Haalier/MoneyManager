@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { IncomeService } from './income-service';
 import { IncomeList } from './income-list/income-list';
 import { Modal } from '../../shared/modal/modal';
@@ -20,6 +20,8 @@ import { IncomeDTO } from '../../models/DTO/income.dto';
   viewProviders: [provideIcons({ lucidePlus })],
 })
 export class Income {
+  @ViewChild('incomeForm') incomeFormRef!: IncomeForm;
+
   private TYPE = CategoryEnum.INCOME;
   protected incomeService = inject(IncomeService);
   private categoryService = inject(CategoryService);
@@ -35,7 +37,14 @@ export class Income {
 
   onSubmitForm(event: IncomeDTO) {
     this.incomeService.addIncome(event).subscribe({
-      next: () => this.addDialogVisible.set(false),
+      next: () => {
+        this.addDialogVisible.set(false);
+        this.incomeFormRef.resetForm();
+      },
     });
+  }
+
+  onDeleteIncome(incomeId: number) {
+    this.incomeService.deleteIncome(incomeId).subscribe();
   }
 }

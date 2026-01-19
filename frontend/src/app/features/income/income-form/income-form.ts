@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, output } from '@angular/core';
+import { Component, effect, inject, input, OnInit, output } from '@angular/core';
 import {
   FormBuilder,
   Validators,
@@ -12,6 +12,8 @@ import { CurrencyPipe } from '@angular/common';
 import { Button } from 'primeng/button';
 import { LoadingService } from '../../../shared/services/loading-service';
 import { IncomeDTO } from '../../../models/DTO/income.dto';
+import { EmojiPicker } from '../../../shared/emoji-picker/emoji-picker';
+import { futureDateValidator } from '../../../validators/date.validator';
 
 @Component({
   selector: 'app-income-form',
@@ -22,11 +24,12 @@ import { IncomeDTO } from '../../../models/DTO/income.dto';
     FormSelect,
     CurrencyPipe,
     Button,
+    EmojiPicker,
   ],
   templateUrl: './income-form.html',
   styleUrl: './income-form.css',
 })
-export class IncomeForm implements OnInit {
+export class IncomeForm {
   save = output<IncomeDTO>();
   categories = input.required<Category[]>();
   private fb = inject(FormBuilder);
@@ -44,19 +47,29 @@ export class IncomeForm implements OnInit {
       validators: [Validators.required, Validators.min(0)],
       nonNullable: true,
     }),
-    date: this.fb.control(new Date().toISOString().split('T')[0], { nonNullable: true }),
+    icon: this.fb.control('dollar', { nonNullable: true }),
+    date: this.fb.control(new Date().toISOString().split('T')[0], {
+      validators: [futureDateValidator()],
+      nonNullable: true,
+    }),
   });
 
-  ngOnInit(): void {
-    const cats = this.categories();
-    if (cats?.length > 0 && !this.incomeForm.controls.categoryId.value) {
-      this.incomeForm.patchValue({ categoryId: cats[0].id });
-    }
+  constructor() {
+    effect(() => {
+      const cats = this.categories();
+      if (cats?.length > 0 && !this.incomeForm.controls.categoryId.value) {
+        this.incomeForm.patchValue({ categoryId: cats[0].id });
+      }
+    });
   }
 
   protected onSubmit() {
     if (this.incomeForm.invalid) return;
     const incomeData = this.incomeForm.getRawValue();
     this.save.emit(incomeData);
+  }
+
+  resetForm() {
+    this.incomeForm.reset({ categoryId: this.categories()[0].id });
   }
 }

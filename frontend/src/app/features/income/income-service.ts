@@ -55,4 +55,23 @@ export class IncomeService {
       takeUntilDestroyed(this.destroyRef),
     );
   }
+
+  public deleteIncome(incomeId: number) {
+    return this.http.delete(`${this.URL}/${incomeId}`).pipe(
+      tap(() => {
+        const incomeToDelete = this.incomesSignal()?.find((i) => i.id === incomeId);
+
+        if (this.incomesSignal() !== null) {
+          this.incomesSignal.update((incomes) =>
+            (incomes || []).filter((income) => income.id !== incomeId),
+          );
+        }
+
+        if (this.totalIncomesSignal() !== null && incomeToDelete) {
+          this.totalIncomesSignal.update((total) => (total ?? 0) - incomeToDelete.amount);
+        }
+      }),
+      takeUntilDestroyed(this.destroyRef),
+    );
+  }
 }

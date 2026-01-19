@@ -1,17 +1,22 @@
 <div class="my-5 mx-auto">
   <div class="grid grid-cols-1 gap-6">
-    <div class="flex">
+    <div class="flex items-center">
+      <h2 class="text-2xl font-semibold">All Incomes</h2>
       <button type="button" class="btn-add ml-auto" (click)="onDialogToggle()">
         <ng-icon name="lucidePlus" size="18" />
         Add income
       </button>
     </div>
 
-    <app-income-list [transactions]="transactions()"></app-income-list>
+    <app-income-list
+      [transactions]="transactions()"
+      (delete)="onDeleteIncome($event)"
+    ></app-income-list>
 
     <app-modal [(isModalVisible)]="addDialogVisible" title="Add New Income">
       @if (incomeCategories()) {
         <app-income-form
+          #incomeForm
           [categories]="incomeCategories()"
           (save)="onSubmitForm($event)"
         ></app-income-form>

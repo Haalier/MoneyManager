@@ -1,22 +1,22 @@
 <div class="my-5 mx-auto">
   <div class="flex justify-between items-center mb-5">
     <h2 class="text-2xl font-semibold">All Categories</h2>
-    <button (click)="onCreateCategory()" class="btn-add">
+    <button (click)="openAddModal()" class="btn-add">
       <ng-icon name="lucidePlus" size="18" />
       Add Category
     </button>
   </div>
 
-  <app-category-list (updateEvent)="onUpdateEvent($event)" [categories]="categories()" />
+  <app-category-list (updateEvent)="openEditModal($event)" [categories]="categories()" />
 
-  <app-modal [(isModalVisible)]="editDialogVisible" [title]="'Update Category'">
+  <app-modal
+    [(isModalVisible)]="dialogVisible"
+    [title]="isEditMode() ? 'Update Category' : 'Add New Category'"
+  >
     <app-category-form
+      #categoryForm
       (submitForm)="onFormSubmitted($event)"
       [category]="categoryData()"
     ></app-category-form>
-  </app-modal>
-
-  <app-modal [(isModalVisible)]="addDialogVisible" [title]="'Add New Category'">
-    <app-category-form (submitForm)="onFormSubmitted($event)"></app-category-form>
   </app-modal>
 </div>

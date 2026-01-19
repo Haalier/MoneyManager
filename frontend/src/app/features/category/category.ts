@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucidePlus } from '@ng-icons/lucide';
 import { CategoryList } from './category-list/category-list';
@@ -17,39 +17,38 @@ import { HotToastService } from '@ngxpert/hot-toast';
   viewProviders: [provideIcons({ lucidePlus })],
 })
 export class Category {
-  protected editDialogVisible = false;
-  protected addDialogVisible = false;
+  @ViewChild('categoryForm') categoryFormRef!: CategoryForm;
+  protected dialogVisible = signal<boolean>(false);
   protected categoryData = signal<CategoryModel | null>(null);
   protected categoryService = inject(CategoryService);
   protected categories = this.categoryService.getAllCategories();
   private toast = inject(HotToastService);
+  protected isEditMode = computed(() => !!this.categoryData());
 
-  protected onUpdateEvent(category: CategoryModel) {
+  protected openEditModal(category: CategoryModel) {
     this.categoryData.set(category);
-    this.editDialogVisible = true;
+    this.dialogVisible.set(true);
   }
 
-  protected onCreateCategory() {
-    this.addDialogVisible = true;
+  protected openAddModal() {
+    this.categoryData.set(null);
+    this.dialogVisible.set(true);
   }
 
-  onFormSubmitted(event: { isEditMode: boolean; newCategory: CategoryDTO }) {
-    const { isEditMode, newCategory } = event;
-
+  onFormSubmitted(newCategory: CategoryDTO) {
     const request$ =
-      isEditMode && this.categoryData()?.id
+      this.isEditMode() && this.categoryData()?.id
         ? this.categoryService.updateCategory(this.categoryData()!.id, newCategory)
         : this.categoryService.addCategory(newCategory);
 
     request$.subscribe({
       next: () => {
-        const msg = isEditMode ? 'Category successfully updated!' : 'Category successfully added!';
-        isEditMode ? (this.editDialogVisible = false) : (this.addDialogVisible = false);
+        const msg = this.isEditMode()
+          ? 'Category successfully updated!'
+          : 'Category successfully added!';
+        this.dialogVisible.set(false);
         this.toast.success(msg);
-      },
-      error: (err) => {
-        const msg = isEditMode ? 'Failed to update category' : 'Failed to update category';
-        this.toast.error(err.response?.data?.message || msg);
+        this.categoryFormRef.resetForm();
       },
     });
   }

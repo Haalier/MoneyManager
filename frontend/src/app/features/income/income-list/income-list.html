@@ -23,6 +23,7 @@
             [income]="income"
             type="income"
             [style.--index]="i"
+            (delete)="onDelete($event)"
             animate.enter="slide-in"
           ></app-transaction-info-card>
         } @empty {
