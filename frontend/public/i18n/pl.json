@@ -18,7 +18,8 @@
     "password-on-tooltip": "Pokaż hasło",
     "password-hide-tooltip": "Ukryj hasło",
     "income": "Dochód",
-    "expense": "Wydatek"
+    "expense": "Wydatek",
+    "date": "Data"
   },
   "errors": {
     "required": "{{field}} jest wymagane.",
@@ -76,6 +77,12 @@
     "amount": "Kwota Dochodu",
     "date": "Data Dochodu",
     "delete": "Usuń dochód",
-    "fallback": "Nie dodano jeszcze żadnych dochodów. Dodaj kilka, aby rozpocząć!"
+    "fallback": "Nie dodano jeszcze żadnych dochodów. Dodaj kilka, aby rozpocząć!",
+    "overview": {
+      "header": "Przegląd Dochodów",
+      "text": "Śledź swoje zarobki i analizuj trendy dotyczące dochodów.",
+      "total": "Suma",
+      "transactions": "Transakcje"
+    }
   }
 }

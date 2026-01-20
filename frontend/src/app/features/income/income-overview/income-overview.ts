@@ -36,7 +36,7 @@ export class IncomeOverview {
 
         this.chartOptions.set({
           maintainAspectRatio: false,
-          aspectRatio: 0.6,
+          aspectRatio: 1,
           plugins: {
             tooltip: {
               callbacks: {

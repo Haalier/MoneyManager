@@ -20,7 +20,8 @@
     "password-on-tooltip": "Show password",
     "password-hide-tooltip": "Hide password",
     "income": "Income",
-    "expense": "Exepnse"
+    "expense": "Exepnse",
+    "date": "Date"
   },
   "errors": {
     "required": "{{field}} is required.",
@@ -78,6 +79,12 @@
     "amount": "Income Amount",
     "date": "Income Date",
     "delete": "Delete income",
-    "fallback": "No incomes added yet. Add some to get started!"
+    "fallback": "No incomes added yet. Add some to get started!",
+    "overview": {
+      "header": "Income Overview",
+      "text": "Track your earnings over time and analyze your income trends.",
+      "total": "Total",
+      "transactions": "Transactions"
+    }
   }
 }

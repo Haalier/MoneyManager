@@ -5,7 +5,7 @@ export interface Income {
   categoryName: string;
   categoryId: number;
   amount: number;
-  date: Date;
+  date: string;
   createdAt: Date;
   updatedAt: Date;
 }
