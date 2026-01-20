@@ -8,6 +8,9 @@
       </button>
     </div>
 
+    @if (transactions()) {
+      <app-income-overview [transactions]="transactions()"></app-income-overview>
+    }
     <app-income-list
       [transactions]="transactions()"
       (delete)="onDeleteIncome($event)"

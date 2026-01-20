@@ -1,0 +1,19 @@
+@if (isLoading()) {
+  <app-spinner></app-spinner>
+} @else {
+  <p-card>
+    <div class="flex items-center justify-between">
+      <div>
+        <h5 class="text-lg">
+          {{ 'incomes.overview.header' | translate }}
+        </h5>
+        <p class="text-xs text-gray-400 mt-0.5">
+          {{ 'incomes.overview.text' | translate }}
+        </p>
+      </div>
+    </div>
+    <div class="mt-10">
+      <p-chart type="line" [data]="chartData()" [options]="chartOptions()"></p-chart>
+    </div>
+  </p-card>
+}
