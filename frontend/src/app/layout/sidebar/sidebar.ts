@@ -11,30 +11,31 @@ import {
   lucideWallet,
 } from '@ng-icons/lucide';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 const SIDE_BAR_DATA: { label: string; icon: string; path: string }[] = [
   {
-    label: 'Dashboard',
+    label: 'sidebar-info.dashboard',
     icon: 'lucideLayoutDashboard',
     path: '/dashboard',
   },
   {
-    label: 'Category',
+    label: 'sidebar-info.category',
     icon: 'lucideList',
     path: 'category',
   },
   {
-    label: 'Income',
+    label: 'sidebar-info.income',
     icon: 'lucideWallet',
     path: 'income',
   },
   {
-    label: 'Expense',
+    label: 'sidebar-info.expense',
     icon: 'lucideCoins',
     path: 'expense',
   },
   {
-    label: 'Filters',
+    label: 'sidebar-info.filters',
     icon: 'lucideFunnelPlus',
     path: 'filter',
   },
@@ -42,7 +43,7 @@ const SIDE_BAR_DATA: { label: string; icon: string; path: string }[] = [
 
 @Component({
   selector: 'app-sidebar',
-  imports: [NgIcon, RouterLink, RouterLinkActive],
+  imports: [NgIcon, RouterLink, RouterLinkActive, TranslatePipe],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
   viewProviders: [

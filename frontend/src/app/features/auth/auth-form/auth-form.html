@@ -1,71 +1,94 @@
-<div class="bg-white opacity-95 backdrop-blur-sm rounded-lg shadow-2xl p-8 max-h-[90vh] overflow-y-auto">
+<div
+  class="bg-white opacity-95 backdrop-blur-sm rounded-lg shadow-2xl p-8 max-h-[90vh] overflow-y-auto"
+>
   <h3 class="text-2xl uppercase tracking-widest font-semibold text-black text-center mb-2">
-    @if (route === "signup") {
-      Create An Account
+    @if (route === 'signup') {
+      {{ 'auth.signup-header' | translate }}
     } @else {
-      Log Into Your Account
+      {{ 'auth.login-header' | translate }}
     }
   </h3>
   <p class="text-sm text-slate-700 text-center mb-8">
-    @if (route === "signup") {
-      Start tracking your spendings by joining us today!
+    @if (route === 'signup') {
+      {{ 'auth.signup-text' | translate }}
     } @else {
-      Welcome back! Please enter your details to log in.
+      {{ 'auth.login-text' | translate }}
     }
   </p>
 
   <form class="space-y-4" [formGroup]="authForm" (ngSubmit)="onSubmit()">
     @if (route === 'signup') {
       <div class="flex justify-center mb-2">
-        <app-photo-selector formControlName="profileImage"/>
+        <app-photo-selector formControlName="profileImage" />
       </div>
     }
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      @if (route === "signup") {
-        <app-input label="Full Name" id="fullName" formControlName="fullName"
-                        placeholder="John Doe"></app-input>
+      @if (route === 'signup') {
+        <app-input
+          [label]="'auth.full-name' | translate"
+          id="fullName"
+          formControlName="fullName"
+          placeholder="John Doe"
+        ></app-input>
       }
 
-      @if (route === "signup") {
-        <app-input label="Email Address" id="email" type="email" formControlName="email"
-                        placeholder="test@example.com"></app-input>
-
+      @if (route === 'signup') {
+        <app-input
+          [label]="'auth.email' | translate"
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="test@example.com"
+        ></app-input>
       } @else {
         <div class="col-span-2">
-          <app-input label="Email Address" id="email" type="email" formControlName="email"
-                          placeholder="test@example.com"></app-input>
+          <app-input
+            [label]="'auth.email' | translate"
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="test@example.com"
+          ></app-input>
         </div>
-
       }
 
-
-
       <div [class]="route === 'signup' ? 'col-span-1' : 'col-span-2'">
-        <app-input label="Password" id="password" type="password" formControlName="password"
-                        placeholder="********"></app-input>
+        <app-input
+          [label]="'auth.password' | translate"
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="********"
+        ></app-input>
       </div>
       @if (errorMessage()) {
-        <app-error-message [errorMessage]="errorMessage()"/>
+        <app-error-message [errorMessage]="errorMessage()" />
       }
     </div>
 
-    <p-button type="submit" [loading]="isLoading()" [unstyled]="true" [disabled]="authForm.invalid"
-              styleClass="w-full disabled:cursor-not-allowed disabled:bg-blue-600/50 disabled:transition-none bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 uppercase flex items-center justify-center gap-2">
-      <span>{{ route === 'signup' ? 'create an account' : 'log in' }}</span>
+    <p-button
+      type="submit"
+      [loading]="isLoading()"
+      [unstyled]="true"
+      [disabled]="authForm.invalid"
+      styleClass="w-full disabled:cursor-not-allowed disabled:bg-blue-600/50 disabled:transition-none bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 uppercase flex items-center justify-center gap-2"
+    >
+      <span>{{
+        route === 'signup' ? ('auth.signup' | translate) : ('auth.login' | translate)
+      }}</span>
     </p-button>
 
-
     <p class="text-sm text-slate-800 text-center mt-6">
-      @if (route === "signup") {
-        Already have an account?
+      @if (route === 'signup') {
+        {{ 'auth.signup-fallback' | translate }}
       } @else {
-        Don't have an account?
+        {{ 'auth.login-fallback' | translate }}
       }
-      <a [routerLink]="route === 'signup' ? '/login' : '/signup'"
-         class="font-medium text-blue-600 hover:text-blue-800">{{
-          route ===
-          'signup' ? 'Log in' : 'Sign up'
-        }}</a>
+      <a
+        [routerLink]="route === 'signup' ? '/login' : '/signup'"
+        class="font-medium text-blue-600 hover:text-blue-800"
+        >{{ route === 'signup' ? ('auth.login' | translate) : ('auth.signup' | translate) }}</a
+      >
     </p>
   </form>
 </div>

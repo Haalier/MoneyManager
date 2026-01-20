@@ -1,32 +1,32 @@
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Component, ElementRef, forwardRef, OnDestroy, signal, ViewChild } from '@angular/core';
-import { NgIcon, provideIcons } from "@ng-icons/core";
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideTrash2, lucideUpload, lucideUser } from '@ng-icons/lucide';
-import { Tooltip } from "primeng/tooltip";
+import { Tooltip } from 'primeng/tooltip';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-photo-selector',
-  imports: [NgIcon, Tooltip],
+  imports: [NgIcon, Tooltip, TranslatePipe],
   templateUrl: './photo-selector.html',
   styleUrl: './photo-selector.css',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => PhotoSelector)
-    }
+      useExisting: forwardRef(() => PhotoSelector),
+    },
   ],
-  viewProviders: [provideIcons({ lucideUser, lucideUpload, lucideTrash2 })]
+  viewProviders: [provideIcons({ lucideUser, lucideUpload, lucideTrash2 })],
 })
 export class PhotoSelector implements ControlValueAccessor, OnDestroy {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   isProcessing = signal<boolean>(false);
   previewUrl = signal<string | null>(null);
-  image = signal<File | null>(null)
+  image = signal<File | null>(null);
 
-  onChange: (value: string | null) => void = () => { };
-  onTouched: () => void = () => { };
-
+  onChange: (value: string | null) => void = () => {};
+  onTouched: () => void = () => {};
 
   writeValue(value: string | null): void {
     if (!value) this.cleanUpObjectURL();
@@ -47,7 +47,7 @@ export class PhotoSelector implements ControlValueAccessor, OnDestroy {
       this.cleanUpObjectURL();
 
       this.image.set(file);
-      
+
       const preview = URL.createObjectURL(file);
       this.previewUrl.set(preview);
 
@@ -55,7 +55,6 @@ export class PhotoSelector implements ControlValueAccessor, OnDestroy {
         this.compressImage(file);
       } else {
         this.readFileAsBase64(file);
-
       }
     }
   }
@@ -109,7 +108,7 @@ export class PhotoSelector implements ControlValueAccessor, OnDestroy {
 
         if (width > MAX_WIDTH) {
           height = Math.round((height * MAX_WIDTH) / width);
-          width = MAX_WIDTH
+          width = MAX_WIDTH;
         }
 
         canvas.width = width;
@@ -120,8 +119,8 @@ export class PhotoSelector implements ControlValueAccessor, OnDestroy {
         const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
         this.onChange(compressedBase64);
         this.isProcessing.set(false);
-      }
-    }
+      };
+    };
   }
 
   ngOnDestroy(): void {

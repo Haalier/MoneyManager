@@ -3,15 +3,15 @@
 
   <app-input
     id="name"
-    label="Category Name"
-    placeholder="e.g., Salary, Groceries, Bonus"
+    [label]="'categories.form-name' | translate"
+    [placeholder]="'categories.name-placeholder' | translate"
     formControlName="name"
   />
 
   <app-select
     id="type"
-    label="Category Type"
-    placeholder="Select category type"
+    [label]="'categories.form-type' | translate"
+    [placeholder]="'categories.type-placeholder' | translate"
     [options]="categoryTypeOptions"
     formControlName="type"
   ></app-select>
@@ -20,9 +20,9 @@
     class="w-fit ml-auto"
     [pTooltip]="
       categoryForm.invalid
-        ? 'Fill up form to submit'
+        ? ('errors.fill-up' | translate)
         : isEditMode() && !isDirty()
-          ? 'No changes detected'
+          ? ('errors.no-changes' | translate)
           : ''
     "
   >
@@ -33,7 +33,9 @@
       [disabled]="categoryForm.invalid || (isEditMode() && !isDirty())"
       styleClass="disabled:cursor-not-allowed disabled:grayscale-75 disabled:hover:bg-green-600/30 disabled:transition-none bg-green-600/30 hover:bg-green-600/40 text-green-600 font-medium py-2 px-4 rounded-md transition duration-300 flex items-center justify-center gap-2"
     >
-      <span>{{ isEditMode() ? 'Update category' : 'Add category' }}</span>
+      <span>{{
+        isEditMode() ? ('categories.update' | translate) : ('categories.add' | translate)
+      }}</span>
     </p-button>
   </div>
 </form>

@@ -11,10 +11,11 @@ import { IncomeForm } from './income-form/income-form';
 import { SpinnerComponent } from '../../shared/spinner/spinner';
 import { LoadingService } from '../../shared/services/loading-service';
 import { IncomeDTO } from '../../models/DTO/income.dto';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-income',
-  imports: [IncomeList, Modal, NgIcon, IncomeForm, SpinnerComponent],
+  imports: [IncomeList, Modal, NgIcon, IncomeForm, SpinnerComponent, TranslatePipe],
   templateUrl: './income.html',
   styleUrl: './income.css',
   viewProviders: [provideIcons({ lucidePlus })],

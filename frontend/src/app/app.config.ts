@@ -8,6 +8,8 @@ import { provideRouter } from '@angular/router';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 
+import { provideTranslateService, provideTranslateLoader } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
@@ -17,9 +19,9 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './interceptors/auth-interceptor';
 import { errorInterceptor } from './interceptors/error-interceptor';
 import { registerLocaleData } from '@angular/common';
-import localePl from '@angular/common/locales/pl'
+import localePl from '@angular/common/locales/pl';
 
-registerLocaleData(localePl)
+registerLocaleData(localePl);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +29,14 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideCharts(withDefaultRegisterables()),
     provideHttpClient(withInterceptors([authInterceptor, errorInterceptor])),
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({
+        prefix: './i18n/',
+        suffix: '.json',
+      }),
+      lang: 'pl',
+      fallbackLang: 'en',
+    }),
     providePrimeNG({
       theme: {
         preset: Aura,

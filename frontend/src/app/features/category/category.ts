@@ -8,10 +8,11 @@ import { Category as CategoryModel } from '../../models/category.model';
 import { CategoryService } from './category-service';
 import { CategoryDTO } from '../../models/DTO/category.dto';
 import { HotToastService } from '@ngxpert/hot-toast';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-category',
-  imports: [NgIcon, CategoryList, Modal, CategoryForm],
+  imports: [NgIcon, CategoryList, Modal, CategoryForm, TranslatePipe],
   templateUrl: './category.html',
   styleUrl: './category.css',
   viewProviders: [provideIcons({ lucidePlus })],

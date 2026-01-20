@@ -1,20 +1,19 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { AuthService } from '../../features/auth/auth-service';
 import { lucideLogOut, lucideMenu, lucideUser, lucideX } from '@ng-icons/lucide';
 import { PopoverModule } from 'primeng/popover';
 import { Sidebar } from '../sidebar/sidebar';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-menubar',
-  imports: [NgIcon, PopoverModule, Sidebar],
+  imports: [NgIcon, PopoverModule, Sidebar, TranslatePipe],
   templateUrl: './menubar.html',
   styleUrl: './menubar.css',
   viewProviders: [provideIcons({ lucideX, lucideMenu, lucideUser, lucideLogOut })],
 })
-export class Menubar implements OnInit {
-  private router = inject(Router);
+export class Menubar {
   protected openSideMenu = false;
   protected showDropdown = false;
   private authService = inject(AuthService);
@@ -31,10 +30,6 @@ export class Menubar implements OnInit {
 
   protected onLogOut(): void {
     this.authService.logout().subscribe();
-  }
-
-  ngOnInit(): void {
-    console.log('user', this.user);
   }
 
   protected onSidebarClose() {

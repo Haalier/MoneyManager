@@ -3,15 +3,15 @@
     <app-spinner></app-spinner>
   } @else {
     <div class="flex items-center justify-between">
-      <h5 class="text-lg">Income Sources</h5>
+      <h5 class="text-lg">{{ 'incomes.recent-incomes' | translate }}</h5>
       <div class="flex flex-col sm:flex-row items-center justify-end gap-2">
         <button type="button" class="btn-action">
           <ng-icon name="lucideMail" size="15" class="text-base!"></ng-icon>
-          <span>Email</span>
+          <span>{{ 'operations.email' | translate }}</span>
         </button>
         <button type="button" class="btn-action">
           <ng-icon name="lucideDownload" size="15"></ng-icon>
-          <span>Download</span>
+          <span>{{ 'operations.download' | translate }}</span>
         </button>
       </div>
     </div>
@@ -27,7 +27,7 @@
             animate.enter="slide-in"
           ></app-transaction-info-card>
         } @empty {
-          <p class="text-gray-500">No incomes added yet. Add some to get started!</p>
+          <p class="text-gray-500">{{ 'incomes.fallback' | translate }}</p>
         }
       }
     </div>

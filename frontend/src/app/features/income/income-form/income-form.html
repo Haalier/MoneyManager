@@ -3,16 +3,16 @@
 
   <app-input
     id="name"
-    label="Income Name"
-    placeholder="eg., Mid year bonus, salary..."
+    [label]="'incomes.name' | translate"
+    [placeholder]="'incomes.name-placeholder' | translate"
     formControlName="name"
   >
   </app-input>
 
   <app-select
     id="categoryId"
-    label="Income Categories"
-    placeholder=""
+    [label]="'incomes.categories' | translate"
+    [placeholder]="'incomes.categories-placeholder' | translate"
     [options]="categories()"
     formControlName="categoryId"
     bindLabel="name"
@@ -21,13 +21,18 @@
 
   <app-input
     id="amount"
-    label="Income amount"
+    [label]="'incomes.amount' | translate"
     type="number"
     [placeholder]="('1000' | currency: 'PLN' : 'symbol' : '1.2-2' : 'pl') ?? '$1000'"
     formControlName="amount"
   ></app-input>
 
-  <app-input id="date" label="Income date" type="date" formControlName="date"></app-input>
+  <app-input
+    id="date"
+    [label]="'incomes.date' | translate"
+    type="date"
+    formControlName="date"
+  ></app-input>
 
   <div class="w-fit ml-auto">
     <p-button
@@ -37,7 +42,7 @@
       [disabled]="incomeForm.invalid"
       styleClass="disabled:cursor-not-allowed disabled:grayscale-75 disabled:hover:bg-green-600/30 disabled:transition-none bg-green-600/30 hover:bg-green-600/40 text-green-600 font-medium py-2 px-4 rounded-md transition duration-300 flex items-center justify-center gap-2"
     >
-      <span>Add income</span>
+      <span>{{ 'incomes.add' | translate }}</span>
     </p-button>
   </div>
 </form>

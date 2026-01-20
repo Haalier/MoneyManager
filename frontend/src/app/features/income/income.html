@@ -1,10 +1,10 @@
 <div class="my-5 mx-auto">
   <div class="grid grid-cols-1 gap-6">
     <div class="flex items-center">
-      <h2 class="text-2xl font-semibold">All Incomes</h2>
+      <h2 class="text-2xl font-semibold">{{ 'incomes.all-incomes' | translate }}</h2>
       <button type="button" class="btn-add ml-auto" (click)="onDialogToggle()">
         <ng-icon name="lucidePlus" size="18" />
-        Add income
+        {{ 'incomes.add' | translate }}
       </button>
     </div>
 

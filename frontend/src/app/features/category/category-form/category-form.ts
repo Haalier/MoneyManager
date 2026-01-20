@@ -1,13 +1,4 @@
-import {
-  Component,
-  computed,
-  effect,
-  inject,
-  input,
-  Input,
-  output,
-  ViewChild,
-} from '@angular/core';
+import { Component, computed, effect, inject, input, output, ViewChild } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormInput } from '../../../shared/form-input/form-input';
 import { Popover } from 'primeng/popover';
@@ -19,10 +10,19 @@ import { LoadingService } from '../../../shared/services/loading-service';
 import { FormSelect } from '../../../shared/form-select/form-select';
 import { CategoryDTO } from '../../../models/DTO/category.dto';
 import { EmojiPicker } from '../../../shared/emoji-picker/emoji-picker';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-category-form',
-  imports: [FormInput, ReactiveFormsModule, Tooltip, Button, FormSelect, EmojiPicker],
+  imports: [
+    FormInput,
+    ReactiveFormsModule,
+    Tooltip,
+    Button,
+    FormSelect,
+    EmojiPicker,
+    TranslatePipe,
+  ],
   templateUrl: './category-form.html',
   styleUrl: './category-form.css',
 })
@@ -32,7 +32,7 @@ export class CategoryForm {
   category = input<Category | null>(null);
   submitForm = output<CategoryDTO>();
 
-  protected isEditMode = computed(() => !!this.category)
+  protected isEditMode = computed(() => !!this.category());
 
   private fb = inject(FormBuilder);
   private loadingService = inject(LoadingService);
@@ -40,11 +40,11 @@ export class CategoryForm {
   protected categoryTypeOptions = [
     {
       value: 'income',
-      label: 'Income',
+      label: 'general.income',
     },
     {
       value: 'expense',
-      label: 'Expense',
+      label: 'general.expense',
     },
   ];
 

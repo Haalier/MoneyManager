@@ -14,6 +14,7 @@ import { LoadingService } from '../../../shared/services/loading-service';
 import { IncomeDTO } from '../../../models/DTO/income.dto';
 import { EmojiPicker } from '../../../shared/emoji-picker/emoji-picker';
 import { futureDateValidator } from '../../../validators/date.validator';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-income-form',
@@ -25,6 +26,7 @@ import { futureDateValidator } from '../../../validators/date.validator';
     CurrencyPipe,
     Button,
     EmojiPicker,
+    TranslatePipe,
   ],
   templateUrl: './income-form.html',
   styleUrl: './income-form.css',

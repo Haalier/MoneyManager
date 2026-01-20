@@ -6,10 +6,11 @@ import { SpinnerComponent } from '../../../shared/spinner/spinner';
 import { LoadingService } from '../../../shared/services/loading-service';
 import { Income } from '../../../models/income.model';
 import { TransactionInfoCard } from '../../../shared/transaction-info-card/transaction-info-card';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-income-list',
-  imports: [Card, NgIcon, SpinnerComponent, TransactionInfoCard],
+  imports: [Card, NgIcon, SpinnerComponent, TransactionInfoCard, TranslatePipe],
   templateUrl: './income-list.html',
   styleUrl: './income-list.css',
   viewProviders: [provideIcons({ lucideMail, lucideDownload })],

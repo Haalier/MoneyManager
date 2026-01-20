@@ -19,14 +19,16 @@
   </div>
 
   <div class="flex flex-col">
-    <span class="text-sm font-semibold text-slate-800 tracking-tight">Emoji Icon</span>
-    <p class="text-xs text-slate-500 font-medium">Click to pick an emoji icon</p>
+    <span class="text-sm font-semibold text-slate-800 tracking-tight">{{
+      'emoji.icon' | translate
+    }}</span>
+    <p class="text-xs text-slate-500 font-medium">{{ 'emoji.text' | translate }}</p>
   </div>
 </div>
 
 <p-popover #op>
   <emoji-mart
-    title="Pick your emoji…"
+    [title]="'emoji.pick' | translate"
     emoji="point_up"
     (emojiClick)="onAddEmoji($event)"
   ></emoji-mart>

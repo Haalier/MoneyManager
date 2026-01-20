@@ -1,0 +1,83 @@
+{
+  "auth": {
+    "login": "Log in",
+    "login-header": "Log into your account",
+    "login-text": "Welcome back! Please enter your details to log in.",
+    "login-fallback": "Don't have an account?",
+    "signup": "Sign up",
+    "signup-header": "Create an account",
+    "signup-text": "Start tracking your spendings by joining us today!",
+    "signup-fallback": "Already have an account?",
+    "full-name": "Full Name",
+    "email": "Email Address",
+    "password": "Password",
+    "upload-image-tooltip": "Upload your image",
+    "remove-image-tooltip": "Remove your image",
+    "account-created": "Account created successfully!",
+    "logged-in": "Logged in successfully!"
+  },
+  "general": {
+    "password-on-tooltip": "Show password",
+    "password-hide-tooltip": "Hide password",
+    "income": "Income",
+    "expense": "Exepnse"
+  },
+  "errors": {
+    "required": "{{field}} is required.",
+    "email": "Please enter a valid email address.",
+    "min-length": "{{field}} must be at least {{length}} characters long.",
+    "pattern": "Invalid format.",
+    "future-date": "Date cannot be in the future.",
+    "default": "Invalid value.",
+    "fill-up": "Fill up form to submit.",
+    "no-changes": "No changes detected."
+  },
+  "sidebar-info": {
+    "dashboard": "Dashboard",
+    "category": "Category",
+    "income": "Income",
+    "expense": "Expense",
+    "filters": "Filters"
+  },
+  "emoji": {
+    "icon": "Emoji Icon",
+    "text": "Click to pick an emoji icon",
+    "pick": "Pick your emoji"
+  },
+  "operations": {
+    "email": "Email",
+    "download": "Download",
+    "delete-confirm": "Yes, delete",
+    "cancel": "Cancel",
+    "logout": "Logout"
+  },
+  "categories": {
+    "all-categories": "All Categories",
+    "transaction-categories": "Transaction Categories",
+    "income": "Income",
+    "expense": "Expense",
+    "add": "Add category",
+    "update": "Update category",
+    "add-new": "Add New Category",
+    "form-name": "Category Name",
+    "name-placeholder": "e.g., Salary, Groceries, Bonus",
+    "type-placeholder": "Select category type",
+    "form-type": "Category Type",
+    "edit-tooltip": "Edit category",
+    "fallback": "No categories added yet. Add some to get started!"
+  },
+  "incomes": {
+    "all-incomes": "All Incomes",
+    "recent-incomes": "Recent Incomes",
+    "add": "Add income",
+    "add-new": "Add New Income",
+    "name": "Income Name",
+    "name-placeholder": "e.g., Mid year bonus, salary...",
+    "categories": "Income Categories",
+    "categories-placeholder": "Select category",
+    "amount": "Income Amount",
+    "date": "Income Date",
+    "delete": "Delete income",
+    "fallback": "No incomes added yet. Add some to get started!"
+  }
+}

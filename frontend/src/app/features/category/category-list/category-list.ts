@@ -9,10 +9,11 @@ import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { Category } from '../../../models/category.model';
 import { LoadingService } from '../../../shared/services/loading-service';
 import { Tooltip } from 'primeng/tooltip';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-category-list',
-  imports: [SpinnerComponent, NgIcon, Card, EmojiComponent, Tooltip],
+  imports: [SpinnerComponent, NgIcon, Card, EmojiComponent, Tooltip, TranslatePipe],
   templateUrl: './category-list.html',
   styleUrl: './category-list.css',
   viewProviders: [provideIcons({ lucideLayers, lucidePencil })],

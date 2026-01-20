@@ -1,6 +1,6 @@
 <p-card class="p-4">
   <div class="flex items-center justify-between mb-4">
-    <h4 class="text-lg font-semibold">Category Sources</h4>
+    <h4 class="text-lg font-semibold">{{ 'categories.transaction-categories' | translate }}</h4>
   </div>
   @if (loader()) {
     <app-spinner />
@@ -33,7 +33,11 @@
                   [class.text-green-500]="category.type === CategoryEnum.INCOME"
                   [class.text-red-500]="category.type === CategoryEnum.EXPENSE"
                 >
-                  {{ category.type }}
+                  {{
+                    category.type === CategoryEnum.INCOME
+                      ? ('general.income' | translate)
+                      : ('general.expense' | translate)
+                  }}
                 </p>
               </div>
               <div class="flex items-center gap-2">
@@ -42,7 +46,7 @@
                   (click)="onUpdate(category)"
                   aria-label="Open modal for updating particular category"
                   class="text-gray-400 hover:text-blue-500 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-300"
-                  pTooltip="Edit category"
+                  [pTooltip]="'categories.edit-tooltip' | translate"
                   tooltipPosition="top"
                 >
                   <ng-icon name="lucidePencil" size="18" />
@@ -51,7 +55,7 @@
             </div>
           </li>
         } @empty {
-          <p class="text-gray-500">No categories added yet. Add some to get started!</p>
+          <p class="text-gray-500">{{ 'categories.fallback' | translate }}</p>
         }
       </ul>
     }

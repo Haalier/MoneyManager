@@ -1,10 +1,11 @@
 import { Component, input, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-select',
-  imports: [NgClass],
+  imports: [NgClass, TranslatePipe],
   templateUrl: './form-select.html',
   styleUrl: './form-select.css',
 })

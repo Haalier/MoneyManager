@@ -1,19 +1,28 @@
-import { Component, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormInput } from '../../../shared/form-input/form-input';
 import { ButtonModule } from 'primeng/button';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '../auth-service';
 import { ErrorMessage } from '../../../shared/error-message/error-message';
-import { finalize, first } from 'rxjs';
+import { first } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { PhotoSelector } from './photo-selector/photo-selector';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LoadingService } from '../../../shared/services/loading-service';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-auth-form',
-  imports: [ReactiveFormsModule, FormInput, RouterLink, ErrorMessage, ButtonModule, PhotoSelector],
+  imports: [
+    ReactiveFormsModule,
+    FormInput,
+    RouterLink,
+    ErrorMessage,
+    ButtonModule,
+    PhotoSelector,
+    TranslatePipe,
+  ],
   templateUrl: './auth-form.html',
   styleUrl: './auth-form.css',
 })
@@ -24,6 +33,7 @@ export class AuthForm implements OnInit {
   private destroyRef = inject(DestroyRef);
   private fb = inject(FormBuilder);
   private loadingService = inject(LoadingService);
+  private translate = inject(TranslateService);
   protected route = this.act.snapshot.url.map((segment) => segment.path).join('/');
 
   protected isLoading = this.loadingService.isLoading;
@@ -60,9 +70,7 @@ export class AuthForm implements OnInit {
         .pipe(first(), takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: () => {
-            this.toast.show('Account created successfully!', {
-              className: 'bg-success text-white',
-            });
+            this.toast.show(this.translate.instant('auth.account-created'));
             this.errorMessage.set('');
           },
           error: (err) => {
@@ -76,7 +84,7 @@ export class AuthForm implements OnInit {
         .pipe(first(), takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: () => {
-            this.toast.success('Logged in successfully!');
+            this.toast.success(this.translate.instant('auth.logged-in'));
             this.errorMessage.set('');
           },
           error: (err) => {

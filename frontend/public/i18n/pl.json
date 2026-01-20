@@ -1,0 +1,81 @@
+{
+  "auth": {
+    "login": "Zaloguj się",
+    "login-header": "Zaloguj się na konto",
+    "login-text": "Witamy ponownie! Wprowadzić swoje dane, aby się zalogować.",
+    "login-fallback": "Nie masz konta?",
+    "signup": "Zarejestruj się",
+    "signup-header": "Utwórz konto",
+    "signup-text": "Zacznij śledzić swoje wydatki, dołączając do nas już dziś!",
+    "signup-fallback": "Masz już konto?",
+    "full-name": "Imię i naziwsko",
+    "email": "Adres Email",
+    "password": "Hasło",
+    "upload-image-tooltip": "Prześlij swoje zdjęcie",
+    "remove-image-tooltip": "Usuń swoje zdjęcie"
+  },
+  "general": {
+    "password-on-tooltip": "Pokaż hasło",
+    "password-hide-tooltip": "Ukryj hasło",
+    "income": "Dochód",
+    "expense": "Wydatek"
+  },
+  "errors": {
+    "required": "{{field}} jest wymagane.",
+    "email": "Wprowadź poprawny adres email.",
+    "min-length": "{{field}} musi mieć przynajmniej {{length}} znaków.",
+    "pattern": "Nieprawidłowy format.",
+    "future-date": "Data nie może być z przyszłości.",
+    "default": "Nieprawidłowa wartość.",
+    "fill-up": "Wypełnij formularz, aby móc go wysłać.",
+    "no-changes": "Nie wykryto żadnych zmian."
+  },
+  "sidebar-info": {
+    "dashboard": "Pulpit",
+    "category": "Kategorie",
+    "income": "Przychody",
+    "expense": "Wydatki",
+    "filters": "Filtry"
+  },
+  "emoji": {
+    "icon": "Ikona Emoji",
+    "text": "Kliknij, aby wybrać ikonę",
+    "pick": "Wybierz swoją ikonę"
+  },
+  "operations": {
+    "email": "Email",
+    "download": "Pobierz",
+    "delete-confirm": "tak, usuń",
+    "cancel": "Anuluj",
+    "logout": "Wyloguj się"
+  },
+  "categories": {
+    "all-categories": "Wszystkie Kategorie",
+    "transaction-categories": "Kategorie Transakcji",
+    "income": "Przychód",
+    "expense": "Wydatki",
+    "add": "Dodaj kategorię",
+    "update": "Zaktualizuj kategorię",
+    "add-new": "Dodaj Nową Kategorię",
+    "form-name": "Nazwa Kategorii",
+    "name-placeholder": "np. Wynagrodzenie, Zakupy, Premia...",
+    "type-placeholder": "Wybierz typ kategorii",
+    "form-type": "Typ Kategorii",
+    "edit-tooltip": "Edytuj kategorię",
+    "fallback": "Nie dodano jeszcze żadnych kategorii. Dodaj kilka, aby rozpocząć!"
+  },
+  "incomes": {
+    "all-incomes": "Wszystkie dochody",
+    "recent-incomes": "Aktualne dochody",
+    "add": "Dodaj dochód",
+    "add-new": "Dodaj Nowy Dochód",
+    "name": "Nazwa Dochodu",
+    "name-placeholder": "np. Premia śródroczna, Wypłata...",
+    "categories": "Kategorie Dochodów",
+    "categories-placeholder": "Wybierz kategorię",
+    "amount": "Kwota Dochodu",
+    "date": "Data Dochodu",
+    "delete": "Usuń dochód",
+    "fallback": "Nie dodano jeszcze żadnych dochodów. Dodaj kilka, aby rozpocząć!"
+  }
+}

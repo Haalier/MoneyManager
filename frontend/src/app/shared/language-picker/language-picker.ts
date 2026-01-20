@@ -1,5 +1,5 @@
-
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateService } from '@ngx-translate/core';
 import { Popover } from 'primeng/popover';
 
@@ -10,8 +10,9 @@ import { Popover } from 'primeng/popover';
   styleUrl: './language-picker.css',
 })
 export class LanguagePicker implements OnInit {
-  private translate = inject(TranslateService);
   private readonly LANG_KEY = 'preferredLang';
+  private translate = inject(TranslateService);
+  private readonly destroyRef = inject(DestroyRef);
 
   isOpen = signal(false);
   currentLang = signal(this.translate.getCurrentLang() || 'pl');
@@ -22,7 +23,7 @@ export class LanguagePicker implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.translate.onLangChange.subscribe((lang) => {
+    this.translate.onLangChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((lang) => {
       this.currentLang.set(lang.lang);
     });
   }

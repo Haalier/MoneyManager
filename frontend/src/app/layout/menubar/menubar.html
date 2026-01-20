@@ -1,57 +1,59 @@
 <div
-    class="flex items-center justify-between gap-5 bg-white border border-b border-gray-200/50 backdrop-blur-[2px] p-4 sm:px-7 sticky top-0 z-30">
-    <div class="flex items-center justify-center gap-5">
-        <button (click)="toggleSideMenu()"
-            class="flex items-center justify-center lg:hidden text-black hover:bg-gray-100 p-1 rounded transition-colors">
-            <ng-icon [name]="openSideMenu ? 'lucideX' : 'lucideMenu'" class="text-2xl" />
-        </button>
+  class="flex items-center justify-between gap-5 bg-white border border-b border-gray-200/50 backdrop-blur-[2px] p-4 sm:px-7 sticky top-0 z-30"
+>
+  <div class="flex items-center justify-center gap-5">
+    <button
+      (click)="toggleSideMenu()"
+      class="flex items-center justify-center lg:hidden text-black hover:bg-gray-100 p-1 rounded transition-colors"
+    >
+      <ng-icon [name]="openSideMenu ? 'lucideX' : 'lucideMenu'" class="text-2xl" />
+    </button>
 
-        <div class="flex items-center gap-2">
-            <img src="logo.png" alt="Money manager logo" class="h-10 w-10">
-            <span class="text-lg font-medium text-black truncate">Money Manager</span>
+    <div class="flex items-center gap-2">
+      <img src="logo.png" alt="Money manager logo" class="h-10 w-10" />
+      <span class="text-lg font-medium text-black truncate">Money Manager</span>
+    </div>
+  </div>
+
+  <div class="relative">
+    <button
+      (click)="op.toggle($event)"
+      class="flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-800 focus:ring-offset-2"
+    >
+      <ng-icon name="lucideUser" class="text-blue-500!" size="25" />
+
+      <p-popover #op>
+        <div class="px-4 py-3 bg-gray-200 border-b border-gray-100">
+          <div class="flex items-center gap-3">
+            <div class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full">
+              <ng-icon name="lucideUser" class="w-4! h-4! text-blue-600!"></ng-icon>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-gray-800 truncate">
+                {{ user?.fullName }}
+              </p>
+              <p class="text-xs text-gray-500 truncate">
+                {{ user?.email }}
+              </p>
+            </div>
+          </div>
+          <div class="py-1">
+            <button
+              (click)="onLogOut()"
+              class="flex items-center gap-3 w-full rounded-sm px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition duration-200"
+            >
+              <ng-icon name="lucideLogOut" />
+              <span>{{ 'operations.logout' | translate }}</span>
+            </button>
+          </div>
         </div>
-    </div>
+      </p-popover>
+    </button>
+  </div>
 
-
-    <div class="relative">
-        <button (click)="op.toggle($event)"
-            class="flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-800 focus:ring-offset-2">
-            <ng-icon name="lucideUser" class="text-blue-500!" size="25" />
-
-            <p-popover #op>
-                <div class="px-4 py-3 bg-gray-200 border-b border-gray-100">
-                    <div class="flex items-center gap-3">
-                        <div class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full">
-                            <ng-icon name="lucideUser" class="w-4! h-4! text-blue-600!"></ng-icon>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <p class="text-sm font-medium text-gray-800 truncate">
-                                {{user?.fullName}}
-                            </p>
-                            <p class="text-xs text-gray-500 truncate">
-                                {{user?.email}}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="py-1">
-                        <button (click)="onLogOut()"
-                            class="flex items-center gap-3 w-full rounded-sm px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition duration-200">
-                            <ng-icon name="lucideLogOut" />
-                            <span>Logout</span>
-                        </button>
-                    </div>
-                </div>
-
-
-            </p-popover>
-
-
-        </button>
-    </div>
-
-    @if (openSideMenu) {
+  @if (openSideMenu) {
     <div class="fixed left-0 right-0 bg-white border-b border-gray-200 lg:hidden z-20 top-18.5">
-        <app-sidebar (closeSidebarEvent)="onSidebarClose()"></app-sidebar>
+      <app-sidebar (closeSidebarEvent)="onSidebarClose()"></app-sidebar>
     </div>
-    }
+  }
 </div>

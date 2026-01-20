@@ -17,7 +17,7 @@
       <option value="" disabled selected>{{ placeholder() || 'Select option' }}</option>
 
       @for (option of options(); track getOptionValue(option)) {
-        <option [value]="getOptionValue(option)">{{ getOptionLabel(option) }}</option>
+        <option [value]="getOptionValue(option)">{{ getOptionLabel(option) | translate }}</option>
       }
     </select>
   </div>

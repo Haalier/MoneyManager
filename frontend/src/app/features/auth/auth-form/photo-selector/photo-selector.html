@@ -16,8 +16,8 @@
       <button
         type="button"
         (click)="triggerFileInput()"
-        pTooltip="Upload your image"
-        aria-label="Select image you want to upload"
+        [pTooltip]="'auth.upload-image-tooltip' | translate"
+        [aria-label]="'auth.upload-image-tooltip' | translate"
         class="absolute inset-0 cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center"
       >
         <ng-icon name="lucideUpload" size="35" />
@@ -30,8 +30,8 @@
       <button
         type="button"
         (click)="removePhoto()"
-        aria-label="Remove updated image"
-        pTooltip="Remove your image"
+        [aria-label]="'auth.remove-image-tooltip' | translate"
+        [pTooltip]="'auth.remove-image-tooltip' | translate"
         class="absolute -inset-0.5 cursor-pointer opacity-0 group-hover:opacity-100 text-blue-500 hover:bg-blue-200 rounded-full transition-opacity duration-200 flex items-center justify-center z-50"
       >
         <ng-icon name="lucideTrash2" size="35" />
