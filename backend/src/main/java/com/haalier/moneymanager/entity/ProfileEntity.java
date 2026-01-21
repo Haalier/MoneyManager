@@ -42,4 +42,10 @@ public class ProfileEntity {
             this.isActive = false;
         }
     }
+
+    @Column(nullable = false)
+    private boolean dailyReminderEnabled = false;
+
+    @Column(nullable = false)
+    private boolean dailySummaryEnabled = true;
 }

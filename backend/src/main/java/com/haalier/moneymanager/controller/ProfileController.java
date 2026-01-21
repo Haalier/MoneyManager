@@ -1,6 +1,7 @@
 package com.haalier.moneymanager.controller;
 
 import com.haalier.moneymanager.dto.AuthDTO;
+import com.haalier.moneymanager.dto.NotificationSettingsDTO;
 import com.haalier.moneymanager.dto.ProfileDTO;
 import com.haalier.moneymanager.service.ProfileService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -82,5 +83,11 @@ public class ProfileController {
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/notifications")
+    public ResponseEntity<Void> updateNotificationSettings(@RequestBody NotificationSettingsDTO dto) {
+        profileService.updateNotificationSettings(dto);
+        return ResponseEntity.ok().build();
     }
 }

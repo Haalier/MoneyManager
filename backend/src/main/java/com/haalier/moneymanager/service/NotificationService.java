@@ -31,9 +31,14 @@ public class NotificationService {
     @Scheduled(cron = "0 0 18 * * *", zone = "Europe/Warsaw")
     public void sendDailyIncomeExpenseReminder() throws MessagingException {
         log.info("Job started: sendDailyIncomeExpenseReminder");
-        List<ProfileEntity> profiles = profileRepository.findAll();
+        List<ProfileEntity> profiles = profileRepository.findByDailyReminderEnabledTrue();
 
         for (ProfileEntity profile : profiles) {
+
+            if (!profile.isDailyReminderEnabled()) {
+                continue;
+            }
+
             boolean existExpenses = expenseService.hasExpensesForUserOnDate(profile.getId(),
                     LocalDate.now(ZoneId.of("Europe/Warsaw")));
             boolean existIncomes = incomeService.hasIncomesForUserOnDate(profile.getId(),
@@ -41,7 +46,8 @@ public class NotificationService {
 
             if (existExpenses && existIncomes) {
                 String body = "Hi " + profile.getFullName() + ",<br><br>" + "This is a daily reminder to add your income " +
-                        "and expenses for today in Money Manager.<br><br>" + "<a href=" + frontendUrl + "style='display" +
+                        "and expenses for today in Money Manager.<br><br>" + "<a href=" + frontendUrl + " style" +
+                        "='display" +
                         ":inline-block;padding:10px 20px;background-color:#4CAF50;color:#fff;text-decoration:none;" +
                         "border-radius:5px;font-weight:bold;'>Go to Money Manager</a>" + "<br><br>Thanks,<br>Money " +
                         "Manager Team";
@@ -56,9 +62,13 @@ public class NotificationService {
     @Transactional
     public void sendDailyExpenseSummary() throws MessagingException {
         log.info("Job started: sendDailyExpenseSummary");
-        List<ProfileEntity> profiles = profileRepository.findAll();
+        List<ProfileEntity> profiles = profileRepository.findByDailySummaryEnabledTrue();
 
         for (ProfileEntity profile : profiles) {
+            if(!profile.isDailySummaryEnabled()) {
+                continue;
+            }
+
             List<ExpenseDTO> todayExpenses = expenseService.getExpensesForUserOnDate(profile.getId(),
                     LocalDate.now(ZoneId.of("Europe/Warsaw")));
             if (todayExpenses != null) {

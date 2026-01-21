@@ -1,6 +1,7 @@
 package com.haalier.moneymanager.service;
 
 import com.haalier.moneymanager.dto.AuthDTO;
+import com.haalier.moneymanager.dto.NotificationSettingsDTO;
 import com.haalier.moneymanager.dto.ProfileDTO;
 import com.haalier.moneymanager.entity.ProfileEntity;
 import com.haalier.moneymanager.repository.ProfileRepository;
@@ -149,5 +150,12 @@ public class ProfileService {
         } catch (Exception e) {
             throw new RuntimeException("Invalid email or password.");
         }
+    }
+
+    @Transactional
+    public void updateNotificationSettings(NotificationSettingsDTO dto) {
+        ProfileEntity profile = getCurrentProfile();
+        profile.setDailyReminderEnabled(dto.isDailyReminderEnabled());
+        profile.setDailySummaryEnabled(dto.isDailySummaryEnabled());
     }
 }
