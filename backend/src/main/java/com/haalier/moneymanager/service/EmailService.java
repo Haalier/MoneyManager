@@ -1,13 +1,15 @@
 package com.haalier.moneymanager.service;
 
-import com.resend.Resend;
-import com.resend.core.exception.ResendException;
-import com.resend.services.emails.model.CreateEmailOptions;
-import com.resend.services.emails.model.CreateEmailResponse;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.InputStreamSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,73 +17,43 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class EmailService {
 
-    @Value("${resend.api.key}")
-    private String apiKey;
+    private final JavaMailSender mailSender;
 
-//    @Value("${resend.from.email}")
-//    private String fromEmail;
-
-    @Value("${resend.from.name}")
+    @Value("${spring.mail.username}")
     private String fromName;
 
-    public void sendEmail(String toEmail, String subject, String body) {
-        log.info("=== EMAIL SERVICE START ===");
-        log.info("Sending to: {}", toEmail);
-        log.info("From: {}", fromName);
-        log.info("Subject: {}", subject);
-        log.info("API Key present: {}", apiKey != null && !apiKey.isEmpty());
-        log.info("API Key starts with 're': {}", apiKey != null && apiKey.startsWith("re"));
-
-        if (apiKey == null || apiKey.isEmpty() || apiKey.startsWith("${")) {
-            log.error("CRITICAL: RESEND_API_KEY is not configured!");
-            log.error("API Key value: {}", apiKey);
-            throw new RuntimeException("Email service not configured - API key missing");
-        }
-
-
+    public void sendEmail(String to, String subject, String body) throws MessagingException {
         try {
-            log.info("Creating Resend client");
-            Resend resend = new Resend(apiKey);
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-            log.info("Building email params");
-            CreateEmailOptions params =
-                    CreateEmailOptions.builder().from("onboarding@resend.dev").to(toEmail).subject(subject).html(body)
-                            .build();
+            helper.setFrom(fromName);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(body, true);
 
-            log.info("Sending email");
-            CreateEmailResponse data = resend.emails().send(params);
-
-            log.info("Email sent. Message ID: {}", data.getId());
-            log.info("=== EMAIL SERVICE END ===");
-        } catch (ResendException ex) {
-            log.error("=== RESEND EXCEPTION ===");
-            log.error("Status Code: {}", ex.getStatusCode());
-            log.error("Error Name: {}", ex.getErrorName());
-            log.error("Error Message: {}", ex.getMessage());
-            log.error("Full exception: ", ex);
-            log.error("=========================");
-            throw new RuntimeException("Resend API error: " + ex.getMessage(), ex);
-        } catch (Exception ex) {
-            log.error("=== UNEXPECTED EXCEPTION ===");
-            log.error("Exception type: {}", ex.getClass().getName());
-            log.error("Error message: {}", ex.getMessage());
-            log.error("Full exception: ", ex);
-            log.error("============================");
-            throw new RuntimeException("Email sending failed: " + ex.getMessage(), ex);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Error while sending mail: " + e.getMessage());
         }
     }
-//    private final JavaMailSender mailSender;
 
-//    public void sendEmail(String to, String subject, String body) {
-//        try{
-//            SimpleMailMessage message = new SimpleMailMessage();
-//            message.setFrom(fromEmail);
-//            message.setTo(to);
-//            message.setSubject(subject);
-//            message.setText(body);
-//            mailSender.send(message);
-//        }catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//    }
+    public void sendEmailWithAttachment(String to, String subject, String body, byte[] attachmentBytes,
+                                        String fileName) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromName);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(body, true);
+            helper.addAttachment(fileName, new ByteArrayResource(attachmentBytes));
+
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            log.error("Failed to send email with attachment", e);
+            throw new RuntimeException("Error while sending mail with attachment: " + e.getMessage());
+        }
+    }
 }

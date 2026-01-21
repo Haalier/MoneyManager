@@ -3,6 +3,7 @@ package com.haalier.moneymanager.service;
 import com.haalier.moneymanager.dto.ExpenseDTO;
 import com.haalier.moneymanager.entity.ProfileEntity;
 import com.haalier.moneymanager.repository.ProfileRepository;
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ public class NotificationService {
     private String frontendUrl;
 
     @Scheduled(cron = "0 0 18 * * *", zone = "Europe/Warsaw")
-    public void sendDailyIncomeExpenseReminder() {
+    public void sendDailyIncomeExpenseReminder() throws MessagingException {
         log.info("Job started: sendDailyIncomeExpenseReminder");
         List<ProfileEntity> profiles = profileRepository.findAll();
 
@@ -53,7 +54,7 @@ public class NotificationService {
 
     @Scheduled(cron = "0 0 22 * * *", zone = "Europe/Warsaw")
     @Transactional
-    public void sendDailyExpenseSummary() {
+    public void sendDailyExpenseSummary() throws MessagingException {
         log.info("Job started: sendDailyExpenseSummary");
         List<ProfileEntity> profiles = profileRepository.findAll();
 
