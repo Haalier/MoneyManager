@@ -16,10 +16,10 @@ import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { AuthService } from './features/auth/auth-service';
 import { firstValueFrom } from 'rxjs';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { authInterceptor } from './interceptors/auth-interceptor';
-import { errorInterceptor } from './interceptors/error-interceptor';
 import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
+import { authInterceptor } from './core/interceptors/auth-interceptor';
+import { errorInterceptor } from './core/interceptors/error-interceptor';
 
 registerLocaleData(localePl);
 

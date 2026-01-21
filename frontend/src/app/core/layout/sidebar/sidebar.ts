@@ -1,5 +1,4 @@
 import { Component, inject, output } from '@angular/core';
-import { AuthService } from '../../features/auth/auth-service';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   lucideArrowRight,
@@ -12,6 +11,7 @@ import {
 } from '@ng-icons/lucide';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { AuthService } from '../../../features/auth/auth-service';
 
 const SIDE_BAR_DATA: { label: string; icon: string; path: string }[] = [
   {

@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '../../features/auth/auth-service';
 import { Menubar } from "../menubar/menubar";
 import { Sidebar } from "../sidebar/sidebar";
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from '../../../features/auth/auth-service';
 
 @Component({
   selector: 'app-main-layout',

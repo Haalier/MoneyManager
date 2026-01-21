@@ -3,10 +3,10 @@ import { Card } from 'primeng/card';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideMail, lucideDownload } from '@ng-icons/lucide';
 import { SpinnerComponent } from '../../../shared/spinner/spinner';
-import { LoadingService } from '../../../shared/services/loading-service';
-import { Income } from '../../../models/income.model';
+import { LoadingService } from '../../../core/services/loading-service';
 import { TransactionInfoCard } from '../../../shared/transaction-info-card/transaction-info-card';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Income } from '../../../shared/models/income.model';
 
 @Component({
   selector: 'app-income-list',

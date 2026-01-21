@@ -5,12 +5,12 @@ import { Popover } from 'primeng/popover';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Tooltip } from 'primeng/tooltip';
 import { Button } from 'primeng/button';
-import { Category } from '../../../models/category.model';
-import { LoadingService } from '../../../shared/services/loading-service';
+import { LoadingService } from '../../../core/services/loading-service';
 import { FormSelect } from '../../../shared/form-select/form-select';
-import { CategoryDTO } from '../../../models/DTO/category.dto';
 import { EmojiPicker } from '../../../shared/emoji-picker/emoji-picker';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Category } from '../../../shared/models/category.model';
+import { CategoryDTO } from '../../../shared/models/DTO/category.dto';
 
 @Component({
   selector: 'app-category-form',

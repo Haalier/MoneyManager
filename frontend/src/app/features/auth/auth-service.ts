@@ -1,6 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { User } from '../../models/user.model';
 import {
   catchError,
   EMPTY,
@@ -14,6 +13,7 @@ import {
 } from 'rxjs';
 import { Router } from '@angular/router';
 import { CategoryService } from '../category/category-service';
+import { User } from '../../shared/models/user.model';
 
 interface LoginRes {
   token: string;

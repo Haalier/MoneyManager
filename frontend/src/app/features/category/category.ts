@@ -4,9 +4,9 @@ import { lucidePlus } from '@ng-icons/lucide';
 import { CategoryList } from './category-list/category-list';
 import { Modal } from '../../shared/modal/modal';
 import { CategoryForm } from './category-form/category-form';
-import { Category as CategoryModel } from '../../models/category.model';
+import { Category as CategoryModel } from '../../shared/models/category.model';
 import { CategoryService } from './category-service';
-import { CategoryDTO } from '../../models/DTO/category.dto';
+import { CategoryDTO } from '../../shared/models/DTO/category.dto'
 import { HotToastService } from '@ngxpert/hot-toast';
 import { TranslatePipe } from '@ngx-translate/core';
 

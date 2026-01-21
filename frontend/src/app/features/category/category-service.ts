@@ -1,10 +1,10 @@
 import { DestroyRef, inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Category } from '../../models/category.model';
 import { CategoryEnum } from './CategoryEnum';
 import { tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CategoryDTO } from '../../models/DTO/category.dto';
+import { Category } from '../../shared/models/category.model';
+import { CategoryDTO } from '../../shared/models/DTO/category.dto';
 
 @Injectable({
   providedIn: 'root',

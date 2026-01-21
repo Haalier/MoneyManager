@@ -6,10 +6,10 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucideLayers, lucidePencil } from '@ng-icons/lucide';
 import { Card } from 'primeng/card';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { Category } from '../../../models/category.model';
-import { LoadingService } from '../../../shared/services/loading-service';
+import { LoadingService } from '../../../core/services/loading-service';
 import { Tooltip } from 'primeng/tooltip';
 import { TranslatePipe } from '@ngx-translate/core';
+import { Category } from '../../../shared/models/category.model';
 
 @Component({
   selector: 'app-category-list',

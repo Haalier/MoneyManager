@@ -1,12 +1,12 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { Card } from 'primeng/card';
-import { Income } from '../../../models/income.model';
 import { ChartModule } from 'primeng/chart';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { prepareChartData } from '../../../utils/prepare-chart';
+import { prepareChartData } from '../../../shared/utils/prepare-chart';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { LoadingService } from '../../../shared/services/loading-service';
+import { LoadingService } from '../../../core/services/loading-service';
 import { SpinnerComponent } from '../../../shared/spinner/spinner';
+import { Income } from '../../../shared/models/income.model';
 
 @Component({
   selector: 'app-income-overview',
@@ -25,8 +25,6 @@ export class IncomeOverview {
 
   constructor() {
     effect(() => {
-      console.log(this.transactions());
-
       const currentTransactions = this.transactions();
       const currentLang = this.translate.getCurrentLang() || 'pl';
 

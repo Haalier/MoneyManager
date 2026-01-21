@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, Input, output, signal } from '@angular/core';
+import { Component, computed, input, Input, output, signal } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   lucideUtensilsCrossed,
@@ -6,14 +6,12 @@ import {
   lucideTrendingUp,
   lucideTrendingDown,
 } from '@ng-icons/lucide';
-import { Income } from '../../models/income.model';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { Tooltip } from 'primeng/tooltip';
 import { CategoryEnum } from '../../features/category/CategoryEnum';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { Popover } from 'primeng/popover';
-import { Dialog } from 'primeng/dialog';
 import { Modal } from '../modal/modal';
+import { Income } from '../models/income.model';
 
 @Component({
   selector: 'app-transaction-info-card',

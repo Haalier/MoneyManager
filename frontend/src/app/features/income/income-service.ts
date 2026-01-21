@@ -1,9 +1,9 @@
 import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Income } from '../../models/income.model';
-import { IncomeDTO } from '../../models/DTO/income.dto';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { tap } from 'rxjs';
+import { Income } from '../../shared/models/income.model';
+import { IncomeDTO } from '../../shared/models/DTO/income.dto';
 
 @Injectable({
   providedIn: 'root',

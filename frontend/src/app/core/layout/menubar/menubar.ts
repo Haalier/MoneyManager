@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { AuthService } from '../../features/auth/auth-service';
 import { lucideLogOut, lucideMenu, lucideUser, lucideX } from '@ng-icons/lucide';
 import { PopoverModule } from 'primeng/popover';
 import { Sidebar } from '../sidebar/sidebar';
 import { TranslatePipe } from '@ngx-translate/core';
+import { AuthService } from '../../../features/auth/auth-service';
 
 @Component({
   selector: 'app-menubar',

@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './guards/auth-guard';
+import { authGuard } from './core/guards/auth-guard';
 import { AuthForm } from './features/auth/auth-form/auth-form';
-import { guestGuard } from './guards/guest-guard';
-import { AuthLayout } from './layout/auth-layout/auth-layout';
-import { MainLayout } from './layout/main-layout/main-layout';
+import { guestGuard } from './core/guards/guest-guard';
+
+
 import { inject } from '@angular/core';
 import { AuthService } from './features/auth/auth-service';
+import { MainLayout } from './core/layout/main-layout/main-layout';
+import { AuthLayout } from './core/layout/auth-layout/auth-layout';
 
 
 export const routes: Routes = [

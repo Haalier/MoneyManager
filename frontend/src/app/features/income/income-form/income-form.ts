@@ -5,16 +5,16 @@ import {
   ɵInternalFormsSharedModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { Category } from '../../../models/category.model';
 import { FormInput } from '../../../shared/form-input/form-input';
 import { FormSelect } from '../../../shared/form-select/form-select';
 import { CurrencyPipe } from '@angular/common';
 import { Button } from 'primeng/button';
-import { LoadingService } from '../../../shared/services/loading-service';
-import { IncomeDTO } from '../../../models/DTO/income.dto';
+import { LoadingService } from '../../../core/services/loading-service';
 import { EmojiPicker } from '../../../shared/emoji-picker/emoji-picker';
-import { futureDateValidator } from '../../../validators/date.validator';
+import { futureDateValidator } from '../../../core/validators/date.validator';
 import { TranslatePipe } from '@ngx-translate/core';
+import { IncomeDTO } from '../../../shared/models/DTO/income.dto';
+import { Category } from '../../../shared/models/category.model';
 
 @Component({
   selector: 'app-income-form',

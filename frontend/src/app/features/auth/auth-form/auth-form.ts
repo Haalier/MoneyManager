@@ -9,7 +9,7 @@ import { first } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { PhotoSelector } from './photo-selector/photo-selector';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { LoadingService } from '../../../shared/services/loading-service';
+import { LoadingService } from '../../../core/services/loading-service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 @Component({

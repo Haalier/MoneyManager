@@ -9,10 +9,10 @@ import { CategoryService } from '../category/category-service';
 import { CategoryEnum } from '../category/CategoryEnum';
 import { IncomeForm } from './income-form/income-form';
 import { SpinnerComponent } from '../../shared/spinner/spinner';
-import { LoadingService } from '../../shared/services/loading-service';
-import { IncomeDTO } from '../../models/DTO/income.dto';
+import { LoadingService } from '../../core/services/loading-service';
 import { TranslatePipe } from '@ngx-translate/core';
-import { IncomeOverview } from "./income-overview/income-overview";
+import { IncomeOverview } from './income-overview/income-overview';
+import { IncomeDTO } from '../../shared/models/DTO/income.dto';
 
 @Component({
   selector: 'app-income',
