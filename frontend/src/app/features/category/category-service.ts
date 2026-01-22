@@ -1,10 +1,10 @@
 import { DestroyRef, inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CategoryEnum } from './CategoryEnum';
 import { tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Category } from '../../shared/models/category.model';
 import { CategoryDTO } from '../../shared/models/DTO/category.dto';
+import { TransactionType } from '../../shared/enums/transactions.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class CategoryService {
 
   private allCategoriesSignal = signal<Category[] | null>(null);
 
-  private categoriesByTypeCache = new Map<CategoryEnum, WritableSignal<Category[]>>();
+  private categoriesByTypeCache = new Map<TransactionType, WritableSignal<Category[]>>();
 
   public getAllCategories() {
     if (this.allCategoriesSignal() === null) {
@@ -35,7 +35,7 @@ export class CategoryService {
   public addCategory(newCategory: CategoryDTO) {
     return this.http.post<Category>(this.URL, newCategory).pipe(
       tap((addedCategory) => {
-        const type = addedCategory.type as CategoryEnum;
+        const type = addedCategory.type as TransactionType;
         if (this.categoriesByTypeCache.has(type)) {
           this.categoriesByTypeCache.get(type)?.update((cats) => [...cats, addedCategory]);
         }
@@ -64,7 +64,7 @@ export class CategoryService {
     this.allCategoriesSignal.set(null);
   }
 
-  public getCategoryByType(type: CategoryEnum) {
+  public getCategoryByType(type: TransactionType) {
     if (!this.categoriesByTypeCache.has(type)) {
       this.categoriesByTypeCache.set(type, signal<Category[]>([]));
       this.refreshCategoriesByType(type);
@@ -73,7 +73,7 @@ export class CategoryService {
     return this.categoriesByTypeCache.get(type)!.asReadonly();
   }
 
-  private refreshCategoriesByType(type: CategoryEnum): void {
+  private refreshCategoriesByType(type: TransactionType): void {
     this.http
       .get<Category[]>(`${this.URL}/${type}`)
       .pipe(takeUntilDestroyed(this.destroyRef))

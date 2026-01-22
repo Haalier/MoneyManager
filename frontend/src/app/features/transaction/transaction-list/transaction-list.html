@@ -1,0 +1,51 @@
+<p-card class="w-full mx-auto">
+  @if (isLoading()) {
+    <app-spinner></app-spinner>
+  } @else {
+    <div class="flex items-center justify-between">
+      <h5 class="text-lg">{{ type() + '.recent-' + type() + 's' | translate }}</h5>
+      <div class="flex flex-col sm:flex-row items-center justify-end gap-2">
+        <p-button
+          [loading]="emailLoader()"
+          [pTooltip]="type() + '.email.tooltip' | translate"
+          tooltipPosition="top"
+          variant="outlined"
+          raised="true"
+          size="small"
+          (onClick)="onTransactionEmail()"
+        >
+          <ng-icon name="lucideMail" size="15" class="text-base!"></ng-icon>
+          <span>{{ 'operations.email' | translate }}</span>
+        </p-button>
+        <p-button
+          [loading]="downloadLoader()"
+          variant="outlined"
+          [pTooltip]="type() + '.download.tooltip' | translate"
+          tooltipPosition="top"
+          raised="true"
+          size="small"
+          (onClick)="onTransactionDownload()"
+        >
+          <ng-icon name="lucideDownload" size="15"></ng-icon>
+          <span>{{ 'operations.download' | translate }}</span>
+        </p-button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3">
+      @if (transactions(); as transactions) {
+        @for (transaction of transactions; track transaction.id; let i = $index) {
+          <app-transaction-info-card
+            [transaction]="transaction"
+            [type]="type()"
+            [style.--index]="i"
+            (delete)="onDelete($event)"
+            animate.enter="slide-in"
+          ></app-transaction-info-card>
+        } @empty {
+          <p class="text-gray-500">{{ type() + '.fallback' | translate }}</p>
+        }
+      }
+    </div>
+  }
+</p-card>

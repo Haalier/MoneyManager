@@ -1,21 +1,24 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
-import { Card } from 'primeng/card';
-import { ChartModule } from 'primeng/chart';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { prepareChartData } from '../../../shared/utils/prepare-chart';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { LoadingService } from '../../../core/services/loading-service';
-import { SpinnerComponent } from '../../../shared/spinner/spinner';
-import { Income } from '../../../shared/models/income.model';
+import { LoadingService } from '../../core/services/loading-service';
+import { TranslateService } from '@ngx-translate/core';
+import { Income } from '../models/income.model';
+import { Expense } from '../models/expense.model';
+import { prepareChartData } from '../utils/prepare-chart';
+import { TranslatePipe } from '@ngx-translate/core';
+import { TransactionType } from '../enums/transactions.enum';
+import { SpinnerComponent } from "../spinner/spinner";
+import { Card } from "primeng/card";
+import { ChartModule } from "primeng/chart";
 
 @Component({
-  selector: 'app-income-overview',
-  imports: [Card, ChartModule, TranslatePipe, SpinnerComponent],
-  templateUrl: './income-overview.html',
-  styleUrl: './income-overview.css',
+  selector: 'app-chart-overview',
+  imports: [TranslatePipe, SpinnerComponent, Card, ChartModule],
+  templateUrl: './chart-overview.html',
+  styleUrl: './chart-overview.css',
 })
-export class IncomeOverview {
-  transactions = input.required<Income[] | null>();
+export class ChartOverview {
+  public type = input.required<TransactionType>();
+  public transactions = input.required<Income[] | Expense[] | null>();
   private translate = inject(TranslateService);
   private loadingService = inject(LoadingService);
   protected isLoading = this.loadingService.isLoading;
@@ -27,6 +30,7 @@ export class IncomeOverview {
     effect(() => {
       const currentTransactions = this.transactions();
       const currentLang = this.translate.getCurrentLang() || 'pl';
+      const currentType = this.type();
 
       if (currentTransactions && currentTransactions.length > 0) {
         const prepared = prepareChartData(currentTransactions, currentLang);
@@ -50,8 +54,10 @@ export class IncomeOverview {
                   const itemsList = group.items
                     .map((i: any) => `- ${i.name}: ${i.amount}`)
                     .join('\n');
-                  const totalLabel = this.translate.instant('incomes.overview.total');
-                  const transactionsLabel = this.translate.instant('incomes.overview.transactions');
+                  const totalLabel = this.translate.instant(`${currentType}.overview.total`);
+                  const transactionsLabel = this.translate.instant(
+                    `${currentType}.overview.transactions`,
+                  );
 
                   return [
                     `${totalLabel}: ${group.totalAmount}`,
@@ -67,13 +73,6 @@ export class IncomeOverview {
             y: { beginAtZero: true },
           },
         });
-      }
-    });
-
-    this.translate.onLangChange.pipe(takeUntilDestroyed()).subscribe((event) => {
-      const currentTransactions = this.transactions();
-      if (currentTransactions) {
-        this.chartData.set(prepareChartData(currentTransactions, event.lang));
       }
     });
   }

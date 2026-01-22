@@ -67,7 +67,7 @@
     "edit-tooltip": "Edit category",
     "fallback": "No categories added yet. Add some to get started!"
   },
-  "incomes": {
+  "income": {
     "all-incomes": "All Incomes",
     "recent-incomes": "Recent Incomes",
     "add": "Add income",
@@ -80,9 +80,49 @@
     "date": "Income Date",
     "delete": "Delete income",
     "fallback": "No incomes added yet. Add some to get started!",
+    "download": {
+      "success": "File was successfully downloaded.",
+      "error": "An error occurred while downloading the file.",
+      "tooltip": "Click to download xlsx file."
+    },
+    "email": {
+      "success": "Email was successfully sent.",
+      "error": "An error occurred while sending email.",
+      "tooltip": "Click to send xlsx file via email."
+    },
     "overview": {
       "header": "Income Overview",
       "text": "Track your earnings over time and analyze your income trends.",
+      "total": "Total",
+      "transactions": "Transactions"
+    }
+  },
+  "expense": {
+    "all-expenses": "All Expenses",
+    "recent-expenses": "Recent Expenses",
+    "add": "Add expense",
+    "add-new": "Add New Expense",
+    "name": "Expense Name",
+    "name-placeholder": "e.g., Shopping, fastfood...",
+    "categories": "Expense Categories",
+    "categories-placeholder": "Select category",
+    "amount": "Expense Amount",
+    "date": "Expense Date",
+    "delete": "Delete expense",
+    "fallback": "No expense added yet. Add some to get started!",
+    "download": {
+      "success": "File was successfully downloaded.",
+      "error": "An error occurred while downloading the file.",
+      "tooltip": "Click to download xlsx file."
+    },
+    "email": {
+      "success": "Email was successfully sent.",
+      "error": "An error occurred while sending email.",
+      "tooltip": "Click to send xlsx file via email."
+    },
+    "overview": {
+      "header": "Expense Overview",
+      "text": "Track your spending over time and analyze your expense trends.",
       "total": "Total",
       "transactions": "Transactions"
     }

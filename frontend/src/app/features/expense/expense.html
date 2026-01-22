@@ -1,1 +1,38 @@
-<div>this is expense page</div>
+<div class="my-5 mx-auto">
+  <div class="grid grid-cols-1 gap-6">
+    <div class="flex items-center">
+      <h2 class="text-2xl font-semibold">{{ 'expense.all-expenses' | translate }}</h2>
+      <button type="button" class="btn-add ml-auto" (click)="onDialogToggle()">
+        <ng-icon name="lucidePlus" size="18" />
+        {{ 'expense.add' | translate }}
+      </button>
+    </div>
+
+    @if (transactions() && transactions()!.length > 0) {
+      <app-chart-overview [type]="TYPE" [transactions]="transactions()"></app-chart-overview>
+    }
+
+    <app-transaction-list
+      [transactions]="transactions()"
+      [type]="TYPE"
+      (delete)="onDelete($event)"
+      (downloadExcel)="onExcelDownload()"
+      (sendEmailWithTransaction)="onEmailSend()"
+      [downloadLoader]="downloadLoader()"
+      [emailLoader]="emailLoader()"
+    ></app-transaction-list>
+
+    <app-modal [(isModalVisible)]="addDialogVisible" [headerText]="'income.add-new' | translate">
+      @if (categories()) {
+        <app-transaction-form
+          #expenseForm
+          [type]="TYPE"
+          [categories]="categories()"
+          (save)="onSubmitForm($event)"
+        ></app-transaction-form>
+      } @else {
+        <app-spinner></app-spinner>
+      }
+    </app-modal>
+  </div>
+</div>

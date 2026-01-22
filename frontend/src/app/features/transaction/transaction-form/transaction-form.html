@@ -1,18 +1,18 @@
-<form class="p4" [formGroup]="incomeForm" (ngSubmit)="onSubmit()">
+<form class="p4" [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
   <app-emoji-picker formControlName="icon"></app-emoji-picker>
 
   <app-input
     id="name"
-    [label]="'incomes.name' | translate"
-    [placeholder]="'incomes.name-placeholder' | translate"
+    [label]="type() + '.name' | translate"
+    [placeholder]="type() + '.name-placeholder' | translate"
     formControlName="name"
   >
   </app-input>
 
   <app-select
     id="categoryId"
-    [label]="'incomes.categories' | translate"
-    [placeholder]="'incomes.categories-placeholder' | translate"
+    [label]="type() + '.categories' | translate"
+    [placeholder]="type() + '.categories-placeholder' | translate"
     [options]="categories()"
     formControlName="categoryId"
     bindLabel="name"
@@ -21,7 +21,7 @@
 
   <app-input
     id="amount"
-    [label]="'incomes.amount' | translate"
+    [label]="type() + '.amount' | translate"
     type="number"
     [placeholder]="('1000' | currency: 'PLN' : 'symbol' : '1.2-2' : 'pl') ?? '$1000'"
     formControlName="amount"
@@ -29,7 +29,7 @@
 
   <app-input
     id="date"
-    [label]="'incomes.date' | translate"
+    [label]="type() + '.date' | translate"
     type="date"
     formControlName="date"
   ></app-input>
@@ -39,10 +39,10 @@
       type="submit"
       [loading]="isLoading()"
       [unstyled]="true"
-      [disabled]="incomeForm.invalid"
+      [disabled]="transactionForm.invalid"
       styleClass="disabled:cursor-not-allowed disabled:grayscale-75 disabled:hover:bg-green-600/30 disabled:transition-none bg-green-600/30 hover:bg-green-600/40 text-green-600 font-medium py-2 px-4 rounded-md transition duration-300 flex items-center justify-center gap-2"
     >
-      <span>{{ 'incomes.add' | translate }}</span>
+      <span>{{ type() + '.add' | translate }}</span>
     </p-button>
   </div>
 </form>

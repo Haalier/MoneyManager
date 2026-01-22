@@ -1,52 +1,57 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject, Signal, signal, ViewChild } from '@angular/core';
 import { IncomeService } from './income-service';
-import { IncomeList } from './income-list/income-list';
 import { Modal } from '../../shared/modal/modal';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { lucidePlus } from '@ng-icons/lucide';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { CategoryService } from '../category/category-service';
-import { CategoryEnum } from '../category/CategoryEnum';
-import { IncomeForm } from './income-form/income-form';
 import { SpinnerComponent } from '../../shared/spinner/spinner';
 import { LoadingService } from '../../core/services/loading-service';
-import { TranslatePipe } from '@ngx-translate/core';
-import { IncomeOverview } from './income-overview/income-overview';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { IncomeDTO } from '../../shared/models/DTO/income.dto';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { finalize, Observable } from 'rxjs';
+import { ChartOverview } from '../../shared/chart-overview/chart-overview';
+import { TransactionType } from '../../shared/enums/transactions.enum';
+import { TransactionList } from '../transaction/transaction-list/transaction-list';
+import { TransactionForm } from '../transaction/transaction-form/transaction-form';
+import { BaseTransactionComponent } from '../transaction/base-transaction/base-transaction';
+import { Category } from '../../shared/models/category.model';
 
 @Component({
   selector: 'app-income',
-  imports: [IncomeList, Modal, NgIcon, IncomeForm, SpinnerComponent, TranslatePipe, IncomeOverview],
+  imports: [
+    Modal,
+    NgIcon,
+    SpinnerComponent,
+    TranslatePipe,
+    ChartOverview,
+    TransactionList,
+    TransactionForm,
+  ],
   templateUrl: './income.html',
   styleUrl: './income.css',
   viewProviders: [provideIcons({ lucidePlus })],
 })
-export class Income {
-  @ViewChild('incomeForm') incomeFormRef!: IncomeForm;
+export class Income extends BaseTransactionComponent<IncomeDTO> {
+  protected override TYPE = TransactionType.INCOME;
+  protected override filename = 'income_details.xlsx';
+  private incomeService = inject(IncomeService);
+  protected override transactions = this.incomeService.getCurrentMonthIncomes();
+  protected override categories = this.categoryService.getCategoryByType(this.TYPE);
 
-  private TYPE = CategoryEnum.INCOME;
-  protected incomeService = inject(IncomeService);
-  private categoryService = inject(CategoryService);
-  private loadingService = inject(LoadingService);
-  isLoading = this.loadingService;
-  addDialogVisible = signal<boolean>(false);
-  protected incomeCategories = this.categoryService.getCategoryByType(this.TYPE);
-  protected transactions = this.incomeService.getCurrentMonthIncomes();
-
-  protected onDialogToggle(): void {
-    this.addDialogVisible.set(true);
+  protected override addAction(data: IncomeDTO): Observable<any> {
+    return this.incomeService.addIncome(data);
   }
 
-  onSubmitForm(event: IncomeDTO) {
-    this.incomeService.addIncome(event).subscribe({
-      next: () => {
-        this.addDialogVisible.set(false);
-        this.incomeFormRef.resetForm();
-      },
-    });
+  protected override deleteAction(id: number): Observable<any> {
+    return this.incomeService.deleteIncome(id);
   }
 
-  onDeleteIncome(incomeId: number) {
-    this.incomeService.deleteIncome(incomeId).subscribe();
+  protected override downloadAction(): Observable<Blob> {
+    return this.incomeService.downloadIncomeExcel();
+  }
+
+  protected override emailAction(): Observable<any> {
+    return this.incomeService.sendEmailWithIncomeExcel();
   }
 }

@@ -3,8 +3,8 @@
     [class]="iconStyles()"
     class="w-12 h-12 flex items-center aspect-square justify-center text-xl text-gray-800 bg-gray-100 rounded-full"
   >
-    @if (income.icon) {
-      <ngx-emoji [emoji]="income.icon" [size]="32" class="leading-none"></ngx-emoji>
+    @if (transaction().icon) {
+      <ngx-emoji [emoji]="transaction().icon" [size]="32" class="leading-none"></ngx-emoji>
     } @else {
       <ng-icon name="lucideUtensilsCrossed" class="text-blue-500!"></ng-icon>
     }
@@ -15,24 +15,24 @@
       <p
         #textEl
         class="text-sm text-gray-700 font-medium truncate"
-        [pTooltip]="isTruncated(textEl) ? income.name : ''"
+        [pTooltip]="isTruncated(textEl) ? transaction().name : ''"
         tooltipPosition="top"
       >
-        {{ income.name }}
+        {{ transaction().name }}
       </p>
       <p class="text-[10px] uppercase tracking-wider text-gray-500 mt-1">
-        {{ income.date | date: 'dd/MM/yyyy' }}
+        {{ transaction().date | date: 'dd/MM/yyyy' }}
       </p>
     </div>
 
     <div class="flex items-center gap-2">
-      @if (!hideDeleteButton) {
+      @if (!hideDeleteButton()) {
         <button
           (click)="onDeleteModalVisible()"
           type="button"
           aria-label="Click to delete particular income"
           class="text-gray-400 hover:text-red-800 opacity-100 md:opacity-0 group-hover:opacity-100 md:translate-x-2 group-hover:translate-x-0 transition-all duration-300 flex items-center justify-center"
-          pTooltip="Delete income"
+          [pTooltip]="'incomes.delete' | translate"
           tooltipPosition="top"
         >
           <ng-icon name="lucideTrash2" size="18"></ng-icon>
@@ -70,10 +70,10 @@
 
       <div [class]="getComputedStyles()" class="flex items-center gap-2 px-2 py-1.5 rounded-m">
         <h6 class="text-xs font-medium">
-          {{ type() === CategoryEnum.INCOME ? '+' : '-' }}
-          {{ income.amount | currency: 'PLN' : 'symbol' : '1.2-2' : 'pl' }}
+          {{ type() === TransactionType.INCOME ? '+' : '-' }}
+          {{ transaction().amount | currency: 'PLN' : 'symbol' : '1.2-2' : 'pl' }}
         </h6>
-        @if (type() === CategoryEnum.INCOME) {
+        @if (type() === TransactionType.INCOME) {
           <ng-icon name="lucideTrendingUp"></ng-icon>
         } @else {
           <ng-icon name="lucideTrendingDown"></ng-icon>

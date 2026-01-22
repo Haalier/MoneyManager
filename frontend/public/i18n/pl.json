@@ -65,7 +65,7 @@
     "edit-tooltip": "Edytuj kategorię",
     "fallback": "Nie dodano jeszcze żadnych kategorii. Dodaj kilka, aby rozpocząć!"
   },
-  "incomes": {
+  "income": {
     "all-incomes": "Wszystkie dochody",
     "recent-incomes": "Aktualne dochody",
     "add": "Dodaj dochód",
@@ -78,9 +78,49 @@
     "date": "Data Dochodu",
     "delete": "Usuń dochód",
     "fallback": "Nie dodano jeszcze żadnych dochodów. Dodaj kilka, aby rozpocząć!",
+    "download": {
+      "success": "Plik został pomyślnie pobrany.",
+      "error": "Wystąpił problem podczas pobierania pliku.",
+      "tooltip": "Kliknij aby pobrać plik xlsx."
+    },
+    "email": {
+      "success": "Email został pomyślnie wysłany.",
+      "error": "Wystąpił problem podczas wysyłania emaila.",
+      "tooltip": "Kliknij aby wysłać plik xlsx na maila."
+    },
     "overview": {
       "header": "Przegląd Dochodów",
       "text": "Śledź swoje zarobki i analizuj trendy dotyczące dochodów.",
+      "total": "Suma",
+      "transactions": "Transakcje"
+    }
+  },
+  "expense": {
+    "all-expenses": "Wszystkie wydatki",
+    "recent-expenses": "Aktualne wydatki",
+    "add": "Dodaj wydatek",
+    "add-new": "Dodaj Nowy Wydatek",
+    "name": "Nazwa Wydatku",
+    "name-placeholder": "np. Zakupy, fastfood...",
+    "categories": "Kategorie Wydatków",
+    "categories-placeholder": "Wybierz kategorię",
+    "amount": "Kwota Wydatku",
+    "date": "Data Wydatku",
+    "delete": "Usuń Wydatek",
+    "fallback": "Nie dodano jeszcze żadnych wydatków. Dodaj kilka, aby rozpocząć!",
+    "download": {
+      "success": "Plik został pomyślnie pobrany.",
+      "error": "Wystąpił problem podczas pobierania pliku.",
+      "tooltip": "Kliknij aby pobrać plik xlsx."
+    },
+    "email": {
+      "success": "Email został pomyślnie wysłany.",
+      "error": "Wystąpił problem podczas wysyłania emaila.",
+      "tooltip": "Kliknij aby wysłać plik xlsx na maila."
+    },
+    "overview": {
+      "header": "Przegląd Wydatków",
+      "text": "Śledź swoje wydatki i sprawdzaj, jak zmieniają się one na przestrzeni czasu.",
       "total": "Suma",
       "transactions": "Transakcje"
     }
