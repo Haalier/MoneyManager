@@ -1,19 +1,16 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ChartOverview } from '../../shared/chart-overview/chart-overview';
 import { TransactionList } from '../transaction/transaction-list/transaction-list';
 import { Modal } from '../../shared/modal/modal';
 import { TransactionForm } from '../transaction/transaction-form/transaction-form';
 import { SpinnerComponent } from '../../shared/spinner/spinner';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslatePipe } from '@ngx-translate/core';
 import { lucidePlus } from '@ng-icons/lucide';
 import { TransactionType } from '../../shared/enums/transactions.enum';
 import { ExpenseService } from './expense-service';
-import { CategoryService } from '../category/category-service';
-import { HotToastService } from '@ngxpert/hot-toast';
-import { LoadingService } from '../../core/services/loading-service';
 import { ExpenseDTO } from '../../shared/models/DTO/expense.dto';
-import { finalize, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { BaseTransactionComponent } from '../transaction/base-transaction/base-transaction';
 
 @Component({
