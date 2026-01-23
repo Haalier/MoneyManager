@@ -1,0 +1,14 @@
+[build]
+  # Folder, do którego Netlify ma "wejść" przed budowaniem
+  base = "frontend"
+  
+  # Komenda uruchamiana wewnątrz folderu frontend
+  command = "npm run build"
+  
+  # Ścieżka do plików wynikowych (względem folderu frontend)
+  publish = "dist/frontend/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
