@@ -111,10 +111,7 @@ export class AuthService {
   public logout() {
     return this.http.post(`${this.URL}/logout`, {}).pipe(
       tap((_) => {
-        console.log('inside logout');
-
         this._user.set(null);
-        console.log('user ', this._user());
 
         this.router.navigate(['/login']);
         this.categoryService.resetCategories();
