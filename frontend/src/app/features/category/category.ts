@@ -6,9 +6,9 @@ import { Modal } from '../../shared/modal/modal';
 import { CategoryForm } from './category-form/category-form';
 import { Category as CategoryModel } from '../../shared/models/category.model';
 import { CategoryService } from './category-service';
-import { CategoryDTO } from '../../shared/models/DTO/category.dto'
-import { HotToastService } from '@ngxpert/hot-toast';
+import { CategoryDTO } from '../../shared/models/DTO/category.dto';
 import { TranslatePipe } from '@ngx-translate/core';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-category',
@@ -23,7 +23,7 @@ export class Category {
   protected categoryData = signal<CategoryModel | null>(null);
   protected categoryService = inject(CategoryService);
   protected categories = this.categoryService.getAllCategories();
-  private toast = inject(HotToastService);
+  private messageService = inject(MessageService);
   protected isEditMode = computed(() => !!this.categoryData());
 
   protected openEditModal(category: CategoryModel) {
@@ -48,7 +48,11 @@ export class Category {
           ? 'Category successfully updated!'
           : 'Category successfully added!';
         this.dialogVisible.set(false);
-        this.toast.success(msg);
+        this.messageService.add({
+          severity: 'success',
+          summary: msg,
+          detail: '',
+        });
         this.categoryFormRef.resetForm();
       },
     });

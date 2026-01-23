@@ -2,11 +2,11 @@ import { Directive, inject, Signal, signal, ViewChild } from '@angular/core';
 import { TransactionForm } from '../transaction-form/transaction-form';
 import { CategoryService } from '../../category/category-service';
 import { LoadingService } from '../../../core/services/loading-service';
-import { HotToastService } from '@ngxpert/hot-toast';
 import { TranslateService } from '@ngx-translate/core';
 import { TransactionType } from '../../../shared/enums/transactions.enum';
 import { finalize, Observable } from 'rxjs';
 import { Category } from '../../../shared/models/category.model';
+import { MessageService } from 'primeng/api';
 
 @Directive()
 export abstract class BaseTransactionComponent<T> {
@@ -14,7 +14,7 @@ export abstract class BaseTransactionComponent<T> {
 
   protected categoryService = inject(CategoryService);
   protected loadingService = inject(LoadingService);
-  protected toast = inject(HotToastService);
+  private messageService = inject(MessageService);
   protected translate = inject(TranslateService);
 
   isLoading = this.loadingService.isLoading;
@@ -64,10 +64,18 @@ export abstract class BaseTransactionComponent<T> {
           link.click();
           link.parentNode?.removeChild(link);
           window.URL.revokeObjectURL(url);
-          this.toast.success(this.translate.instant(`${this.TYPE}.download.success`));
+          this.messageService.add({
+            severity: 'success',
+            summary: this.translate.instant(`${this.TYPE}.download.success`),
+            detail: '',
+          });
         },
         error: () =>
-          this.toast.error(this.translate.instant(`${this.TYPE}.download.error`)),
+          this.messageService.add({
+            severity: 'error',
+            summary: this.translate.instant(`${this.TYPE}.download.error`),
+            detail: '',
+          }),
       });
   }
 
@@ -76,9 +84,16 @@ export abstract class BaseTransactionComponent<T> {
     this.emailAction()
       .pipe(finalize(() => this.emailLoader.set(false)))
       .subscribe({
-        next: () =>
-          this.toast.success(this.translate.instant(`${this.TYPE}.email.success`)),
-        error: () => this.toast.error(this.translate.instant(`${this.TYPE}.email.error`)),
+        next: () => this.messageService.add({
+          severity: 'success',
+          summary: this.translate.instant(`${this.TYPE}.email.success`),
+          detail: '',
+        }),
+        error: () => this.messageService.add({
+          severity: 'error',
+          summary: this.translate.instant(`${this.TYPE}.email.error`),
+          detail: '',
+        }),
       });
   }
 }

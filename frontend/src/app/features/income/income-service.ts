@@ -5,11 +5,13 @@ import { tap } from 'rxjs';
 import { Income } from '../../shared/models/income.model';
 import { IncomeDTO } from '../../shared/models/DTO/income.dto';
 import { SKIP_LOADING } from '../../core/context/loading.context';
+import { DashboardService } from '../home/dashboard-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IncomeService {
+  private dashboardService = inject(DashboardService);
   private readonly http = inject(HttpClient);
   private readonly URL = 'https://moneymanager-1-vrgj.onrender.com/api/v1.0/incomes';
   private readonly DOWNLOAD_EXCEL_URL =
@@ -49,6 +51,7 @@ export class IncomeService {
   public addIncome(newIncome: IncomeDTO) {
     return this.http.post<Income>(this.URL, newIncome).pipe(
       tap((data) => {
+        this.dashboardService.refresh();
         if (this.incomesSignal() !== null) {
           this.incomesSignal.update((incomes) => [...(incomes || []), data]);
         }
@@ -64,6 +67,7 @@ export class IncomeService {
   public deleteIncome(incomeId: number) {
     return this.http.delete(`${this.URL}/${incomeId}`).pipe(
       tap(() => {
+        this.dashboardService.refresh();
         const incomeToDelete = this.incomesSignal()?.find((i) => i.id === incomeId);
 
         if (this.incomesSignal() !== null) {

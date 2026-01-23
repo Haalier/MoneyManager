@@ -32,10 +32,10 @@
       [emailLoader]="emailLoader()"
     ></app-transaction-list>
 
-    <app-modal [(isModalVisible)]="addDialogVisible" [headerText]="'income.add-new' | translate">
+    <app-modal [(isModalVisible)]="addDialogVisible" [headerText]="'expense.add-new' | translate">
       @if (categories()) {
         <app-transaction-form
-          #expenseForm
+          #transactionForm
           [type]="TYPE"
           [categories]="categories()"
           (save)="onSubmitForm($event)"

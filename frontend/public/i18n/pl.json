@@ -49,6 +49,7 @@
     "email": "Email",
     "download": "Pobierz",
     "delete-confirm": "tak, usuń",
+    "delete-header": "Potwierdź usunięcie",
     "cancel": "Anuluj",
     "logout": "Wyloguj się"
   },
@@ -81,6 +82,10 @@
     "delete": "Usuń dochód",
     "fallback": "Nie dodano jeszcze żadnych dochodów. Dodaj kilka, aby rozpocząć!",
     "no-categories": "Proszę najpierw dodać kategorie dochodów.",
+    "delete_modal": {
+      "text": "Czy na pewno chcesz usunąć ten dochód?",
+      "hint": "Tej operacji nie można cofnąć."
+    },
     "download": {
       "success": "Plik został pomyślnie pobrany.",
       "error": "Wystąpił problem podczas pobierania pliku.",
@@ -112,6 +117,10 @@
     "delete": "Usuń Wydatek",
     "fallback": "Nie dodano jeszcze żadnych wydatków. Dodaj kilka, aby rozpocząć!",
     "no-categories": "Proszę najpierw dodać kategorie wydatków.",
+    "delete_modal": {
+      "text": "Czy na pewno chcesz usunąć ten wydatek?",
+      "hint": "Tej operacji nie można cofnąć."
+    },
     "download": {
       "success": "Plik został pomyślnie pobrany.",
       "error": "Wystąpił problem podczas pobierania pliku.",

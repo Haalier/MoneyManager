@@ -12,7 +12,6 @@ import { provideTranslateService, provideTranslateLoader } from '@ngx-translate/
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
-import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { AuthService } from './features/auth/auth-service';
 import { firstValueFrom } from 'rxjs';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -44,32 +43,6 @@ export const appConfig: ApplicationConfig = {
         preset: Aura,
         options: {
           darkModeSelector: false,
-        },
-      },
-    }),
-    provideHotToastConfig({
-      stacking: 'depth',
-      visibleToasts: 6,
-      duration: 3000,
-      success: {
-        style: {
-          background: 'hsl(143, 85%, 96%)',
-          borderColor: 'hsl(145, 92%, 87%)',
-          color: 'hsl(140, 100%, 27%)',
-        },
-      },
-      error: {
-        style: {
-          background: 'hsl(359, 100%, 97%)',
-          borderColor: 'hsl(359, 100%, 94%)',
-          color: 'hsl(360, 100%, 45%)',
-        },
-      },
-      info: {
-        style: {
-          background: 'hsl(208, 100%, 97%)',
-          borderColor: 'hsl(221, 91%, 93%)',
-          color: 'hsl(210, 92%, 45%)',
         },
       },
     }),

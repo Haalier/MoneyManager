@@ -6,7 +6,6 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AuthService } from '../auth-service';
 import { ErrorMessage } from '../../../shared/error-message/error-message';
 import { first } from 'rxjs';
-import { HotToastService } from '@ngxpert/hot-toast';
 import { PhotoSelector } from './photo-selector/photo-selector';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LoadingService } from '../../../core/services/loading-service';
@@ -28,7 +27,6 @@ import { MessageService } from 'primeng/api';
   styleUrl: './auth-form.css',
 })
 export class AuthForm implements OnInit {
-  private toast = inject(HotToastService);
   private messageService = inject(MessageService);
   private act = inject(ActivatedRoute);
   private authService = inject(AuthService);
@@ -72,7 +70,6 @@ export class AuthForm implements OnInit {
         .pipe(first(), takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: () => {
-            // this.toast.show(this.translate.instant('auth.account-created'));
             this.messageService.add({
               severity: 'success',
               summary: this.translate.instant('auth.account-created'),
@@ -96,7 +93,6 @@ export class AuthForm implements OnInit {
               summary: this.translate.instant('auth.logged-in'),
               detail: '',
             });
-            // this.toast.success(this.translate.instant('auth.logged-in'));
             this.errorMessage.set('');
           },
           error: (err) => {

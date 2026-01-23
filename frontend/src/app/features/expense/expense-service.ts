@@ -5,11 +5,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ExpenseDTO } from '../../shared/models/DTO/expense.dto';
 import { tap } from 'rxjs';
 import { SKIP_LOADING } from '../../core/context/loading.context';
+import { DashboardService } from '../home/dashboard-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExpenseService {
+  private dashboardService = inject(DashboardService);
   private readonly http = inject(HttpClient);
   private readonly URL = 'https://moneymanager-1-vrgj.onrender.com/api/v1.0/expenses';
   private readonly DOWNLOAD_EXCEL_URL =
@@ -50,6 +52,7 @@ export class ExpenseService {
   public addExpense(newExpense: ExpenseDTO) {
     return this.http.post<Expense>(this.URL, newExpense).pipe(
       tap((data) => {
+        this.dashboardService.refresh();
         if (this.expensesSignal() !== null) {
           this.expensesSignal.update((expenses) => [...(expenses || []), data]);
         }
@@ -65,6 +68,7 @@ export class ExpenseService {
   public deleteExpense(expenseId: number) {
     return this.http.delete(`${this.URL}/${expenseId}`).pipe(
       tap(() => {
+        this.dashboardService.refresh();
         const expenseToDelete = this.expensesSignal()?.find((e) => e.id === expenseId);
 
         if (this.expensesSignal() !== null) {

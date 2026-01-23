@@ -50,6 +50,7 @@
     "email": "Email",
     "download": "Download",
     "delete-confirm": "Yes, delete",
+    "delete-header": "Confirm deletion",
     "cancel": "Cancel",
     "logout": "Logout"
   },
@@ -82,6 +83,10 @@
     "delete": "Delete income",
     "fallback": "No incomes added yet. Add some to get started!",
     "no-categories": "Please add income categories first.",
+    "delete_modal": {
+      "text": "Are you sure you want to delete this income?",
+      "hint": "This action cannot be undone."
+    },
     "download": {
       "success": "File was successfully downloaded.",
       "error": "An error occurred while downloading the file.",
@@ -113,6 +118,10 @@
     "delete": "Delete expense",
     "fallback": "No expense added yet. Add some to get started!",
     "no-categories": "Please add expense categories first.",
+    "delete_modal": {
+      "text": "Are you sure you want to delete this expense?",
+      "hint": "This action cannot be undone."
+    },
     "download": {
       "success": "File was successfully downloaded.",
       "error": "An error occurred while downloading the file.",

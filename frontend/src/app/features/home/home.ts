@@ -21,7 +21,7 @@ export class Home implements OnInit {
   private router = inject(Router);
 
   ngOnInit(): void {
-    this.dashboardData = this.dashboardService.getDashboardData();
+    this.dashboardData = this.dashboardService.loadInitialData();
   }
 
   onShowMore(event: TransactionType) {

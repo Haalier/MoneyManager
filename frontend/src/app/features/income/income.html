@@ -35,7 +35,7 @@
     <app-modal [(isModalVisible)]="addDialogVisible" [headerText]="'income.add-new' | translate">
       @if (categories()) {
         <app-transaction-form
-          #incomeForm
+          #transactionForm
           [type]="TYPE"
           [categories]="categories()"
           (save)="onSubmitForm($event)"

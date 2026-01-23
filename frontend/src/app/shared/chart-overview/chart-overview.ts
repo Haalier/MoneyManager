@@ -33,7 +33,7 @@ export class ChartOverview {
       const currentType = this.type();
 
       if (currentTransactions && currentTransactions.length > 0) {
-        const prepared = prepareChartData(currentTransactions, currentLang);
+        const prepared = prepareChartData(currentTransactions, currentLang, this.type());
         this.chartData.set(prepared);
 
         this.chartOptions.set({

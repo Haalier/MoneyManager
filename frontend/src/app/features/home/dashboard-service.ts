@@ -13,14 +13,19 @@ export class DashboardService {
 
   private dashboardDataSignal = signal<DashboardData | null>(null);
 
-  getDashboardData() {
-    if (this.dashboardDataSignal() === null) {
-      this.http
-        .get<DashboardData>(this.URL)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe((res) => this.dashboardDataSignal.set(res));
+  loadInitialData() {
+    if (!this.dashboardDataSignal()) {
+      this.refresh();
     }
+    return this.dashboardDataSignal.asReadonly();;
+  }
 
-    return this.dashboardDataSignal.asReadonly();
+  refresh() {
+    this.http
+      .get<DashboardData>(this.URL)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res) => {
+        this.dashboardDataSignal.set(res);
+      });
   }
 }
