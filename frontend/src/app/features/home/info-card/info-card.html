@@ -1,0 +1,12 @@
+<div class="flex gap-6 p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50">
+  <div
+    class="w-14 h-14 flex items-center justify-center text-[26px] text-white rounded-full drop-shadow-xl"
+    [ngClass]="color() || 'bg-white'"
+  >
+    <ng-icon [name]="icon()"></ng-icon>
+  </div>
+  <div>
+    <h6 class="text-sm text-gray-500 mb-1">{{ label() }}</h6>
+    <span class="text-[22px]"> {{ value() | currency: 'PLN' : 'symbol' : '1.2-2' : 'pl' }}</span>
+  </div>
+</div>

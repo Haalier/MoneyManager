@@ -61,10 +61,10 @@
           placeholder="********"
         ></app-input>
       </div>
-      @if (errorMessage()) {
-        <app-error-message [errorMessage]="errorMessage()" />
-      }
     </div>
+    @if (errorMessage()) {
+      <app-error-message [errorMessage]="errorMessage()" />
+    }
 
     <p-button
       type="submit"

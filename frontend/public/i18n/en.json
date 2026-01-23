@@ -14,7 +14,8 @@
     "upload-image-tooltip": "Upload your image",
     "remove-image-tooltip": "Remove your image",
     "account-created": "Account created successfully!",
-    "logged-in": "Logged in successfully!"
+    "logged-in": "Logged in successfully!",
+    "test-account": "Test account"
   },
   "general": {
     "password-on-tooltip": "Show password",
@@ -80,6 +81,7 @@
     "date": "Income Date",
     "delete": "Delete income",
     "fallback": "No incomes added yet. Add some to get started!",
+    "no-categories": "Please add income categories first.",
     "download": {
       "success": "File was successfully downloaded.",
       "error": "An error occurred while downloading the file.",
@@ -110,6 +112,7 @@
     "date": "Expense Date",
     "delete": "Delete expense",
     "fallback": "No expense added yet. Add some to get started!",
+    "no-categories": "Please add expense categories first.",
     "download": {
       "success": "File was successfully downloaded.",
       "error": "An error occurred while downloading the file.",
@@ -126,5 +129,40 @@
       "total": "Total",
       "transactions": "Transactions"
     }
+  },
+  "filters": {
+    "title": "Filter transactions",
+    "select": "Select the filters",
+    "type": "Type",
+    "start_date": "Start date",
+    "end_date": "End date",
+    "order": {
+      "label": "Order",
+      "ascending": "Ascending",
+      "descending": "Descending"
+    },
+
+    "sort": {
+      "label": "Sort",
+      "date": "Date",
+      "amount": "Amount",
+      "category": "Category"
+    },
+
+    "search": "Search",
+    "search_placeholder": "Search...",
+
+    "fallback": "Select and apply filters to search for specific transactions.",
+    "transactions": "Transactions"
+  },
+  "dashboard": {
+    "total_balance": "Total balance",
+    "total_income": "Total income",
+    "total_expense": "Total expense",
+    "recent_transactions": "Recent transactions",
+    "more": "More",
+    "overview": "Financial Overview",
+    "no_transactions_yet": "No transactions yet",
+    "no_transactions_hint": "Add some transactions to get started!"
   }
 }

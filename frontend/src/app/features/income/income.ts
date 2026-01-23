@@ -12,6 +12,7 @@ import { TransactionType } from '../../shared/enums/transactions.enum';
 import { TransactionList } from '../transaction/transaction-list/transaction-list';
 import { TransactionForm } from '../transaction/transaction-form/transaction-form';
 import { BaseTransactionComponent } from '../transaction/base-transaction/base-transaction';
+import { Tooltip } from "primeng/tooltip";
 
 @Component({
   selector: 'app-income',
@@ -23,7 +24,8 @@ import { BaseTransactionComponent } from '../transaction/base-transaction/base-t
     ChartOverview,
     TransactionList,
     TransactionForm,
-  ],
+    Tooltip
+],
   templateUrl: './income.html',
   styleUrl: './income.css',
   viewProviders: [provideIcons({ lucidePlus })],

@@ -8,6 +8,7 @@
         <p-button
           [loading]="emailLoader()"
           [pTooltip]="type() + '.email.tooltip' | translate"
+          [disabled]="!transactions() || transactions()!.length === 0"
           tooltipPosition="top"
           variant="outlined"
           raised="true"
@@ -21,6 +22,7 @@
           [loading]="downloadLoader()"
           variant="outlined"
           [pTooltip]="type() + '.download.tooltip' | translate"
+          [disabled]="!transactions() || transactions()!.length === 0"
           tooltipPosition="top"
           raised="true"
           size="small"

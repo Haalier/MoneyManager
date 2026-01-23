@@ -1,1 +1,76 @@
-<div>this is filter page</div>
+<div class="my-5 mx-auto">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-2xl font-semibold capitalize">{{ 'filters.title' | translate }}</h2>
+  </div>
+  <p-card class="p-4 m-4">
+    <div class="flex items-center justify-between mb-4">
+      <h5 class="text-lg font-semibold">{{ 'filters.select' | translate }}</h5>
+    </div>
+    <form
+      [formGroup]="filterForm"
+      class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-4 items-end"
+    >
+      <app-select
+        id="type"
+        [label]="'filters.type' | translate"
+        [options]="typeOptions"
+        formControlName="type"
+      ></app-select>
+
+      <app-input
+        id="startDate"
+        [label]="'filters.start_date' | translate"
+        type="date"
+        formControlName="startDate"
+      ></app-input>
+
+      <app-input
+        id="endDate"
+        [label]="'filters.end_date' | translate"
+        type="date"
+        formControlName="endDate"
+      ></app-input>
+
+      <app-select
+        id="sortOrder"
+        [label]="'filters.order.label' | translate"
+        [options]="orderOptions"
+        formControlName="sortOrder"
+      ></app-select>
+
+      <app-select
+        id="sortField"
+        [label]="'filters.sort.label' | translate"
+        [options]="sortOptions"
+        formControlName="sortField"
+      ></app-select>
+
+      <div class="flex items-end gap-1">
+        <app-input
+          id="keyword"
+          class="flex-1"
+          [label]="'filters.search' | translate"
+          formControlName="keyword"
+        ></app-input>
+
+        <button
+          type="submit"
+          class="mb-4 flex aspect-square h-10.5 items-center justify-center rounded-lg bg-blue-500 text-white shadow-sm transition-all hover:bg-blue-600 active:scale-95"
+          (click)="onSearch()"
+        >
+          <ng-icon name="lucideSearch" size="20"></ng-icon>
+        </button>
+      </div>
+    </form>
+  </p-card>
+  <p-card class="p-4 m-4">
+    <div class="flex items-center justify-between mb-4">
+      <h5 class="text-lg font-semibold">{{ 'filters.transactions' | translate }}</h5>
+    </div>
+    @if (!isLoading()) {
+      <app-filter-list [type]="currentType()" [transactions]="transactions()"></app-filter-list>
+    } @else {
+      <app-spinner></app-spinner>
+    }
+  </p-card>
+</div>

@@ -6,9 +6,9 @@ import { Expense } from '../models/expense.model';
 import { prepareChartData } from '../utils/prepare-chart';
 import { TranslatePipe } from '@ngx-translate/core';
 import { TransactionType } from '../enums/transactions.enum';
-import { SpinnerComponent } from "../spinner/spinner";
-import { Card } from "primeng/card";
-import { ChartModule } from "primeng/chart";
+import { SpinnerComponent } from '../spinner/spinner';
+import { Card } from 'primeng/card';
+import { ChartModule } from 'primeng/chart';
 
 @Component({
   selector: 'app-chart-overview',

@@ -1,7 +1,7 @@
 <div class="relative inline-block text-left">
   <button
     type="button"
-    (click)="op.toggle($event)"
+    (click)="menu.toggle($event)"
     class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-all shadow-sm"
   >
     <span class="uppercase">{{ currentLang() }}</span>
@@ -13,7 +13,7 @@
     </span>
   </button>
 
-  <p-popover #op>
+  <!-- <p-popover #op>
     <div class="py-1 px-2">
       @for (lang of languages; track lang.code) {
         <button
@@ -33,5 +33,21 @@
         </button>
       }
     </div>
-  </p-popover>
+  </p-popover> -->
+
+  <p-menu #menu appendTo="body" [popup]="true" [model]="menuItems()">
+    <ng-template #item let-item>
+      <div
+        class="flex items-center justify-between gap-2 px-3 py-2 text-sm rounded-lg cursor-pointer transition-colors"
+        [ngClass]="item.styleClass"
+      >
+        <span class="font-medium">{{ item.label }}</span>
+        <span
+          class="fi rounded-sm shadow-sm"
+          [class.fi-us]="item.code === 'en'"
+          [class.fi-pl]="item.code === 'pl'"
+        ></span>
+      </div>
+    </ng-template>
+  </p-menu>
 </div>

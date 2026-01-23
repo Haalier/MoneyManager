@@ -1,0 +1,10 @@
+<p-card>
+  <div class="flex items-center justify-between">
+    <h5 class="text-lg">{{ 'dashboard.overview' | translate }}</h5>
+  </div>
+
+  <app-financial-pie-chart
+    [data]="balanceData"
+    [colors]="['#6366F1', '#22C55E', '#EF4444']"
+  ></app-financial-pie-chart>
+</p-card>

@@ -23,6 +23,7 @@
   "private": true,
   "packageManager": "npm@11.6.3",
   "dependencies": {
+    "@angular/cdk": "^21.1.1",
     "@angular/common": "^21.0.0",
     "@angular/compiler": "^21.0.0",
     "@angular/core": "^21.0.0",
@@ -38,6 +39,7 @@
     "@ngxpert/hot-toast": "^6.0.0",
     "@primeuix/themes": "^2.0.2",
     "chart.js": "^4.3.0",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.19",
     "ng2-charts": "^8.0.0",
     "primeng": "^21.0.2",

@@ -1,0 +1,13 @@
+@if (transactions() === null || transactions()?.length === 0) {
+  <p class="text-gray-500">{{ 'filters.fallback' | translate }}</p>
+} @else {
+  @for (transaction of transactions(); track transaction.id; let i = $index) {
+    <app-transaction-info-card
+      [hideDeleteButton]="true"
+      [type]="type()"
+      [transaction]="transaction"
+      [style.--index]="i"
+      animate.enter="slide-in"
+    ></app-transaction-info-card>
+  }
+}

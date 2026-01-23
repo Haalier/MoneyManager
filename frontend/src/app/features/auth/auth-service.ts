@@ -1,16 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import {
-  catchError,
-  EMPTY,
-  finalize,
-  map,
-  Observable,
-  of,
-  switchMap,
-  tap,
-  throwError,
-} from 'rxjs';
+import { catchError, EMPTY, finalize, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { CategoryService } from '../category/category-service';
 import { User } from '../../shared/models/user.model';
@@ -45,7 +35,11 @@ export class AuthService {
 
     return this.http.get<User>(`${this.URL}/me`).pipe(
       map((user) => {
+        console.log('inside checkAuth');
+
         this._user.set(user);
+
+        console.log('user set to', user);
         return true;
       }),
       catchError((error: HttpErrorResponse) => {
@@ -62,6 +56,7 @@ export class AuthService {
     const formData = new FormData();
     formData.append('file', image);
     formData.append('upload_preset', this.CLOUDINARY_UPLOAD_PRESET);
+
     return this.http.post(this.CLOUDINARY_URL, formData).pipe(
       map((res: any) => res.secure_url),
       catchError((error) => {
@@ -116,7 +111,11 @@ export class AuthService {
   public logout() {
     return this.http.post(`${this.URL}/logout`, {}).pipe(
       tap((_) => {
+        console.log('inside logout');
+
         this._user.set(null);
+        console.log('user ', this._user());
+
         this.router.navigate(['/login']);
         this.categoryService.resetCategories();
       }),

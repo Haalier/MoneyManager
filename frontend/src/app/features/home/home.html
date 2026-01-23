@@ -1,1 +1,49 @@
-<div>This is home page</div>
+<div class="my-5 mx-auto">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <app-info-card
+      [label]="'dashboard.total_balance' | translate"
+      [value]="dashboardData()?.totalBalance ?? 0"
+      color="bg-blue-500"
+      icon="LucideWalletCards"
+    ></app-info-card>
+    <app-info-card
+      [label]="'dashboard.total_income' | translate"
+      [value]="dashboardData()?.totalIncome ?? 0"
+      color="bg-green-500"
+      icon="LucideWallet"
+    ></app-info-card>
+    <app-info-card
+      [label]="'dashboard.total_expense' | translate"
+      [value]="dashboardData()?.totalExpense ?? 0"
+      color="bg-red-500"
+      icon="LucideCoins"
+    ></app-info-card>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+    <app-recent-transactions
+      [hideButton]="true"
+      [transactions]="dashboardData()?.recentTransactions ?? []"
+      [label]="'dashboard.recent_transactions' | translate"
+    ></app-recent-transactions>
+
+    <app-finance-overview
+      [totalBalance]="dashboardData()?.totalBalance ?? 0"
+      [totalExpense]="dashboardData()?.totalExpense ?? 0"
+      [totalIncome]="dashboardData()?.totalIncome ?? 0"
+    ></app-finance-overview>
+
+    <app-recent-transactions
+      [transactions]="dashboardData()?.recentFiveIncomes ?? []"
+      [type]="TransactionType.INCOME"
+      (showMore)="onShowMore($event)"
+      [label]="'dashboard.recent_incomes' | translate"
+    ></app-recent-transactions>
+
+    <app-recent-transactions
+      [transactions]="dashboardData()?.recentFiveExpenses ?? []"
+      [type]="TransactionType.EXPENSE"
+      (showMore)="onShowMore($event)"
+      [label]="'dashboard.recent_expenses' | translate"
+    ></app-recent-transactions>
+  </div>
+</div>

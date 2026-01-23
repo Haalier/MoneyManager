@@ -12,7 +12,9 @@
     "email": "Adres Email",
     "password": "Hasło",
     "upload-image-tooltip": "Prześlij swoje zdjęcie",
-    "remove-image-tooltip": "Usuń swoje zdjęcie"
+    "remove-image-tooltip": "Usuń swoje zdjęcie",
+    "logged-in": "Pomyślnie zalogowano!",
+    "test-account": "Konto testowe"
   },
   "general": {
     "password-on-tooltip": "Pokaż hasło",
@@ -78,6 +80,7 @@
     "date": "Data Dochodu",
     "delete": "Usuń dochód",
     "fallback": "Nie dodano jeszcze żadnych dochodów. Dodaj kilka, aby rozpocząć!",
+    "no-categories": "Proszę najpierw dodać kategorie dochodów.",
     "download": {
       "success": "Plik został pomyślnie pobrany.",
       "error": "Wystąpił problem podczas pobierania pliku.",
@@ -108,6 +111,7 @@
     "date": "Data Wydatku",
     "delete": "Usuń Wydatek",
     "fallback": "Nie dodano jeszcze żadnych wydatków. Dodaj kilka, aby rozpocząć!",
+    "no-categories": "Proszę najpierw dodać kategorie wydatków.",
     "download": {
       "success": "Plik został pomyślnie pobrany.",
       "error": "Wystąpił problem podczas pobierania pliku.",
@@ -124,5 +128,43 @@
       "total": "Suma",
       "transactions": "Transakcje"
     }
+  },
+  "filters": {
+    "title": "Filtruj transakcje",
+    "select": "Wybierz filtry",
+    "type": "Typ",
+    "start_date": "Data początkowa",
+    "end_date": "Data końcowa",
+
+    "order": {
+      "label": "Kolejność",
+      "ascending": "Rosnąco",
+      "descending": "Malejąco"
+    },
+
+    "sort": {
+      "label": "Sortuj",
+      "date": "Data",
+      "amount": "Ilość",
+      "category": "Kategoria"
+    },
+
+    "search": "Szukaj",
+    "search_placeholder": "Szukaj...",
+
+    "fallback": "Wybierz i zastosuj filtry, aby wyszukać poszczególne transakcje.",
+    "transactions": "Transakcje"
+  },
+  "dashboard": {
+    "total_balance": "Saldo całkowite",
+    "total_income": "Wszystkie dochody",
+    "total_expense": "Wszystkie wydatki",
+    "recent_transactions": "Ostatnie transakcje",
+    "recent_incomes": "Ostatnie dochody",
+    "recent_expenses": "Ostatnie wydatki",
+    "more": "Więcej",
+    "overview": "Przegląd finansów",
+    "no_transactions_yet": "Brak transakcji",
+    "no_transactions_hint": "Dodaj kilka transakcji, aby rozpocząć!"
   }
 }

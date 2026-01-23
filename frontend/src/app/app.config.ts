@@ -20,11 +20,13 @@ import { registerLocaleData } from '@angular/common';
 import localePl from '@angular/common/locales/pl';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
 import { errorInterceptor } from './core/interceptors/error-interceptor';
+import { MessageService } from 'primeng/api';
 
 registerLocaleData(localePl);
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    MessageService,
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideCharts(withDefaultRegisterables()),

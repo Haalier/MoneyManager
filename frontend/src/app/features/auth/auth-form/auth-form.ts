@@ -11,6 +11,7 @@ import { PhotoSelector } from './photo-selector/photo-selector';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LoadingService } from '../../../core/services/loading-service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-auth-form',
@@ -28,6 +29,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 })
 export class AuthForm implements OnInit {
   private toast = inject(HotToastService);
+  private messageService = inject(MessageService);
   private act = inject(ActivatedRoute);
   private authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
@@ -70,12 +72,17 @@ export class AuthForm implements OnInit {
         .pipe(first(), takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: () => {
-            this.toast.show(this.translate.instant('auth.account-created'));
+            // this.toast.show(this.translate.instant('auth.account-created'));
+            this.messageService.add({
+              severity: 'success',
+              summary: this.translate.instant('auth.account-created'),
+              detail: '',
+            });
             this.errorMessage.set('');
           },
           error: (err) => {
             console.error('Signup error: ', err);
-            this.errorMessage.set(err.error.message || 'An error occurred. Please try again.');
+            this.errorMessage.set(err.error?.message || 'An error occurred. Please try again.');
           },
         });
     } else {
@@ -84,7 +91,12 @@ export class AuthForm implements OnInit {
         .pipe(first(), takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: () => {
-            this.toast.success(this.translate.instant('auth.logged-in'));
+            this.messageService.add({
+              severity: 'success',
+              summary: this.translate.instant('auth.logged-in'),
+              detail: '',
+            });
+            // this.toast.success(this.translate.instant('auth.logged-in'));
             this.errorMessage.set('');
           },
           error: (err) => {

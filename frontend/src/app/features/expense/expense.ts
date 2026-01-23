@@ -12,6 +12,7 @@ import { ExpenseService } from './expense-service';
 import { ExpenseDTO } from '../../shared/models/DTO/expense.dto';
 import { Observable } from 'rxjs';
 import { BaseTransactionComponent } from '../transaction/base-transaction/base-transaction';
+import { Tooltip } from "primeng/tooltip";
 
 @Component({
   selector: 'app-expense',
@@ -23,7 +24,8 @@ import { BaseTransactionComponent } from '../transaction/base-transaction/base-t
     TransactionForm,
     SpinnerComponent,
     TranslatePipe,
-  ],
+    Tooltip
+],
   templateUrl: './expense.html',
   styleUrl: './expense.css',
   viewProviders: [provideIcons({ lucidePlus })],

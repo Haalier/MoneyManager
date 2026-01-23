@@ -14,6 +14,7 @@ import { Income } from '../../../shared/models/income.model';
 import { TranslatePipe } from '@ngx-translate/core';
 import { TransactionType } from '../../../shared/enums/transactions.enum';
 import { Expense } from '../../../shared/models/expense.model';
+import { Transaction } from '../../../shared/models/transaction.model';
 
 @Component({
   selector: 'app-transaction-info-card',
@@ -27,7 +28,7 @@ import { Expense } from '../../../shared/models/expense.model';
 export class TransactionInfoCard {
   protected readonly TransactionType = TransactionType;
   public type = input.required<TransactionType>();
-  public transaction = input.required<Income | Expense>();
+  public transaction = input.required<Income | Expense | Transaction>();
   public hideDeleteButton = input<boolean>(false);
   public delete = output<{ id: number; type: TransactionType }>();
   deleteModalVisible = signal<boolean>(false);
