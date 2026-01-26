@@ -122,17 +122,6 @@ export class Filter {
     });
   }
 
-  private resetForm() {
-    this.filterForm.reset({
-      type: 'income',
-      sortOrder: 'asc',
-      // startDate: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
-      // endDate: format(endOfMonth(new Date()), 'yyyy-MM-dd'),
-      sortField: 'date',
-    });
-    this.currentType.set(TransactionType.INCOME);
-  }
-
   get maxDate(): Date {
     return new Date();
   }
