@@ -175,5 +175,10 @@
     "overview": "Przegląd finansów",
     "no_transactions_yet": "Brak transakcji",
     "no_transactions_hint": "Dodaj kilka transakcji, aby rozpocząć!"
+  },
+  "not_found": {
+    "header": "Strona nie została znaleziona",
+    "text": "Przepraszamy ale strona, której szukasz nie istnieje lub została przeniesiona.",
+    "go_back": "Wróć do strony głównej"
   }
 }

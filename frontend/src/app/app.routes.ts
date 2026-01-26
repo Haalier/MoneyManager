@@ -7,6 +7,7 @@ import { inject } from '@angular/core';
 import { AuthService } from './features/auth/auth-service';
 import { MainLayout } from './core/layout/main-layout/main-layout';
 import { AuthLayout } from './core/layout/auth-layout/auth-layout';
+import { NotFound } from './features/not-found/not-found';
 
 export const routes: Routes = [
   {
@@ -59,4 +60,9 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: '**',
+    component: NotFound,
+    title: '404 - Page Not Found'
+  }
 ];
