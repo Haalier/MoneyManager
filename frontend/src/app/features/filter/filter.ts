@@ -18,6 +18,7 @@ import { FilterDTO } from '../../shared/models/DTO/filter.dto';
 import { FilterList } from './filter-list/filter-list';
 import { SpinnerComponent } from '../../shared/spinner/spinner';
 import { TransactionType } from '../../shared/enums/transactions.enum';
+import { DatePickerModule } from 'primeng/datepicker';
 
 @Component({
   selector: 'app-filter',
@@ -31,6 +32,7 @@ import { TransactionType } from '../../shared/enums/transactions.enum';
     NgIcon,
     FilterList,
     SpinnerComponent,
+    DatePickerModule,
   ],
   templateUrl: './filter.html',
   styleUrl: './filter.css',
@@ -42,7 +44,7 @@ export class Filter {
   private fb = inject(FormBuilder);
   protected date = new Date();
   protected isLoading = this.loadingService.isLoading;
-  protected transactions = this.filterService.transactions
+  protected transactions = this.filterService.transactions;
   protected currentType = signal<TransactionType>(TransactionType.INCOME);
 
   protected typeOptions = [
@@ -82,11 +84,15 @@ export class Filter {
 
   protected filterForm = this.fb.group({
     type: this.fb.control('income', { validators: [Validators.required], nonNullable: true }),
-    startDate: this.fb.control(format(startOfMonth(new Date()), 'yyyy-MM-dd'), {
-      validators: [Validators.required],
-      nonNullable: true,
-    }),
-    endDate: this.fb.control(format(endOfMonth(new Date()), 'yyyy-MM-dd'), {
+    // startDate: this.fb.control(format(startOfMonth(new Date()), 'yyyy-MM-dd'), {
+    //   validators: [Validators.required],
+    //   nonNullable: true,
+    // }),
+    // endDate: this.fb.control(format(endOfMonth(new Date()), 'yyyy-MM-dd'), {
+    //   validators: [Validators.required],
+    //   nonNullable: true,
+    // }),
+    dates: this.fb.control([startOfMonth(new Date()), new Date()], {
       validators: [Validators.required],
       nonNullable: true,
     }),
@@ -96,8 +102,21 @@ export class Filter {
   });
 
   onSearch() {
-    if (this.filterForm.invalid) return;
-    const filterObj = this.filterForm.getRawValue() as FilterDTO;
+    const dates = this.filterForm.value.dates;
+    if (!dates || dates.length < 1) {
+      this.filterForm.setErrors({ invalidDates: true });
+      return;
+    }
+
+    if (dates[1] === null) {
+      dates[1] = dates[0];
+    }
+    const filterObj = {
+      ...this.filterForm.getRawValue(),
+      startDate: format(dates[0], 'yyyy-MM-dd'),
+      endDate: format(dates[1], 'yyyy-MM-dd'),
+    } as FilterDTO;
+
     this.filterService.addFilters(filterObj).subscribe(() => {
       this.currentType.set(filterObj.type);
     });
@@ -107,10 +126,14 @@ export class Filter {
     this.filterForm.reset({
       type: 'income',
       sortOrder: 'asc',
-      startDate: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
-      endDate: format(endOfMonth(new Date()), 'yyyy-MM-dd'),
+      // startDate: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
+      // endDate: format(endOfMonth(new Date()), 'yyyy-MM-dd'),
       sortField: 'date',
     });
     this.currentType.set(TransactionType.INCOME);
+  }
+
+  get maxDate(): Date {
+    return new Date();
   }
 }

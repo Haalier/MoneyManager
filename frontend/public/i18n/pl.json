@@ -143,8 +143,7 @@
     "title": "Filtruj transakcje",
     "select": "Wybierz filtry",
     "type": "Typ",
-    "start_date": "Data początkowa",
-    "end_date": "Data końcowa",
+    "dateRange": "Zakres Dat",
 
     "order": {
       "label": "Kolejność",

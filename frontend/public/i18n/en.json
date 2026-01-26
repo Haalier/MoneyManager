@@ -29,7 +29,7 @@
     "email": "Please enter a valid email address.",
     "min-length": "{{field}} must be at least {{length}} characters long.",
     "pattern": "Invalid format.",
-    "future-date": "Date cannot be in the future.",
+    "future-date": "Date cannot be a future date.",
     "default": "Invalid value.",
     "fill-up": "Fill up form to submit.",
     "no-changes": "No changes detected.",
@@ -144,8 +144,7 @@
     "title": "Filter transactions",
     "select": "Select the filters",
     "type": "Type",
-    "start_date": "Start date",
-    "end_date": "End date",
+    "dateRange": "Date Range",
     "order": {
       "label": "Order",
       "ascending": "Ascending",

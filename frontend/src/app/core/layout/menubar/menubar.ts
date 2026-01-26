@@ -5,11 +5,12 @@ import { PopoverModule } from 'primeng/popover';
 import { Sidebar } from '../sidebar/sidebar';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '../../../features/auth/auth-service';
-import { LanguagePicker } from "../../../shared/language-picker/language-picker";
+import { LanguagePicker } from '../../../shared/language-picker/language-picker';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-menubar',
-  imports: [NgIcon, PopoverModule, Sidebar, TranslatePipe, LanguagePicker],
+  imports: [NgIcon, PopoverModule, Sidebar, TranslatePipe, LanguagePicker, RouterLink],
   templateUrl: './menubar.html',
   styleUrl: './menubar.css',
   viewProviders: [provideIcons({ lucideX, lucideMenu, lucideUser, lucideLogOut })],

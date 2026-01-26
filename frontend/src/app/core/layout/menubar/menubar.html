@@ -9,10 +9,12 @@
       <ng-icon [name]="openSideMenu ? 'lucideX' : 'lucideMenu'" class="text-2xl" />
     </button>
 
-    <div class="flex items-center gap-2">
-      <img src="logo.png" alt="Money manager logo" class="h-10 w-10" />
-      <span class="text-lg font-medium text-black truncate">Money Manager</span>
-    </div>
+    <a routerLink="/dashboard" class="cursor-pointer">
+      <div class="flex items-center gap-2">
+        <img src="logo.png" alt="Money manager logo" class="h-10 w-10" />
+        <span class="text-lg font-medium text-black truncate">Money Manager</span>
+      </div>
+    </a>
   </div>
 
   <div class="relative flex items-center gap-3">

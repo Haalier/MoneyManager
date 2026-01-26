@@ -8,7 +8,7 @@
     </div>
     <form
       [formGroup]="filterForm"
-      class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-4 items-end"
+      class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 items-end"
     >
       <app-select
         id="type"
@@ -17,19 +17,19 @@
         formControlName="type"
       ></app-select>
 
-      <app-input
-        id="startDate"
-        [label]="'filters.start_date' | translate"
-        type="date"
-        formControlName="startDate"
-      ></app-input>
-
-      <app-input
-        id="endDate"
-        [label]="'filters.end_date' | translate"
-        type="date"
-        formControlName="endDate"
-      ></app-input>
+      <div class="flex flex-col mb-4">
+        <label class="text-[13px] text-slate-800 block mb-1" for="dateRange">{{
+          'filters.dateRange' | translate
+        }}</label>
+        <p-datepicker
+          inputStyleClass="w-full text-black border border-slate-300 rounded-md px-3 py-2 outline-none transition duration-200 focus:ring-2 focus:ring-blue-500 h-[42px]"
+          id="dateRange"
+          formControlName="dates"
+          selectionMode="range"
+          readonlyInput="true"
+          [maxDate]="maxDate"
+        ></p-datepicker>
+      </div>
 
       <app-select
         id="sortOrder"
