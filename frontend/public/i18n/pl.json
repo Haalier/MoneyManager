@@ -31,7 +31,8 @@
     "future-date": "Data nie może być z przyszłości.",
     "default": "Nieprawidłowa wartość.",
     "fill-up": "Wypełnij formularz, aby móc go wysłać.",
-    "no-changes": "Nie wykryto żadnych zmian."
+    "no-changes": "Nie wykryto żadnych zmian.",
+    "invalid-number": "Wprowadź poprawną wartość liczbową."
   },
   "sidebar-info": {
     "dashboard": "Pulpit",

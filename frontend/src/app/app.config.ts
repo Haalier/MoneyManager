@@ -45,14 +45,6 @@ export const appConfig: ApplicationConfig = {
           darkModeSelector: false,
         },
       },
-    }),
-    provideAppInitializer(async () => {
-      const authService = inject(AuthService);
-      try {
-        return await firstValueFrom(authService.checkAuth());
-      } catch {
-        return false;
-      }
-    }),
+    })
   ],
 };

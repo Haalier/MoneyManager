@@ -6,6 +6,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { NgClass } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { TranslateService, _ } from '@ngx-translate/core';
+import { parse } from 'date-fns';
 
 @Component({
   selector: 'app-input',
@@ -57,27 +58,10 @@ export class FormInput implements ControlValueAccessor {
 
   handleInput(event: Event): void {
     const target = event.target as HTMLInputElement;
-    let val: any = target.value;
+    let rawValue = target.value;
 
-    if (this.type === 'number') {
-      val = target.value.replace(/[^0-9.,]/g, '').replace(',', '.');
-      target.value = val;
-
-      const numericValue = parseFloat(val);
-
-      if (val === '') {
-        this.value = val;
-        this.onChange(null);
-      } else if (!isNaN(numericValue)) {
-        this.value = val;
-        this.onChange(numericValue);
-      } else {
-        return;
-      }
-    } else {
-      this.value = target.value;
-      this.onChange(val);
-    }
+    this.value = rawValue;
+    this.onChange(this.value);
   }
 
   get errorMessage(): string | null {
@@ -93,6 +77,7 @@ export class FormInput implements ControlValueAccessor {
 
     if (errors['required']) return this.translate.instant('errors.required', params);
     if (errors['email']) return this.translate.instant('error.email');
+    if (errors['invalidNumber']) return this.translate.instant('errors.invalid-number');
     if (errors['minlength']) {
       const requiredLength = errors['minlength'].requiredLength;
       return this.translate.instant('errors.min-length', { ...params, length: requiredLength });

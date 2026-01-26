@@ -22,7 +22,6 @@
   <app-input
     id="amount"
     [label]="type() + '.amount' | translate"
-    type="number"
     [placeholder]="('1000' | currency: 'PLN' : 'symbol' : '1.2-2' : 'pl') ?? '$1000'"
     formControlName="amount"
   ></app-input>

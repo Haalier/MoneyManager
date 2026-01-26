@@ -17,6 +17,7 @@ import { futureDateValidator } from '../../../core/validators/date.validator';
 import { Category } from '../../../shared/models/category.model';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CurrencyPipe } from '@angular/common';
+import { validateNumber } from '../../../core/validators/number.validator';
 
 @Component({
   selector: 'app-transaction-form',
@@ -48,7 +49,7 @@ export class TransactionForm {
       nonNullable: true,
     }),
     amount: this.fb.control(0, {
-      validators: [Validators.required, Validators.min(0)],
+      validators: [validateNumber(), Validators.required, Validators.min(0)],
       nonNullable: true,
     }),
     icon: this.fb.control('dollar', { nonNullable: true }),

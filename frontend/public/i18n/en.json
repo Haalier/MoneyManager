@@ -32,7 +32,8 @@
     "future-date": "Date cannot be in the future.",
     "default": "Invalid value.",
     "fill-up": "Fill up form to submit.",
-    "no-changes": "No changes detected."
+    "no-changes": "No changes detected.",
+    "invalid-number": "Please enter a valid numeric value."
   },
   "sidebar-info": {
     "dashboard": "Dashboard",
@@ -169,6 +170,8 @@
     "total_income": "Total income",
     "total_expense": "Total expense",
     "recent_transactions": "Recent transactions",
+    "recent_incomes": "Recent incomes",
+    "recent_expenses": "Recent expenses",
     "more": "More",
     "overview": "Financial Overview",
     "no_transactions_yet": "No transactions yet",

@@ -35,11 +35,7 @@ export class AuthService {
 
     return this.http.get<User>(`${this.URL}/me`).pipe(
       map((user) => {
-        console.log('inside checkAuth');
-
         this._user.set(user);
-
-        console.log('user set to', user);
         return true;
       }),
       catchError((error: HttpErrorResponse) => {
